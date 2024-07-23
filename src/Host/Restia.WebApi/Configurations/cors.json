@@ -1,0 +1,6 @@
+{
+  "CorsSettings": {
+    "Blazor": "http://localhost:5173;https://localhost:7229;https://www.mydomain.my",
+    "React": "http://localhost:3000"
+  }
+}
