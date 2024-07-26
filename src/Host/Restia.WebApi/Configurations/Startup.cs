@@ -1,7 +1,15 @@
 namespace Restia.WebApi.Configurations;
 
+/// <summary>
+/// Startup
+/// </summary>
 internal static class Startup
 {
+	/// <summary>
+	/// Add configurations to <see cref="WebApplicationBuilder"/>
+	/// </summary>
+	/// <param name="builder">A web application builder</param>
+	/// <returns><see cref="WebApplicationBuilder"/></returns>
 	internal static WebApplicationBuilder AddConfigurations(this WebApplicationBuilder builder)
 	{
 		const string configurationsDirectory = "Configurations";

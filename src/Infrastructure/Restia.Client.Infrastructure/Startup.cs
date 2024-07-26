@@ -3,10 +3,19 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Restia.Client.Infrastructure;
 
+/// <summary>
+/// Startup
+/// </summary>
 public static class Startup
 {
 	private const string ClientName = "Restia.API";
 
+	/// <summary>
+	/// Add client services to <see cref="IServiceCollection"/>
+	/// </summary>
+	/// <param name="services">Services</param>
+	/// <param name="config">Config</param>
+	/// <returns><see cref="IServiceCollection"/></returns>
 	public static IServiceCollection AddClientServices(this IServiceCollection services, IConfiguration config)
 	{
 		var apiBaseUrl = config.GetSection(ConfigNames.ApiBaseUrl)?.Value ?? string.Empty;
