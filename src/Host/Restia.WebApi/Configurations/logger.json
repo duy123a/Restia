@@ -1,0 +1,9 @@
+{
+  "LoggerSettings": {
+    "AppName": "Restia.WebApi",
+    "ElasticSearchUrl": "",
+    "WriteToFile": true,
+    "OutputLogFilePath": "C:\\logs",
+    "StructuredConsoleLogging": false
+  }
+}

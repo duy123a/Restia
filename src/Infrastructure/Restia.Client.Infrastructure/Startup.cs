@@ -8,7 +8,7 @@ namespace Restia.Client.Infrastructure;
 /// </summary>
 public static class Startup
 {
-	private const string ClientName = "Restia.API";
+	private const string ClientName = "Restia.WebApi";
 
 	/// <summary>
 	/// Add client services to <see cref="IServiceCollection"/>
