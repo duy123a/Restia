@@ -6,8 +6,6 @@ public class LoggerSettings
 {
 	/// <summary>Get and set application name</summary>
 	public string AppName { get; set; } = "Restia.WebApi";
-	/// <summary>Get and set elastic search url</summary>
-	public string ElasticSearchUrl { get; set; } = string.Empty;
 	/// <summary>Get and set write to file</summary>
 	public bool WriteToFile { get; set; }
 	/// <summary>Get and set output log file path</summary>

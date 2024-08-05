@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Restia.WebApi.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("api/[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
 		private static readonly string[] Summaries = new[]
@@ -21,6 +21,7 @@ namespace Restia.WebApi.Controllers
 		[HttpGet]
 		public IEnumerable<WeatherForecast> Get()
 		{
+			_logger.LogInformation("Get information of weather forecast success");
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
 			{
 				Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

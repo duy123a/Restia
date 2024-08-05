@@ -4,7 +4,7 @@ namespace Restia.Manager.Pages;
 
 public partial class Home
 {
-	private string _baseUrl = string.Empty;
+	private string _result = string.Empty;
 
 	[Inject]
 	private HttpClient _httpClient { get; set; } = null!;
@@ -14,8 +14,8 @@ public partial class Home
 	{
 	}
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		_baseUrl = _httpClient.BaseAddress!.ToString();
+		_result = await _httpClient.GetStringAsync("api/weatherforecast");
 	}
 }

@@ -1,4 +1,6 @@
+using Restia.Infrastructure;
 using Restia.Infrastructure.Common;
+using Restia.Infrastructure.Logging.Serilog;
 using Restia.WebApi.Configurations;
 using Serilog;
 
@@ -9,20 +11,34 @@ public class Program
 	public static void Main(string[] args)
 	{
 		StaticLogger.EnsureInitialized();
-		Log.Information("Server Booting Up...");
+		Log.Information("Server booting up...");
 
-		// This method will load appsettings.json at default
-		var builder = WebApplication.CreateBuilder(args);
-		builder.AddConfigurations();
+		try
+		{
+			// This method will load appsettings.json at default
+			var builder = WebApplication.CreateBuilder(args);
+			builder.AddConfigurations();
+			builder.RegisterSerilog();
+			builder.Services.AddControllers();
+			builder.Services.AddInfrastructure(builder.Configuration);
 
-		// Add services to the container.
-		builder.Services.AddControllers();
+			var app = builder.Build();
 
-		var app = builder.Build();
+			app.UseInfrastructure(builder.Configuration);
+			app.MapControllers();
 
-		// Configure the HTTP request pipeline.
-		app.MapControllers();
-
-		app.Run();
+			app.Run();
+		}
+		catch (Exception ex) when (ex is not HostAbortedException)
+		{
+			StaticLogger.EnsureInitialized();
+			Log.Fatal(ex, "Unhandled exception");
+		}
+		finally
+		{
+			StaticLogger.EnsureInitialized();
+			Log.Information("Server shutting down...");
+			Log.CloseAndFlush();
+		}
 	}
 }

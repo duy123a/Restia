@@ -29,7 +29,6 @@ public static class Extensions
 		{
 			var loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
 			var appName = loggerSettings.AppName;
-			var elasticSearchUrl = loggerSettings.ElasticSearchUrl;
 			var writeToFile = loggerSettings.WriteToFile;
 			var outputLogFilePath = $"{loggerSettings.OutputLogFilePath}/{appName}/";
 			var structuredConsoleLogging = loggerSettings.StructuredConsoleLogging;
