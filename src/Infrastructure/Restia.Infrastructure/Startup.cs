@@ -1,3 +1,4 @@
+using System.Reflection;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,8 @@ public static class Startup
 	{
 		return services
 			.AddCorsPolicy(config)
-			.AddCustomApiVersioning();
+			.AddCustomApiVersioning()
+			.AddCustomMediatR();
 	}
 
 	/// <summary>
@@ -38,6 +40,7 @@ public static class Startup
 			options.ReportApiVersions = true;
 		});
 
+		// This is only useful for api doc/swagger
 		apiVersioningBuilder.AddApiExplorer(options =>
 		{
 			options.GroupNameFormat = "'v'VVV";
@@ -45,6 +48,16 @@ public static class Startup
 		});
 
 		return services;
+	}
+
+	/// <summary>
+	/// Add custom mediatR
+	/// </summary>
+	/// <param name="services">The services</param>
+	/// <returns>A <see cref="IServiceCollection"/>.</returns>
+	private static IServiceCollection AddCustomMediatR(this IServiceCollection services)
+	{
+		return services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 	}
 
 	/// <summary>

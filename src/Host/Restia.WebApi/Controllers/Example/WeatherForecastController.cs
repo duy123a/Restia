@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-
-namespace Restia.WebApi.Controllers
+namespace Restia.WebApi.Controllers.Example
 {
 	public class WeatherForecastController : VersionedApiController
 	{

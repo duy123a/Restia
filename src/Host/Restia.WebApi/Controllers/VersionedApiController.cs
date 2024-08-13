@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Restia.WebApi.Controllers;
 
-[ApiController]
+/// <summary>
+/// Versioned api controller
+/// </summary>
 [Route("api/v{version:apiVersion}/[controller]")]
-public class VersionedApiController : ControllerBase
+public class VersionedApiController : BaseApiController
 {
 }
