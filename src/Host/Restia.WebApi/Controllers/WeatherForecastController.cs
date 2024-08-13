@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Restia.WebApi.Controllers
 {
-	[ApiController]
-	[Route("api/[controller]")]
-	public class WeatherForecastController : ControllerBase
+	public class WeatherForecastController : VersionedApiController
 	{
 		private static readonly string[] Summaries = new[]
 		{

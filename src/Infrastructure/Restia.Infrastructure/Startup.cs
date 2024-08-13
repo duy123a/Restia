@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,31 @@ public static class Startup
 	public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
 	{
 		return services
-			.AddCorsPolicy(config);
+			.AddCorsPolicy(config)
+			.AddCustomApiVersioning();
+	}
+
+	/// <summary>
+	/// Add custom api versioning
+	/// </summary>
+	/// <param name="services">The services</param>
+	/// <returns>A <see cref="IServiceCollection"/>.</returns>
+	private static IServiceCollection AddCustomApiVersioning(this IServiceCollection services)
+	{
+		var apiVersioningBuilder = services.AddApiVersioning(options =>
+		{
+			options.DefaultApiVersion = new ApiVersion(1, 0);
+			options.AssumeDefaultVersionWhenUnspecified = true;
+			options.ReportApiVersions = true;
+		});
+
+		apiVersioningBuilder.AddApiExplorer(options =>
+		{
+			options.GroupNameFormat = "'v'VVV";
+			options.SubstituteApiVersionInUrl = true;
+		});
+
+		return services;
 	}
 
 	/// <summary>
