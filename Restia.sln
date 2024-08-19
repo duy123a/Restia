@@ -25,7 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restia.Client.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restia.WebApi", "src\Host\Restia.WebApi\Restia.WebApi.csproj", "{31151A7A-8DE0-4C01-ADAE-8E2A592C0563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restia.Infrastructure", "src\Infrastructure\Restia.Infrastructure\Restia.Infrastructure.csproj", "{43639D73-0343-44C8-8A49-061D8BCB1063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restia.Infrastructure", "src\Infrastructure\Restia.Infrastructure\Restia.Infrastructure.csproj", "{43639D73-0343-44C8-8A49-061D8BCB1063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restia.Application", "src\Core\Restia.Application\Restia.Application.csproj", "{91F0A9BA-A7F4-4E22-9E9D-5A6BA6C79E07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restia.Domain", "src\Core\Restia.Domain\Restia.Domain.csproj", "{E738FB11-9B05-4642-8968-B09381C4C296}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{43639D73-0343-44C8-8A49-061D8BCB1063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43639D73-0343-44C8-8A49-061D8BCB1063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43639D73-0343-44C8-8A49-061D8BCB1063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91F0A9BA-A7F4-4E22-9E9D-5A6BA6C79E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91F0A9BA-A7F4-4E22-9E9D-5A6BA6C79E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91F0A9BA-A7F4-4E22-9E9D-5A6BA6C79E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91F0A9BA-A7F4-4E22-9E9D-5A6BA6C79E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E738FB11-9B05-4642-8968-B09381C4C296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E738FB11-9B05-4642-8968-B09381C4C296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E738FB11-9B05-4642-8968-B09381C4C296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E738FB11-9B05-4642-8968-B09381C4C296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +74,8 @@ Global
 		{A5F0C06E-95B7-450C-8A4A-9DA4D17828A0} = {D4CFB5A9-5E31-49A3-B4F7-94F663958980}
 		{31151A7A-8DE0-4C01-ADAE-8E2A592C0563} = {F8A4873B-C8DE-401F-B2E0-80DA5D80A4D6}
 		{43639D73-0343-44C8-8A49-061D8BCB1063} = {D4CFB5A9-5E31-49A3-B4F7-94F663958980}
+		{91F0A9BA-A7F4-4E22-9E9D-5A6BA6C79E07} = {008AF900-288B-4B5F-AC95-89F584C7FDC2}
+		{E738FB11-9B05-4642-8968-B09381C4C296} = {008AF900-288B-4B5F-AC95-89F584C7FDC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBA8902F-3077-44DC-95F8-EEDFA0930180}

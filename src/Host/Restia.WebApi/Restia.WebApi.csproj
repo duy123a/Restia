@@ -8,9 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Restia.Application\Restia.Application.csproj" />
+    <ProjectReference Include="..\..\Core\Restia.Domain\Restia.Domain.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Restia.Infrastructure\Restia.Infrastructure.csproj" />
   </ItemGroup>
 

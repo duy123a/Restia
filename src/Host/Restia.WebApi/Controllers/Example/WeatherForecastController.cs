@@ -1,3 +1,5 @@
+using Restia.Application.Model.WeatherForecast;
+
 namespace Restia.WebApi.Controllers.Example
 {
 	public class WeatherForecastController : VersionedApiController
@@ -15,16 +17,12 @@ namespace Restia.WebApi.Controllers.Example
 		}
 
 		[HttpGet]
-		public IEnumerable<WeatherForecast> Get()
+		public async Task<IActionResult> Get()
 		{
 			_logger.LogInformation("Get information of weather forecast success");
-			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-			{
-				Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-				TemperatureC = Random.Shared.Next(-20, 55),
-				Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-			})
-			.ToArray();
+			var query = new GetWeatherForecastRequest();
+			var result = await Mediator.Send(query);
+			return Ok(result);
 		}
 	}
 }

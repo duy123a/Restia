@@ -1,8 +1,8 @@
-using System.Reflection;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restia.Application.Model.WeatherForecast;
 using Restia.Infrastructure.Cors;
 
 namespace Restia.Infrastructure;
@@ -57,7 +57,9 @@ public static class Startup
 	/// <returns>A <see cref="IServiceCollection"/>.</returns>
 	private static IServiceCollection AddCustomMediatR(this IServiceCollection services)
 	{
-		return services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+		// Will find an assembly contain this class
+		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetWeatherForecastRequest>());
+		return services;
 	}
 
 	/// <summary>
