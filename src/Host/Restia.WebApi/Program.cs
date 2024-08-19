@@ -1,3 +1,4 @@
+using Restia.Application;
 using Restia.Infrastructure;
 using Restia.Infrastructure.Common;
 using Restia.Infrastructure.Logging.Serilog;
@@ -21,6 +22,7 @@ public class Program
 			builder.RegisterSerilog();
 			builder.Services.AddControllers();
 			builder.Services.AddInfrastructure(builder.Configuration);
+			builder.Services.AddApplication();
 
 			var app = builder.Build();
 
