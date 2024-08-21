@@ -27,7 +27,7 @@ public class Program
 			var app = builder.Build();
 
 			app.UseInfrastructure(builder.Configuration);
-			app.MapControllers();
+			app.MapEndpoints();
 
 			app.Run();
 		}

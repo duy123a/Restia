@@ -1,9 +1,11 @@
 using System.Reflection;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Infrastructure.Cors;
+using Restia.Infrastructure.HealthCheck;
 
 namespace Restia.Infrastructure;
 
@@ -23,7 +25,8 @@ public static class Startup
 		return services
 			.AddCorsPolicy(config)
 			.AddApiVersioning()
-			.AddMediatR();
+			.AddMediatR()
+			.AddCustomHealthChecks();
 	}
 
 	/// <summary>
@@ -47,7 +50,7 @@ public static class Startup
 			options.SubstituteApiVersionInUrl = true;
 		});
 
-		return services;
+		return apiVersioningBuilder.Services;
 	}
 
 	/// <summary>
@@ -65,6 +68,19 @@ public static class Startup
 	}
 
 	/// <summary>
+	/// Add custom health check
+	/// </summary>
+	/// <param name="services">The services</param>
+	/// <returns>A <see cref="IServiceCollection"/>.</returns>
+	private static IServiceCollection AddCustomHealthChecks(this IServiceCollection services)
+	{
+		return services
+			.AddHealthChecks()
+			.AddCheck<CustomHealthCheck>("custom_health_check")
+			.Services;
+	}
+
+	/// <summary>
 	/// Use infrastructure
 	/// </summary>
 	/// <param name="builder">The application builder</param>
@@ -75,4 +91,24 @@ public static class Startup
 		return builder
 			.UseCorsPolicy();
 	}
+
+	/// <summary>
+	/// Map endpoints
+	/// </summary>
+	/// <param name="builder">The endpoint route builder</param>
+	/// <returns>A <see cref="IEndpointRouteBuilder"/>.</returns>
+	public static IEndpointRouteBuilder MapEndpoints(this IEndpointRouteBuilder builder)
+	{
+		builder.MapControllers();
+		builder.MapHealthCheck();
+		return builder;
+	}
+
+	/// <summary>
+	/// Map health check
+	/// </summary>
+	/// <param name="endpoints">The endpoint route builder</param>
+	/// <returns>A <see cref="IEndpointConventionBuilder"/>.</returns>
+	private static IEndpointConventionBuilder MapHealthCheck(this IEndpointRouteBuilder endpoints) =>
+		endpoints.MapHealthChecks("/api/health");
 }
