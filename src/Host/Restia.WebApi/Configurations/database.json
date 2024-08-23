@@ -1,0 +1,6 @@
+{
+  "DatabaseSettings": {
+    "DBProvider": "mssql",
+    "ConnectionString": "Server=.;Database=Restia.Develop;User ID=sa;Password=w2Sa;MultipleActiveResultSets=true;TrustServerCertificate=True"
+  }
+}
