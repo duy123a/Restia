@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Infrastructure.Cors;
 using Restia.Infrastructure.HealthCheck;
+using Restia.Infrastructure.Persistence;
 
 namespace Restia.Infrastructure;
 
@@ -26,7 +27,8 @@ public static class Startup
 			.AddCorsPolicy(config)
 			.AddApiVersioning()
 			.AddMediatR()
-			.AddCustomHealthChecks();
+			.AddCustomHealthChecks()
+			.AddPersistence();
 	}
 
 	/// <summary>
