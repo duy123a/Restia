@@ -1,9 +1,15 @@
+using Finbuckle.MultiTenant.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Restia.Infrastructure.Persistence.Context;
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : BaseDbContext
 {
-	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+	public ApplicationDbContext(
+		ITenantInfo currentTenant,
+		DbContextOptions options)
+			: base(
+				currentTenant,
+				options)
 	{
 
 	}
