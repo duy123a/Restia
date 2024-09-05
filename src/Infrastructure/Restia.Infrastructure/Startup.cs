@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restia.Infrastructure.Common;
 using Restia.Infrastructure.Cors;
 using Restia.Infrastructure.HealthCheck;
 using Restia.Infrastructure.Persistence;
@@ -28,7 +29,8 @@ public static class Startup
 			.AddApiVersioning()
 			.AddMediatR()
 			.AddCustomHealthChecks()
-			.AddPersistence();
+			.AddPersistence()
+			.AddServices();
 	}
 
 	/// <summary>

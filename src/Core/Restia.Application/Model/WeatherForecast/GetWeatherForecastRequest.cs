@@ -4,14 +4,14 @@ namespace Restia.Application.Model.WeatherForecast;
 
 public class GetWeatherForecastRequest : IRequest<IEnumerable<Restia.Domain.Model.WeatherForecast>>
 {
-	public GetWeatherForecastRequest(Guid id)
+	public GetWeatherForecastRequest(DefaultIdType id)
 	{
 		Id = id;
 	}
 	public GetWeatherForecastRequest()
 	{
 	}
-	public Guid Id { get; set; }
+	public DefaultIdType Id { get; set; }
 }
 
 public class GetWeatherForecastRequestHandler : IRequestHandler<GetWeatherForecastRequest, IEnumerable<Restia.Domain.Model.WeatherForecast>>
