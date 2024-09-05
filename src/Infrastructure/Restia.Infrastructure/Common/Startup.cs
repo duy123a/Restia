@@ -38,14 +38,14 @@ internal static class Startup
 			.Select(type =>
 				new
 				{
-					Services = type.GetInterfaces().Where(i => interfaceType.IsAssignableFrom(i)),
+					Service = type.GetInterfaces().FirstOrDefault(),
 					Implementation = type
 				})
-			.Where(result => result.Services.Count() == 1);
+			.Where(type => type.Service is not null && interfaceType.IsAssignableFrom(type.Service));
 
 		foreach (var type in interfaceTypes)
 		{
-			services.AddService(type.Services.First(), type.Implementation, lifetime);
+			services.AddService(type.Service!, type.Implementation, lifetime);
 		}
 
 		return services;
