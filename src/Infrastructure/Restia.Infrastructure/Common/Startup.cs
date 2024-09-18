@@ -15,6 +15,8 @@ internal static class Startup
 	/// <returns>A <see cref="IServiceCollection"/>.</returns>
 	internal static IServiceCollection AddServices(this IServiceCollection services)
 	{
+		// If you registered the same service and its implement both lifetime, you resolve the service with the last lifetime you registered
+		// In this case it will be scoped one
 		return services
 			.AddServices(typeof(ITransientService), ServiceLifetime.Transient)
 			.AddServices(typeof(IScopedService), ServiceLifetime.Scoped);
