@@ -1,0 +1,123 @@
+IF EXISTS (
+    SELECT * FROM sysobjects WHERE id = object_id(N'SplitString') 
+    AND xtype IN (N'FN', N'IF', N'TF')
+)
+    DROP FUNCTION dbo.SplitString
+GO
+
+CREATE FUNCTION dbo.SplitString (
+   @Input NVARCHAR(MAX),
+   @Delimiter NVARCHAR(1)
+)
+RETURNS @Output TABLE (Item NVARCHAR(MAX))
+AS
+BEGIN
+    DECLARE @Start INT, @End INT
+    SET @Start = 1
+
+    WHILE CHARINDEX(@Delimiter, @Input, @Start) > 0
+    BEGIN
+        SET @End = CHARINDEX(@Delimiter, @Input, @Start)
+        INSERT INTO @Output(Item) VALUES(SUBSTRING(@Input, @Start, @End - @Start))
+        SET @Start = @End + LEN(@Delimiter)
+    END
+
+    INSERT INTO @Output(Item) VALUES(SUBSTRING(@Input, @Start, LEN(@Input) - @Start + 1))
+    RETURN
+END
+GO
+
+WITH SplitValues AS (
+    SELECT
+        product_id,
+        original,
+        ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY (SELECT NULL)) AS BlockIndex,
+        Item + ']]' AS Block
+    FROM (
+        SELECT
+            SplitParts.Item, original, product_id
+        FROM w2_Product
+        CROSS APPLY (
+            SELECT Item, product_option_settings AS original
+            FROM dbo.SplitString(product_option_settings, ']]')
+            WHERE Item <> ''
+            AND Item NOT LIKE '%INDEX=%'
+        ) AS SplitParts
+    ) AS Processed
+)
+UPDATE w2_Product
+SET product_option_settings = ISNULL(UpdatedProductOptionSettings, '')
+FROM w2_Product
+CROSS APPLY (
+    SELECT STUFF((
+        SELECT 
+            LEFT(Block, LEN(Block) - 2) + '@@Index=' + CAST(BlockIndex AS NVARCHAR(10)) + ']]'
+        FROM SplitValues sv
+        WHERE sv.product_id = w2_Product.product_id
+        FOR XML PATH(''), TYPE
+    ).value('.', 'NVARCHAR(MAX)'), 1, 0, '') AS UpdatedProductOptionSettings
+) AS UpdatedValues
+WHERE ISNULL(UpdatedProductOptionSettings, '') <> ''
+
+
+-----------------------------------------------------------------------
+
+Database mẫu
+
+w2_Product: product_id, product_option_settings
+
+product_option_settings = [[S@@Segi04-Sub01@@100@@200@@Necessary=0]][[S@@Segi04-Sub02@@100@@200@@Necessary=0]]
+
+-----------------------------------------------------------------------
+
+WITH SplitValues AS (
+    SELECT
+        product_id,
+        original,
+        ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY (SELECT NULL)) AS BlockIndex,
+        Item + ']]' AS Block
+    FROM (
+        SELECT
+            SplitParts.Item, original, product_id
+        FROM w2_Product
+        CROSS APPLY (
+            SELECT Item, product_option_settings AS original
+            FROM dbo.SplitString(product_option_settings, ']]')
+            WHERE Item <> ''
+            AND Item NOT LIKE '%INDEX=%'
+        ) AS SplitParts
+    ) AS Processed
+)
+SELECT *
+FROM SplitValues
+
+-----------------------------------------------------------------------
+
+WITH SplitValues AS (
+    SELECT
+        product_id,
+        original,
+        ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY (SELECT NULL)) AS BlockIndex,
+        Item + ']]' AS Block
+    FROM (
+        SELECT
+            SplitParts.Item, original, product_id
+        FROM w2_Product
+        CROSS APPLY (
+            SELECT Item, product_option_settings AS original
+            FROM dbo.SplitString(product_option_settings, ']]')
+            WHERE Item <> ''
+            AND Item NOT LIKE '%INDEX=%'
+        ) AS SplitParts
+    ) AS Processed
+)
+SELECT product_id,
+       ISNULL(STUFF((
+            SELECT 
+                LEFT(Block, LEN(Block) - 2) + '@@Index=' + CAST(BlockIndex AS NVARCHAR(10)) + ']]'
+            FROM SplitValues sv
+            WHERE sv.product_id = w2_Product.product_id
+            FOR XML PATH(''), TYPE
+       ).value('.', 'NVARCHAR(MAX)'), 1, 0, ''), '') AS UpdatedProductOptionSettings
+FROM w2_Product
+GROUP BY product_id, product_option_settings;
