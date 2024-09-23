@@ -1,10 +1,11 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Restia.Infrastructure.HealthCheck;
+namespace Restia.Infrastructure.Multitenancy.Services;
+
 /// <summary>
-/// Custom health check
+/// Tenant Health Check
 /// </summary>
-public class CustomHealthCheck : IHealthCheck
+public class TenantHealthCheck : IHealthCheck
 {
 	/// <summary>
 	/// Check health async
@@ -17,7 +18,7 @@ public class CustomHealthCheck : IHealthCheck
 		CancellationToken cancellationToken = default)
 	{
 		// Perform custom checks here
-		// TODO: Should check connecting status to correct DB maybe?
+		// TODO: Should check connecting status to correct tenant DB maybe?
 		var healthCheckResultHealthy = true;
 
 		if (healthCheckResultHealthy)

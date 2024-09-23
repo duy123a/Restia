@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Infrastructure.Common;
 using Restia.Infrastructure.Cors;
-using Restia.Infrastructure.HealthCheck;
+using Restia.Infrastructure.Multitenancy.Services;
 using Restia.Infrastructure.Persistence;
 
 namespace Restia.Infrastructure;
@@ -28,7 +28,7 @@ public static class Startup
 			.AddCorsPolicy(config)
 			.AddApiVersioning()
 			.AddMediatR()
-			.AddCustomHealthChecks()
+			.AddHealthCheck()
 			.AddPersistence()
 			.AddServices();
 	}
@@ -76,11 +76,11 @@ public static class Startup
 	/// </summary>
 	/// <param name="services">The services</param>
 	/// <returns>A <see cref="IServiceCollection"/>.</returns>
-	private static IServiceCollection AddCustomHealthChecks(this IServiceCollection services)
+	private static IServiceCollection AddHealthCheck(this IServiceCollection services)
 	{
 		return services
 			.AddHealthChecks()
-			.AddCheck<CustomHealthCheck>("custom_health_check")
+			.AddCheck<TenantHealthCheck>("Tenant")
 			.Services;
 	}
 

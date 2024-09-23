@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Restia.Application\Restia.Application.csproj" />
+    <ProjectReference Include="..\..\Core\Restia.Shared\Restia.Shared.csproj" />
   </ItemGroup>
 
 </Project>
