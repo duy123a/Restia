@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Infrastructure.Common;
 using Restia.Infrastructure.Cors;
+using Restia.Infrastructure.Multitenancy;
 using Restia.Infrastructure.Multitenancy.Services;
 using Restia.Infrastructure.Persistence;
 
@@ -27,8 +28,9 @@ public static class Startup
 		return services
 			.AddCorsPolicy(config)
 			.AddApiVersioning()
-			.AddMediatR()
 			.AddHealthCheck()
+			.AddMediatR()
+			.AddMultitenancy()
 			.AddPersistence()
 			.AddServices();
 	}
@@ -93,7 +95,8 @@ public static class Startup
 	public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder builder, IConfiguration config)
 	{
 		return builder
-			.UseCorsPolicy();
+			.UseCorsPolicy()
+			.UseMultiTenancy();
 	}
 
 	/// <summary>
