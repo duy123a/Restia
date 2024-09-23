@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Restia.Application.Common.Interfaces;
 
 namespace Restia.Infrastructure.Common;
@@ -15,8 +16,8 @@ internal static class Startup
 	/// <returns>A <see cref="IServiceCollection"/>.</returns>
 	internal static IServiceCollection AddServices(this IServiceCollection services)
 	{
-		// If you registered the same service and its implement both lifetime, you resolve the service with the last lifetime you registered
-		// In this case it will be scoped one
+		// If you registered the same service and its implement multiple lifetime, you resolve the service with the last lifetime you registered (scoped)
+		// But both of these registration is active by design, which you can resolve by IEnumerable<Dependency> dependencies
 		return services
 			.AddServices(typeof(ITransientService), ServiceLifetime.Transient)
 			.AddServices(typeof(IScopedService), ServiceLifetime.Scoped);
@@ -47,7 +48,7 @@ internal static class Startup
 
 		foreach (var type in interfaceTypes)
 		{
-			services.AddService(type.Service!, type.Implementation, lifetime);
+			services.TryAddService(type.Service!, type.Implementation, lifetime);
 		}
 
 		return services;
@@ -75,5 +76,25 @@ internal static class Startup
 			ServiceLifetime.Singleton => services.AddSingleton(serviceType, implementationType),
 			_ => throw new ArgumentException("Invalid lifeTime", nameof(lifetime))
 		};
+	}
+
+	/// <summary>
+	/// Add service if not already registered
+	/// </summary>
+	/// <param name="services">The services collection</param>
+	/// <param name="serviceType">The service type</param>
+	/// <param name="implementationType">The implementation type</param>
+	/// <param name="lifetime">The lifetime</param>
+	/// <returns>A <see cref="IServiceCollection"/>.</returns>
+	internal static IServiceCollection TryAddService(
+		this IServiceCollection services,
+		Type serviceType,
+		Type implementationType,
+		ServiceLifetime lifetime)
+	{
+		var descriptor = new ServiceDescriptor(serviceType, implementationType, lifetime);
+
+		services.TryAdd(descriptor);
+		return services;
 	}
 }
