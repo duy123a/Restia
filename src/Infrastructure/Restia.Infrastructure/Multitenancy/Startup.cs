@@ -28,6 +28,7 @@ internal static class Startup
 				var databaseSettings = provider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 				options.UseDatabase(databaseSettings.DBProvider, databaseSettings.ConnectionString);
 			})
+			// This will register IMultiTenantContextAccessor<RestiaTenantInfo> to DI which you can use to take RestiaTenantInfo
 			.AddMultiTenant<RestiaTenantInfo>()
 				.WithClaimStrategy(RestiaClaims.Tenant)
 				.WithHeaderStrategy(MultitenancyConstants.TenantIdName)

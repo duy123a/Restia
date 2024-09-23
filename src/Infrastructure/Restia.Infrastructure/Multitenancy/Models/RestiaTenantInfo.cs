@@ -2,6 +2,7 @@ using Finbuckle.MultiTenant.Abstractions;
 using Restia.Shared.Multitenancy;
 
 namespace Restia.Infrastructure.Multitenancy.Models;
+
 public class RestiaTenantInfo : ITenantInfo
 {
 	/// <summary>

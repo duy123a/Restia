@@ -3,6 +3,7 @@ using Finbuckle.MultiTenant.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Restia.Infrastructure.Identity.Models;
+using Restia.Infrastructure.Multitenancy.Models;
 
 namespace Restia.Infrastructure.Persistence.Context;
 public abstract class BaseDbContext :
@@ -17,10 +18,9 @@ public abstract class BaseDbContext :
 		IdentityUserToken<string>>
 {
 	public BaseDbContext(
-		ITenantInfo currentTenant,
+		IMultiTenantContextAccessor<RestiaTenantInfo> currentTenant,
 		DbContextOptions options)
 			: base(currentTenant, options)
 	{
-
 	}
 }
