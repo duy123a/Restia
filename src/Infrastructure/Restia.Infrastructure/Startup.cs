@@ -49,10 +49,9 @@ public static class Startup
 			options.ReportApiVersions = true;
 		});
 
-		// This is only useful for api doc/swagger
+		// This is only useful for open api/nswag
 		apiVersioningBuilder.AddApiExplorer(options =>
 		{
-			options.GroupNameFormat = "'v'VVV";
 			options.SubstituteApiVersionInUrl = true;
 		});
 
