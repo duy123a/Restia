@@ -26,6 +26,7 @@ public class TenantDbContext : EFCoreStoreDbContext<RestiaTenantInfo>
 	{
 		base.OnModelCreating(modelBuilder);
 
+		// Customize table name from RestiaTenantInfo to Tenants
 		modelBuilder.Entity<RestiaTenantInfo>().ToTable("Tenants", SchemaNames.MultiTenancy);
 	}
 }
