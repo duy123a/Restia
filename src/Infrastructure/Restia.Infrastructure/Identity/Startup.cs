@@ -4,6 +4,7 @@ using Restia.Infrastructure.Identity.Models;
 using Restia.Infrastructure.Persistence.Context;
 
 namespace Restia.Infrastructure.Identity;
+
 internal static class Startup
 {
 	/// <summary>
