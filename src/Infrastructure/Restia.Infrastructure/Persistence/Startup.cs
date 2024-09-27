@@ -57,7 +57,8 @@ internal static class Startup
 				builder.UseSqlServer(connectionString, e =>
 				{
 					e.MigrationsAssembly("Restia.Migrators.MsSQL");
-					e.UseCompatibilityLevel(150);
+					// Use 150 for mssql 2014 with cause generated Entity query error
+					e.UseCompatibilityLevel(120);
 				}),
 			_ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
 		};

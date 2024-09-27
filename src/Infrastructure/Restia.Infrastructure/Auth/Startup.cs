@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Application.Common.Interfaces;
 using Restia.Infrastructure.Auth.Interfaces;
 using Restia.Infrastructure.Auth.Middleware;
 using Restia.Infrastructure.Auth.Models;
+using Restia.Infrastructure.Auth.Settings;
 using Restia.Infrastructure.Identity;
 using Restia.Infrastructure.Permissions;
 
@@ -17,9 +17,8 @@ public static class Startup
 	/// Add auth
 	/// </summary>
 	/// <param name="services">The services</param>
-	/// <param name="config">The configuration</param>
 	/// <returns>A <see cref="IServiceCollection"/>.</returns>
-	internal static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration config)
+	internal static IServiceCollection AddAuth(this IServiceCollection services)
 	{
 		services
 			.AddCurrentUser()
@@ -27,6 +26,9 @@ public static class Startup
 
 			// Must add identity before adding auth!
 			.AddIdentity();
+
+		//services.Configure<SecuritySettings>(config.GetSection(nameof(SecuritySettings)));
+		services.AddOptions<SecuritySettings>().BindConfiguration(nameof(SecuritySettings));
 
 		return services;
 	}
