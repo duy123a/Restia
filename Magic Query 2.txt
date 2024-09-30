@@ -7,7 +7,7 @@ GO
 
 CREATE FUNCTION dbo.SplitString (
    @Input NVARCHAR(MAX),
-   @Delimiter NVARCHAR(1)
+   @Delimiter NVARCHAR(2)
 )
 RETURNS @Output TABLE (Item NVARCHAR(MAX))
 AS
@@ -15,14 +15,24 @@ BEGIN
     DECLARE @Start INT, @End INT
     SET @Start = 1
 
+    -- Loop through the string to find all delimiters and split the string
     WHILE CHARINDEX(@Delimiter, @Input, @Start) > 0
     BEGIN
         SET @End = CHARINDEX(@Delimiter, @Input, @Start)
-        INSERT INTO @Output(Item) VALUES(SUBSTRING(@Input, @Start, @End - @Start))
+        -- Insert the substring between @Start and @End
+        INSERT INTO @Output(Item) 
+        VALUES(SUBSTRING(@Input, @Start, @End - @Start))
+        -- Move @Start to the character after the found delimiter
         SET @Start = @End + LEN(@Delimiter)
     END
 
-    INSERT INTO @Output(Item) VALUES(SUBSTRING(@Input, @Start, LEN(@Input) - @Start + 1))
+    -- Insert the last part of the string (after the final delimiter)
+    IF @Start <= LEN(@Input)
+    BEGIN
+        INSERT INTO @Output(Item) 
+        VALUES(SUBSTRING(@Input, @Start, LEN(@Input) - @Start + 1))
+    END
+    
     RETURN
 END
 GO
