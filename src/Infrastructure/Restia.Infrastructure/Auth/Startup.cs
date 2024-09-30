@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Application.Common.Interfaces;
 using Restia.Infrastructure.Auth.Interfaces;
+using Restia.Infrastructure.Auth.Jwt;
 using Restia.Infrastructure.Auth.Middleware;
 using Restia.Infrastructure.Auth.Models;
 using Restia.Infrastructure.Auth.Settings;
@@ -30,7 +31,7 @@ public static class Startup
 		//services.Configure<SecuritySettings>(config.GetSection(nameof(SecuritySettings)));
 		services.AddOptions<SecuritySettings>().BindConfiguration(nameof(SecuritySettings));
 
-		return services;
+		return services.AddJwtAuth();
 	}
 
 	/// <summary>

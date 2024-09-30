@@ -33,6 +33,13 @@ internal static class Startup
 		// IConfigureOptions usually used to create the custom options, which is different than IOptions which used to read directly from config file without customization
 		services.AddSingleton<IConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
 
-		return services;
+		return services
+			.AddAuthentication(authentication =>
+			{
+				authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+			.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, null!)
+			.Services;
 	}
 }
