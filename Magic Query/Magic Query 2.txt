@@ -20,7 +20,7 @@ BEGIN
     BEGIN
         SET @End = CHARINDEX(@Delimiter, @Input, @Start)
         -- Insert the substring between @Start and @End
-        INSERT INTO @Output(Item) 
+        INSERT INTO @Output(Item)
         VALUES(SUBSTRING(@Input, @Start, @End - @Start))
         -- Move @Start to the character after the found delimiter
         SET @Start = @End + LEN(@Delimiter)
@@ -29,10 +29,10 @@ BEGIN
     -- Insert the last part of the string (after the final delimiter)
     IF @Start <= LEN(@Input)
     BEGIN
-        INSERT INTO @Output(Item) 
+        INSERT INTO @Output(Item)
         VALUES(SUBSTRING(@Input, @Start, LEN(@Input) - @Start + 1))
     END
-    
+
     RETURN
 END
 GO
@@ -60,7 +60,7 @@ SET product_option_settings = ISNULL(UpdatedProductOptionSettings, '')
 FROM w2_Product
 CROSS APPLY (
     SELECT STUFF((
-        SELECT 
+        SELECT
             LEFT(Block, LEN(Block) - 2) + '@@Index=' + CAST(BlockIndex AS NVARCHAR(10)) + ']]'
         FROM SplitValues sv
         WHERE sv.product_id = w2_Product.product_id
@@ -68,8 +68,46 @@ CROSS APPLY (
     ).value('.', 'NVARCHAR(MAX)'), 1, 0, '') AS UpdatedProductOptionSettings
 ) AS UpdatedValues
 WHERE ISNULL(UpdatedProductOptionSettings, '') <> ''
+-----------------------------------------------------------------------
 
+WITH SplitValues AS (
+SELECT SplitParts.Item + ']]' as block, product_option_settings as original, product_id, row_number() over(partition by product_id order by (SELECT NULL)) as blockindex
+FROM w2_Product
+CROSS APPLY dbo.SplitString(product_option_settings, ']]') as SplitParts
+WHERE SplitParts.Item NOT LIKE '%Index=%'
+)
+UPDATE w2_Product
+SET product_option_settings =
+    (
+        SELECT
+            LEFT(Block, LEN(Block) - 2) + '@@Index=' + CAST(BlockIndex AS NVARCHAR(10)) + ']]'
+        FROM SplitValues sv
+        WHERE sv.product_id = w2_Product.product_id
+        FOR XML PATH(''), TYPE
+    ).value('.', 'NVARCHAR(MAX)')
+WHERE product_id IN (SELECT product_id FROM SplitValues)
 
+-----------------------------------------------------------------------
+
+WITH SplitValues AS (
+SELECT SplitParts.Item + ']]' as block, product_option_settings as original, product_id, row_number() over(partition by product_id order by (SELECT NULL)) as blockindex
+FROM w2_Product
+CROSS APPLY dbo.SplitString(product_option_settings, ']]') as SplitParts
+WHERE SplitParts.Item NOT LIKE '%Index=%'
+)
+UPDATE w2_Product
+SET product_option_settings = ISNULL(UpdatedProductOptionSettings, '')
+FROM w2_Product
+CROSS APPLY (
+    SELECT ((
+        SELECT
+            LEFT(Block, LEN(Block) - 2) + '@@Index=' + CAST(BlockIndex AS NVARCHAR(10)) + ']]'
+        FROM SplitValues sv
+        WHERE sv.product_id = w2_Product.product_id
+        FOR XML PATH(''), TYPE
+    ).value('.', 'NVARCHAR(MAX)')) AS UpdatedProductOptionSettings
+) AS UpdatedValues
+WHERE ISNULL(UpdatedProductOptionSettings, '') <> ''
 -----------------------------------------------------------------------
 
 Database mẫu

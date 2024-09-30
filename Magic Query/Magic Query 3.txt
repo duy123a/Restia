@@ -1,0 +1,29 @@
+Yes, you can use multiple WITH clauses in a SQL query. When you use multiple common table expressions (CTEs), they need to be defined in a single WITH clause, but you can define multiple CTEs within that clause by separating them with commas.
+
+Here's an example of how to structure multiple CTEs:
+
+sql
+
+WITH CTE1 AS (
+    -- First CTE query
+    SELECT column1, column2
+    FROM Table1
+    WHERE some_condition
+),
+CTE2 AS (
+    -- Second CTE query
+    SELECT column3, column4
+    FROM Table2
+    WHERE some_other_condition
+),
+CTE3 AS (
+    -- Third CTE query
+    SELECT column5, column6
+    FROM Table3
+    WHERE another_condition
+)
+-- Main query using CTEs
+SELECT *
+FROM CTE1
+JOIN CTE2 ON CTE1.column1 = CTE2.column3
+JOIN CTE3 ON CTE2.column4 = CTE3.column5;
