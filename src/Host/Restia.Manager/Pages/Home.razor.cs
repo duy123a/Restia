@@ -16,6 +16,10 @@ public partial class Home
 
 	protected override async Task OnInitializedAsync()
 	{
-		_result = await _httpClient.GetStringAsync("api/v1/weatherforecast");
+		// Check your current localization
+		//System.Globalization.CultureInfo.CurrentCulture;
+
+		//_result = await _httpClient.GetStringAsync("api/v1/weatherforecast");
+		_result = await Task.FromResult<string>("test");
 	}
 }

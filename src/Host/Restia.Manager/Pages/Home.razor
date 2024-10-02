@@ -1,9 +1,11 @@
 @page "/"
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Home> L
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-<div>Welcome to your new app.</div>
+<div>@L["WelcomeMessage"]</div>
 
 <div>This is your api result: @_result</div>
