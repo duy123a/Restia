@@ -17,6 +17,8 @@ public static class Startup
 	{
 		var assembly = Assembly.GetExecutingAssembly();
 		return services
+			// Need to hook FluentValidation into the MediatR pipeline automatically otherwise it won't work
+			// The validation need to implement AbstractValidator<T>
 			.AddValidatorsFromAssembly(assembly)
 			.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 	}
