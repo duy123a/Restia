@@ -18,9 +18,9 @@ public abstract class BaseDbContext :
 		IdentityUserToken<string>>
 {
 	public BaseDbContext(
-		IMultiTenantContextAccessor<RestiaTenantInfo> currentTenant,
+		IMultiTenantContextAccessor<RestiaTenantInfo> currentMultiTenantContextAccessor,
 		DbContextOptions options)
-			: base(currentTenant, options)
+			: base(currentMultiTenantContextAccessor, options)
 	{
 	}
 }
