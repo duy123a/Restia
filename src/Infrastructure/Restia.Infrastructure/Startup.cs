@@ -96,6 +96,7 @@ public static class Startup
 	public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder builder, IConfiguration config)
 	{
 		return builder
+			.UseRequestLocalization()
 			.UseCorsPolicy()
 			.UseMultiTenancy();
 	}

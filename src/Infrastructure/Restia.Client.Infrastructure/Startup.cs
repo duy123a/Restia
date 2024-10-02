@@ -21,6 +21,7 @@ public static class Startup
 		var apiBaseUrl = config.GetSection(ConfigNames.ApiBaseUrl)?.Value ?? string.Empty;
 
 		return services
+			.AddLocalization(options => options.ResourcesPath = "Resources")
 			// This will regist IHttpClientFactory to DI
 			.AddHttpClient(ClientName, client =>
 				{
