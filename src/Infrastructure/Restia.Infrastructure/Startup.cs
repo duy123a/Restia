@@ -96,6 +96,7 @@ public static class Startup
 	public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder builder, IConfiguration config)
 	{
 		return builder
+			// Detect localization from request and set application localization
 			.UseRequestLocalization()
 			.UseCorsPolicy()
 			.UseMultiTenancy();
