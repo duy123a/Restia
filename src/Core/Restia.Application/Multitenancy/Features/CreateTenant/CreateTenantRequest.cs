@@ -1,4 +1,6 @@
 using MediatR;
+using Microsoft.Extensions.Localization;
+using Restia.Application.Common.Persistence;
 using Restia.Application.Common.Validation;
 using Restia.Application.Multitenancy.ServiceInterfaces;
 
@@ -18,7 +20,13 @@ public class CreateTenantRequest : IRequest<string>
 
 public class CreateTenantRequestValidator : CustomValidator<CreateTenantRequest>
 {
+	public CreateTenantRequestValidator(
+		ITenantService tenantService,
+		IStringLocalizer<CreateTenantRequestValidator> T,
+		IConnectionStringValidator connectionStringValidator)
+	{
 
+	}
 }
 
 public class CreateTenantRequestHandler : IRequestHandler<CreateTenantRequest, string>

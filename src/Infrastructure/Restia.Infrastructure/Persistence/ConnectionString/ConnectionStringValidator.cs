@@ -7,6 +7,7 @@ using Restia.Infrastructure.Common.Constants;
 using Restia.Infrastructure.Persistence.Settings;
 
 namespace Restia.Infrastructure.Persistence.ConnectionString;
+
 internal class ConnectionStringValidator : IConnectionStringValidator
 {
 	/// <summary>The db settings</summary>
