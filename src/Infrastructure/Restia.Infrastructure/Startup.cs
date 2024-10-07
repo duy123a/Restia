@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Restia.Infrastructure.Auth;
 using Restia.Infrastructure.Common;
 using Restia.Infrastructure.Cors;
+using Restia.Infrastructure.Localization;
 using Restia.Infrastructure.Multitenancy;
 using Restia.Infrastructure.Multitenancy.Services;
 using Restia.Infrastructure.Persistence;
@@ -31,6 +32,7 @@ public static class Startup
 			.AddAuth()
 			.AddCorsPolicy(config)
 			.AddHealthCheck()
+			.AddPOLocalization(config)
 			.AddMediatR()
 			.AddMultitenancy()
 			.AddPersistence()
@@ -96,7 +98,8 @@ public static class Startup
 	public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder builder, IConfiguration config)
 	{
 		return builder
-			// Detect localization from request and set application localization
+			// Detect culture from request and set application culture
+			// If the request doesn't specify the culture, the app will fall back to the default culture that you specified in AddPOLocalization
 			.UseRequestLocalization()
 			.UseCorsPolicy()
 			.UseMultiTenancy();

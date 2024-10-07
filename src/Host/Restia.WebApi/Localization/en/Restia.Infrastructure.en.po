@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+# English has 2 forms (singular and plural)
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. return _t["Tenant {0} is now Activated.", id];
+#: Restia.Infrastructure\Multitenancy\Services\TenantService.cs:142
+msgctxt "Restia.Infrastructure.Multitenancy.Services.TenantService"
+msgid "Tenant {0} is now Activated."
+msgstr "Tenant {0} is now Activated."
