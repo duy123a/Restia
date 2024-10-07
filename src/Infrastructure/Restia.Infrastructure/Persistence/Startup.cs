@@ -44,6 +44,7 @@ internal static class Startup
 			.AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
 			.AddTransient<CustomSeederRunner>()
 
+			.AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
 			.AddTransient<IConnectionStringValidator, ConnectionStringValidator>();
 	}
 
