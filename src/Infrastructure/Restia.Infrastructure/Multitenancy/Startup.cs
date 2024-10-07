@@ -29,10 +29,12 @@ internal static class Startup
 				options.UseDatabase(databaseSettings.DBProvider, databaseSettings.ConnectionString);
 			})
 			// This will register IMultiTenantContextAccessor<RestiaTenantInfo> to DI which you can use to take RestiaTenantInfo
+			// The RestiaTenantInfo you get will be dynamic resolved based on various strategy (only id)
 			.AddMultiTenant<RestiaTenantInfo>()
 				.WithClaimStrategy(RestiaClaims.Tenant)
 				.WithHeaderStrategy(MultitenancyConstants.TenantIdName)
 				.WithQueryStringStrategy(MultitenancyConstants.TenantIdName)
+				// The rest of tenant info data can be retrieve from the database
 				.WithEFCoreStore<TenantDbContext, RestiaTenantInfo>()
 				.Services;
 	}

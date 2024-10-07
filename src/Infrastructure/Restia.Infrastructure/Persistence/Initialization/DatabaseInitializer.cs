@@ -35,6 +35,11 @@ internal class DatabaseInitializer : IDatabaseInitializer
 		_logger = logger;
 	}
 
+	/// <summary>
+	/// Initialize databases async
+	/// </summary>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>A task</returns>
 	public async Task InitializeDatabasesAsync(CancellationToken cancellationToken)
 	{
 		await InitializeTenantDbAsync(cancellationToken);
@@ -45,12 +50,18 @@ internal class DatabaseInitializer : IDatabaseInitializer
 		}
 	}
 
+	/// <summary>
+	/// Initialize application db for tenant async
+	/// </summary>
+	/// <param name="tenant">The tenant</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>A task</returns>
 	public async Task InitializeApplicationDbForTenantAsync(RestiaTenantInfo tenant, CancellationToken cancellationToken)
 	{
 		// First create a new scope
 		using var scope = _serviceProvider.CreateScope();
 
-		// Then set current tenant so the right connectionstring is used
+		// Then set current tenant temporarily so the right connectionstring is used (only in this scope)
 		_serviceProvider.GetRequiredService<IMultiTenantContextSetter>()
 			.MultiTenantContext = new MultiTenantContext<RestiaTenantInfo>()
 			{

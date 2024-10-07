@@ -4,6 +4,7 @@ using Restia.Infrastructure.Multitenancy.Models;
 using Restia.Infrastructure.Persistence.Context;
 
 namespace Restia.Infrastructure.Persistence.Initialization;
+
 internal class ApplicationDbInitializer
 {
 	/// <summary>The db context</summary>
@@ -17,7 +18,7 @@ internal class ApplicationDbInitializer
 	/// Constructor
 	/// </summary>
 	/// <param name="dbContext">The db context</param>
-	/// <param name="currentTenant">The current tenant</param>
+	/// <param name="currentMultiTenantContextAccessor">The current multi tenant context accessor</param>
 	/// <param name="dbSeeder">The db seeder</param>
 	/// <param name="logger">The logger</param>
 	public ApplicationDbInitializer(

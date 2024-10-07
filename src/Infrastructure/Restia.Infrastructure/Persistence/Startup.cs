@@ -2,9 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Restia.Application.Common.Persistence;
+using Restia.Infrastructure.Common;
 using Restia.Infrastructure.Common.Constants;
 using Restia.Infrastructure.Persistence.ConnectionString;
 using Restia.Infrastructure.Persistence.Context;
+using Restia.Infrastructure.Persistence.Initialization;
+using Restia.Infrastructure.Persistence.Initialization.Interfaces;
 using Restia.Infrastructure.Persistence.Settings;
 using Serilog;
 
@@ -36,6 +39,11 @@ internal static class Startup
 				var databaseSettings = serviceProvider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 				builder.UseDatabase(databaseSettings.DBProvider, databaseSettings.ConnectionString);
 			})
+			.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
+			.AddTransient<ApplicationDbInitializer>()
+			.AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
+			.AddTransient<CustomSeederRunner>()
+
 			.AddTransient<IConnectionStringValidator, ConnectionStringValidator>();
 	}
 
