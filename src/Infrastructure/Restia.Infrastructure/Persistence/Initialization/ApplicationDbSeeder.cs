@@ -65,7 +65,7 @@ internal class ApplicationDbSeeder
 	/// <returns>A task</returns>
 	private async Task SeedRolesAsync(ApplicationDbContext dbContext)
 	{
-		foreach (string roleName in RestiaRoles.DefaultRoles)
+		foreach (var roleName in RestiaRoles.DefaultRoles)
 		{
 			if (await _roleManager.Roles.SingleOrDefaultAsync(r => r.Name == roleName)
 				is not ApplicationRole role)

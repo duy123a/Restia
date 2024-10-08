@@ -11,6 +11,7 @@ using Restia.Infrastructure.Localization;
 using Restia.Infrastructure.Multitenancy;
 using Restia.Infrastructure.Multitenancy.Services;
 using Restia.Infrastructure.Persistence;
+using Restia.Infrastructure.Persistence.Initialization.Interfaces;
 
 namespace Restia.Infrastructure;
 
@@ -87,6 +88,23 @@ public static class Startup
 			.AddHealthChecks()
 			.AddCheck<TenantHealthCheck>("Tenant")
 			.Services;
+	}
+
+	/// <summary>
+	/// Initialize databases async
+	/// </summary>
+	/// <param name="services">The services</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>A task</returns>
+	public static async Task InitializeDatabasesAsync(
+		this IServiceProvider services,
+		CancellationToken cancellationToken = default)
+	{
+		// Create a new scope to retrieve scoped services
+		using var scope = services.CreateScope();
+
+		await scope.ServiceProvider.GetRequiredService<IDatabaseInitializer>()
+			.InitializeDatabasesAsync(cancellationToken);
 	}
 
 	/// <summary>

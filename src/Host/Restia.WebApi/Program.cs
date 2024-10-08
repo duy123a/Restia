@@ -9,7 +9,7 @@ namespace Restia.WebApi;
 
 public class Program
 {
-	public static void Main(string[] args)
+	public static async void Main(string[] args)
 	{
 		StaticLogger.EnsureInitialized();
 		Log.Information("Server booting up...");
@@ -25,6 +25,8 @@ public class Program
 			builder.Services.AddApplication();
 
 			var app = builder.Build();
+
+			await app.Services.InitializeDatabasesAsync();
 
 			app.UseInfrastructure(builder.Configuration);
 			app.MapEndpoints();

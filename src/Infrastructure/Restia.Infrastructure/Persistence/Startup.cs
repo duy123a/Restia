@@ -39,8 +39,10 @@ internal static class Startup
 				var databaseSettings = serviceProvider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 				builder.UseDatabase(databaseSettings.DBProvider, databaseSettings.ConnectionString);
 			})
+
 			.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
 			.AddTransient<ApplicationDbInitializer>()
+			.AddTransient<ApplicationDbSeeder>()
 			.AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
 			.AddTransient<CustomSeederRunner>()
 
