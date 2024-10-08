@@ -9,7 +9,7 @@ namespace Restia.WebApi;
 
 public class Program
 {
-	public static async void Main(string[] args)
+	public static async Task Main(string[] args)
 	{
 		StaticLogger.EnsureInitialized();
 		Log.Information("Server booting up...");
