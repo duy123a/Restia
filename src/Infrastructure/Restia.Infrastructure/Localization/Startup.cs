@@ -39,6 +39,19 @@ internal static class Startup
 				options.DefaultRequestCulture = new RequestCulture(localizationSettings.DefaultRequestCulture ?? "en-US");
 				options.FallBackToParentCultures = localizationSettings.FallbackToParent ?? true;
 				options.FallBackToParentUICultures = localizationSettings.FallbackToParent ?? true;
+
+
+				/*
+				Default RequestCultureProviders
+
+				The default set of culture providers that ASP.NET Core automatically adds (in this order) are:
+
+				* QueryStringRequestCultureProvider: Looks for the culture in the query string (e.g., ?culture=en-US&ui-culture=fr-FR).
+
+				* CookieRequestCultureProvider: Looks for the culture in a cookie (e.g., .AspNetCore.Culture).
+
+				* AcceptLanguageHeaderRequestCultureProvider: Looks for the culture in the Accept-Language HTTP header sent by the browser.
+				 */
 			});
 
 			services.AddSingleton<ILocalizationFileLocationProvider, RestiaPoFileLocationProvider>();

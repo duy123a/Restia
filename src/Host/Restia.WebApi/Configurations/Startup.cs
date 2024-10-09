@@ -28,6 +28,8 @@ internal static class Startup
 			.AddJsonFile($"{configurationsDirectory}/security.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
 			.AddJsonFile($"{configurationsDirectory}/localization.json", optional: false, reloadOnChange: true)
 			.AddJsonFile($"{configurationsDirectory}/localization.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+			.AddJsonFile($"{configurationsDirectory}/cache.json", optional: false, reloadOnChange: true)
+			.AddJsonFile($"{configurationsDirectory}/cache.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
 			.AddEnvironmentVariables();
 
 		return builder;

@@ -117,7 +117,7 @@ public static class Startup
 	{
 		return builder
 			// Detect culture from request and set application culture
-			// If the request doesn't specify the culture, the app will fall back to the default culture that you specified in AddPOLocalization
+			// If the request doesn't specify the culture, the app will fall back to the default culture that you specified in RequestLocalizationOptions
 			.UseRequestLocalization()
 			.UseCorsPolicy()
 			.UseMultiTenancy();
