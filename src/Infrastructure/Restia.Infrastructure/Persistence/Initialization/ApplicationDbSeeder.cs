@@ -120,7 +120,8 @@ internal class ApplicationDbSeeder
 					RoleId = role.Id,
 					ClaimType = RestiaClaims.Permission,
 					ClaimValue = permission.Name,
-					CreatedBy = "ApplicationDbSeeder"
+					CreatedBy = "ApplicationDbSeeder",
+					CreatedOn = DateTime.UtcNow,
 				});
 				await dbContext.SaveChangesAsync();
 			}
