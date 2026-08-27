@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Restia.Common/Restia.Common.csproj" />
+  <Project Path="Restia.Web/Restia.Web.csproj" />
+</Solution>
