@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Restia.Common.Data.Context;
 using Restia.Common.Entities;
 using Restia.Common.Identity.Configurations;
+using Restia.Common.Identity.Services;
 
 namespace Restia.Common.Identity.Extensions
 {
@@ -11,6 +12,9 @@ namespace Restia.Common.Identity.Extensions
     {
         public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
+            services.Configure<SeedAdminSettings>(configuration.GetSection("SeedUserSettings"));
+
             services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = false;

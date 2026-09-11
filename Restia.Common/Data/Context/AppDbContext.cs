@@ -16,28 +16,40 @@ namespace Restia.Common.Data.Context
         {
             base.OnModelCreating(builder);
 
-            // Wont see in the list by GET if it is SOFT DELETED
-            ApplySoftDeleteFilters(builder);
+            ApplyEntityConfigurations(builder);
+
         }
 
-        private static void ApplySoftDeleteFilters(ModelBuilder builder)
+        private static void ApplyEntityConfigurations(ModelBuilder builder)
         {
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
-                if (!typeof(ISoftDeletable).IsAssignableFrom(entityType.ClrType))
+                var entityBuilder = builder.Entity(entityType.ClrType);
+
+                if (typeof(ISoftDeletable).IsAssignableFrom(entityType.ClrType))
                 {
-                    continue;
+                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var property = Expression.Property(
+                        parameter,
+                        nameof(ISoftDeletable.IsDeleted));
+
+                    var body = Expression.Equal(
+                        property,
+                        Expression.Constant(false));
+
+                    var lambda = Expression.Lambda(body, parameter);
+
+                    entityBuilder.HasQueryFilter(lambda);
                 }
 
-                var parameter = Expression.Parameter(entityType.ClrType, "e");
-
-                var property = Expression.Property(parameter, nameof(ISoftDeletable.IsDeleted));
-
-                var body = Expression.Equal(property, Expression.Constant(false));
-
-                var lambda = Expression.Lambda(body, parameter);
-
-                builder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    entityBuilder
+                        .Property(nameof(BaseEntity.RV))
+                        .HasColumnName("xmin")
+                        .HasColumnType("xid")
+                        .IsRowVersion();
+                }
             }
         }
     }

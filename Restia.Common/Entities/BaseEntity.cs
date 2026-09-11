@@ -4,6 +4,9 @@ namespace Restia.Common.Entities
 {
     public abstract class BaseEntity : IAuditable, ISoftDeletable
     {
+        public Guid Id { get; set; }
+        public uint RV { get; set; }
+
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         public string? CreatedBy { get; set; }
 
