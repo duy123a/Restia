@@ -1,0 +1,46 @@
+﻿:root {
+    /* ── Base tokens (design system) ───────────────────────── */
+    /* Surfaces */
+    --surface-0: #ffffff;
+    --surface-1: #F6F7F9; /* page background */
+    --border-1: #E5E7EB;
+    /* Text */
+    --text-1: #3C424B; /* primary */
+    --text-2: #646B75; /* secondary */
+    --text-3: #9CA3AD; /* subtle */
+    /* Brand / actions */
+    --brand-500: #098F89;
+    --brand-600: #077a75;
+    /* Status */
+    --danger-500: #EA5650;
+    --danger-600: #d14a45;
+    --success-500: #198754;
+    --warning-500: #ffc107;
+    --info-500: #0dcaf0;
+    /* Layout */
+    --sidebar-width: 250px;
+    --sidebar-bg: #212529;
+    --sidebar-text: #ffffff;
+    --sidebar-hover: #2c3034;
+    --navbar-height: 56px;
+    /* Shape / motion / elevation */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --drop-shadow: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    --transition-base: 0.2s ease;
+    /* ── Semantic tokens (preferred usage) ─────────────────── */
+    --bg-page: var(--surface-1);
+    --bg-card: var(--surface-0);
+    --text-primary: var(--text-1);
+    --text-secondary: var(--text-2);
+    --text-tertiary: var(--text-2);
+    --text-muted: var(--text-3);
+    --btn: var(--brand-500);
+    --btn-hover: var(--brand-600);
+    --text-danger: var(--danger-500);
+    --text-danger-hover: var(--danger-600);
+    --border-color: var(--border-1);
+}
