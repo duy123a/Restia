@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessDenied_Message" xml:space="preserve">
+    <value>You do not have permission to access this page.</value>
+  </data>
+  <data name="AccessDenied_Title" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="AccessDenied_UrlLabel" xml:space="preserve">
+    <value>Attempted URL:</value>
+  </data>
   <data name="AppErrorDescriber_DuplicateEmail" xml:space="preserve">
     <value>The email is already taken.</value>
   </data>
@@ -149,5 +158,32 @@
   </data>
   <data name="AppErrorDescriber_PasswordTooShort" xml:space="preserve">
     <value>Password must be at least {0} characters long.</value>
+  </data>
+  <data name="Button_GoBack" xml:space="preserve">
+    <value>Go back</value>
+  </data>
+  <data name="Button_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Login_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Login_Failed" xml:space="preserve">
+    <value>The email address or password you entered is incorrect.</value>
+  </data>
+  <data name="Login_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Login_RememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="Login_Submit" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Login_Title" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Please enter {0}.</value>
   </data>
 </root>

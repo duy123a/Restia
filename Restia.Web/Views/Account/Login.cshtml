@@ -1,0 +1,55 @@
+﻿@using Restia.Common.Localization.Resources;
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResources> Localizer
+
+@model LoginViewModel
+@{
+    ViewData["Title"] = Localizer["Login_Title"];
+    ViewData["ShowSidebar"] = false;
+}
+
+<div class="auth-page">
+    <div class="app-card auth-card">
+        <div class="app-card-body">
+            <div class="app-card-header">
+                <div class="app-card-icon">
+                    <i class="bi bi-person-circle" aria-hidden="true"></i>
+                </div>
+                <h1 class="app-card-title">@Localizer["Login_Title"]</h1>
+            </div>
+
+            <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger app-alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label app-form-label">@Localizer["Login_Email"]</label>
+                    <input asp-for="Email"
+                           class="form-control app-form-control"
+                           placeholder="@Localizer["Login_Email"]"
+                           autocomplete="username" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label app-form-label">@Localizer["Login_Password"]</label>
+                    <input asp-for="Password"
+                           class="form-control app-form-control"
+                           placeholder="@Localizer["Login_Password"]"
+                           autocomplete="current-password" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4 form-check">
+                    <input asp-for="RememberMe" class="form-check-input app-form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label"></label>
+                </div>
+
+                <button type="submit" class="btn app-btn app-btn-primary w-100 py-2">
+                    <i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>
+                    @Localizer["Login_Submit"]
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

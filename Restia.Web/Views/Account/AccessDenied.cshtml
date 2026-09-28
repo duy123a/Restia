@@ -1,0 +1,49 @@
+﻿@using Restia.Common.Localization.Resources;
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["AccessDenied_Title"];
+    var returnUrl = ViewData["ReturnUrl"] as string;
+}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center access-denied-page">
+        <div class="col-md-8 col-lg-6">
+            <div class="app-card access-denied-card">
+                <div class="app-card-body text-center">
+                    <div class="access-denied-icon-wrap">
+                        <i class="bi bi-shield-lock-fill access-denied-icon" aria-hidden="true"></i>
+                    </div>
+
+                    <h1 class="app-card-title mb-3">@Localizer["AccessDenied_Title"]</h1>
+
+                    <p class="app-card-subtitle mb-4">
+                        @Localizer["AccessDenied_Message"]
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        <div class="alert alert-light border app-alert mb-4 text-start p-3">
+                            <span class="fw-semibold text-dark d-block mb-1">@Localizer["AccessDenied_UrlLabel"]</span>
+                            <code class="text-break text-danger">@returnUrl</code>
+                        </div>
+                    }
+
+                    <hr class="my-4 text-muted opacity-25">
+
+                    <div class="d-flex justify-content-center gap-3 access-denied-actions">
+                        <a href="javascript:history.back()" class="btn app-btn app-btn-secondary app-btn-lg">
+                            <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
+                            @Localizer["Button_GoBack"]
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn app-btn app-btn-primary app-btn-lg">
+                            <i class="bi bi-house-door me-2" aria-hidden="true"></i>
+                            @Localizer["Button_Home"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

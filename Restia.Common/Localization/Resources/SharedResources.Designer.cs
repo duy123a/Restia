@@ -61,6 +61,33 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You do not have permission to access this page..
+        /// </summary>
+        public static string AccessDenied_Message {
+            get {
+                return ResourceManager.GetString("AccessDenied_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access Denied.
+        /// </summary>
+        public static string AccessDenied_Title {
+            get {
+                return ResourceManager.GetString("AccessDenied_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempted URL:.
+        /// </summary>
+        public static string AccessDenied_UrlLabel {
+            get {
+                return ResourceManager.GetString("AccessDenied_UrlLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The email is already taken..
         /// </summary>
         public static string AppErrorDescriber_DuplicateEmail {
@@ -156,6 +183,87 @@ namespace Restia.Common.Localization.Resources {
         public static string AppErrorDescriber_PasswordTooShort {
             get {
                 return ResourceManager.GetString("AppErrorDescriber_PasswordTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go back.
+        /// </summary>
+        public static string Button_GoBack {
+            get {
+                return ResourceManager.GetString("Button_GoBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string Button_Home {
+            get {
+                return ResourceManager.GetString("Button_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Login_Email {
+            get {
+                return ResourceManager.GetString("Login_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email address or password you entered is incorrect..
+        /// </summary>
+        public static string Login_Failed {
+            get {
+                return ResourceManager.GetString("Login_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Login_Password {
+            get {
+                return ResourceManager.GetString("Login_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me.
+        /// </summary>
+        public static string Login_RememberMe {
+            get {
+                return ResourceManager.GetString("Login_RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login_Submit {
+            get {
+                return ResourceManager.GetString("Login_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login_Title {
+            get {
+                return ResourceManager.GetString("Login_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter {0}..
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
     }

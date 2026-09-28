@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessDenied_Message" xml:space="preserve">
+    <value>Bạn không có quyền truy cập trang này.</value>
+  </data>
+  <data name="AccessDenied_Title" xml:space="preserve">
+    <value>Từ chối truy cập</value>
+  </data>
+  <data name="AccessDenied_UrlLabel" xml:space="preserve">
+    <value>Đường dẫn đã truy cập:</value>
+  </data>
   <data name="AppErrorDescriber_DuplicateEmail" xml:space="preserve">
     <value>Email đã được sử dụng.</value>
   </data>
@@ -149,5 +158,32 @@
   </data>
   <data name="AppErrorDescriber_PasswordTooShort" xml:space="preserve">
     <value>Mật khẩu phải có ít nhất {0} ký tự.</value>
+  </data>
+  <data name="Button_GoBack" xml:space="preserve">
+    <value>Quay lại</value>
+  </data>
+  <data name="Button_Home" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="Login_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Login_Failed" xml:space="preserve">
+    <value>Địa chỉ email hoặc mật khẩu không chính xác.</value>
+  </data>
+  <data name="Login_Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="Login_RememberMe" xml:space="preserve">
+    <value>Ghi nhớ tôi</value>
+  </data>
+  <data name="Login_Submit" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Login_Title" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Vui lòng nhập {0}.</value>
   </data>
 </root>
