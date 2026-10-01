@@ -24,11 +24,12 @@ namespace Restia.Common.Data.Context
         {
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
-                var entityBuilder = builder.Entity(entityType.ClrType);
+                var clrType = entityType.ClrType;
 
-                if (typeof(ISoftDeletable).IsAssignableFrom(entityType.ClrType))
+                if (typeof(ISoftDeletable).IsAssignableFrom(clrType))
                 {
-                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var parameter = Expression.Parameter(clrType, "e");
+
                     var property = Expression.Property(
                         parameter,
                         nameof(ISoftDeletable.IsDeleted));
@@ -39,12 +40,13 @@ namespace Restia.Common.Data.Context
 
                     var lambda = Expression.Lambda(body, parameter);
 
-                    entityBuilder.HasQueryFilter(lambda);
+                    builder.Entity(clrType)
+                        .HasQueryFilter(lambda);
                 }
 
-                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                if (typeof(BaseEntity).IsAssignableFrom(clrType))
                 {
-                    entityBuilder
+                    builder.Entity(clrType)
                         .Property(nameof(BaseEntity.RV))
                         .HasColumnName("xmin")
                         .HasColumnType("xid")

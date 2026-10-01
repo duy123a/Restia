@@ -1,0 +1,101 @@
+﻿@model IReadOnlyList<Restia.Common.Menu.Models.MenuItemDto>
+
+@using Restia.Common.Localization.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    var currentPath = Context.Request.Path.Value ?? string.Empty;
+}
+
+<a class="sidebar-link @(currentPath == "/"
+       || currentPath.Equals("/Home", StringComparison.OrdinalIgnoreCase)
+       || currentPath.StartsWith("/Home/", StringComparison.OrdinalIgnoreCase)
+           ? "active"
+           : "")"
+   asp-controller="Home"
+   asp-action="Index">
+
+    <i class="bi bi-house-door me-2"></i>
+    @Localizer["Button_Home"]
+</a>
+
+@foreach (var group in Model)
+{
+    @if (group.Children.Count > 0)
+    {
+        var hasActiveChild = group.Children.Any(item =>
+            !string.IsNullOrWhiteSpace(item.Url) &&
+            currentPath.StartsWith(
+                item.Url,
+                StringComparison.OrdinalIgnoreCase));
+
+        var collapseId = $"sidebar-menu-{group.NameKey}";
+
+        <div class="sidebar-group">
+
+            <button type="button"
+                    class="sidebar-section-label px-3 py-2 text-uppercase d-flex align-items-center w-100"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#@collapseId"
+                    aria-expanded="@(hasActiveChild ? "true" : "false")"
+                    aria-controls="@collapseId">
+
+                @if (!string.IsNullOrWhiteSpace(group.Icon))
+                {
+                    <i class="bi @group.Icon me-2"></i>
+                }
+
+                <span>
+                    @Localizer[group.NameKey]
+                </span>
+
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </button>
+
+            <div id="@collapseId"
+                 class="collapse @(hasActiveChild ? "show" : "")">
+
+                @foreach (var item in group.Children)
+                {
+                    var isActive =
+                        !string.IsNullOrWhiteSpace(item.Url) &&
+                        currentPath.StartsWith(
+                            item.Url,
+                            StringComparison.OrdinalIgnoreCase);
+
+                    <a class="sidebar-sub-link @(isActive ? "active" : "")"
+                       href="@item.Url">
+
+                        @if (!string.IsNullOrWhiteSpace(item.Icon))
+                        {
+                            <i class="bi @item.Icon me-2"></i>
+                        }
+
+                        @Localizer[item.NameKey]
+                    </a>
+                }
+
+            </div>
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(group.Url))
+    {
+        var isActive =
+            currentPath.StartsWith(
+                group.Url,
+                StringComparison.OrdinalIgnoreCase);
+
+        <a class="sidebar-link @(isActive ? "active" : "")"
+           href="@group.Url">
+
+            @if (!string.IsNullOrWhiteSpace(group.Icon))
+            {
+                <i class="bi @group.Icon me-2"></i>
+            }
+
+            @Localizer[group.NameKey]
+        </a>
+    }
+}

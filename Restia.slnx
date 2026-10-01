@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="note.md" />
+  </Folder>
   <Project Path="Restia.Common/Restia.Common.csproj" />
   <Project Path="Restia.Web/Restia.Web.csproj" />
 </Solution>

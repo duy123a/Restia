@@ -159,11 +159,17 @@
   <data name="AppErrorDescriber_PasswordTooShort" xml:space="preserve">
     <value>Mật khẩu phải có ít nhất {0} ký tự.</value>
   </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
   <data name="Button_GoBack" xml:space="preserve">
     <value>Quay lại</value>
   </data>
   <data name="Button_Home" xml:space="preserve">
     <value>Trang chủ</value>
+  </data>
+  <data name="Button_Logout" xml:space="preserve">
+    <value>Đăng xuất</value>
   </data>
   <data name="Login_Email" xml:space="preserve">
     <value>Email</value>
@@ -182,6 +188,12 @@
   </data>
   <data name="Login_Title" xml:space="preserve">
     <value>Đăng nhập</value>
+  </data>
+  <data name="Logout_ConfirmationMessage" xml:space="preserve">
+    <value>Bạn có muốn đăng xuất?</value>
+  </data>
+  <data name="Logout_ConfirmationTitle" xml:space="preserve">
+    <value>Xác nhận đăng xuất</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>Vui lòng nhập {0}.</value>

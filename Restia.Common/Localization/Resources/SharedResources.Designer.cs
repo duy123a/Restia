@@ -187,6 +187,15 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Button_Cancel {
+            get {
+                return ResourceManager.GetString("Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go back.
         /// </summary>
         public static string Button_GoBack {
@@ -201,6 +210,15 @@ namespace Restia.Common.Localization.Resources {
         public static string Button_Home {
             get {
                 return ResourceManager.GetString("Button_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Button_Logout {
+            get {
+                return ResourceManager.GetString("Button_Logout", resourceCulture);
             }
         }
         
@@ -255,6 +273,24 @@ namespace Restia.Common.Localization.Resources {
         public static string Login_Title {
             get {
                 return ResourceManager.GetString("Login_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to log out?.
+        /// </summary>
+        public static string Logout_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("Logout_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout confirmation.
+        /// </summary>
+        public static string Logout_ConfirmationTitle {
+            get {
+                return ResourceManager.GetString("Logout_ConfirmationTitle", resourceCulture);
             }
         }
         

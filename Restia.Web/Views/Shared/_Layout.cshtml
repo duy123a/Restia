@@ -1,50 +1,144 @@
-﻿<!DOCTYPE html>
+﻿@using Restia.Common.Localization.Resources;
+@using Microsoft.Extensions.Localization;
+@using Restia.Common.Localization.Constants;
+@inject IStringLocalizer<SharedResources> Localizer;
+
+@{
+    ViewData["Title"] = "Restia.Web";
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var currentPath = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Restia.Web</title>
+    <title>@ViewData["Title"]</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Restia.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Restia.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark top-navbar">
+        <div class="container-fluid">
+
+            @if (ViewData["ShowSidebar"] as bool? != false)
+            {
+                <button class="btn btn-dark me-2" type="button" id="sidebarToggle">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            }
+
+            <ul class="navbar-nav ms-auto flex-row align-items-center gap-1">
+                <li class="nav-item dropdown me-2">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-globe2 me-2" aria-hidden="true"></i>
+                        <span class="lang-code">@currentCulture.ToUpperInvariant()</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="langDropdown">
+                        <li>
+                            <form asp-controller="Culture" asp-action="SetLanguage" method="post" class="m-0">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="culture" value="@LocalizationConstants.English" />
+                                <input type="hidden" name="returnUrl" value="@currentPath" />
+                                <button type="submit" class="dropdown-item user-dropdown-item @(currentCulture == LocalizationConstants.English ? "active" : "")">
+                                    <i class="bi bi-check2 @(currentCulture == LocalizationConstants.English ? "" : "invisible")" aria-hidden="true"></i>
+                                    @LocalizationConstants.EnglishLang
+                                </button>
+                            </form>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <form asp-controller="Culture" asp-action="SetLanguage" method="post" class="m-0">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="culture" value="@LocalizationConstants.Vietnamese" />
+                                <input type="hidden" name="returnUrl" value="@currentPath" />
+                                <button type="submit" class="dropdown-item user-dropdown-item @(currentCulture == LocalizationConstants.Vietnamese ? "active" : "")">
+                                    <i class="bi bi-check2 @(currentCulture == LocalizationConstants.Vietnamese ? "" : "invisible")" aria-hidden="true"></i>
+                                    @LocalizationConstants.VietnamLang
+                                </button>
+                            </form>
                         </li>
                     </ul>
-                </div>
+                </li>
+
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/images/default-avatar.svg" alt="Avatar" width="32" height="32" class="rounded-circle avatar-circle">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userDropdown">
+                            <li>
+                                <button type="button" class="dropdown-item user-dropdown-item" id="logoutOpenBtn">
+                                    <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                                    @Localizer["Button_Logout"]
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    @if (ViewData["ShowSidebar"] as bool? != false)
+    {
+        <div class="sidebar" id="sidebar">
+            <button class="sidebar-close d-lg-none" type="button" id="sidebarClose">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            <div class="pt-3">
+                @await Component.InvokeAsync("SidebarMenu")
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </div>
+    }
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="main-content @(ViewData["ShowSidebar"] as bool? == false ? "no-sidebar" : "")" id="mainContent">
+        <main role="main" class="p-4">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Restia.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="d-none">
+            @Html.AntiForgeryToken()
+        </form>
+
+        <div class="modal fade app-modal" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutConfirmModalLabel">@Localizer["Logout_ConfirmationTitle"]</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="app-modal-icon">
+                            <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                        </div>
+                        <p class="mb-0">@Localizer["Logout_ConfirmationMessage"]</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn app-btn app-btn-secondary" data-bs-dismiss="modal">
+                            @Localizer["Button_Cancel"]
+                        </button>
+                        <button type="button" class="btn app-btn app-btn-danger" id="logoutConfirmBtn">
+                            <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>
+                            @Localizer["Button_Logout"]
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    }
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

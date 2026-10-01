@@ -159,11 +159,17 @@
   <data name="AppErrorDescriber_PasswordTooShort" xml:space="preserve">
     <value>Password must be at least {0} characters long.</value>
   </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Button_GoBack" xml:space="preserve">
     <value>Go back</value>
   </data>
   <data name="Button_Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Button_Logout" xml:space="preserve">
+    <value>Logout</value>
   </data>
   <data name="Login_Email" xml:space="preserve">
     <value>Email</value>
@@ -182,6 +188,12 @@
   </data>
   <data name="Login_Title" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="Logout_ConfirmationMessage" xml:space="preserve">
+    <value>Do you want to log out?</value>
+  </data>
+  <data name="Logout_ConfirmationTitle" xml:space="preserve">
+    <value>Logout confirmation</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>Please enter {0}.</value>
