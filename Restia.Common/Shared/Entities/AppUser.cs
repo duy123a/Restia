@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Restia.Common.Entities.Interfaces;
 
-namespace Restia.Common.Entities
+namespace Restia.Common.Shared.Entities
 {
     public class AppUser : IdentityUser, IAuditable
     {
@@ -9,9 +9,9 @@ namespace Restia.Common.Entities
         public string ProfileImg { get; set; } = string.Empty;
 
         // Audit
-        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
-        public string? CreatedBy { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
-        public string? UpdatedBy { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+        public string? CreatedUserId { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
+        public string? UpdatedUserId { get; set; }
     }
 }

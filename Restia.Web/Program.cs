@@ -3,7 +3,7 @@ using Restia.Common.Data.Context;
 using Restia.Common.Identity.Services;
 using Restia.Common.Infrastructure.Extensions;
 using Restia.Common.Localization.Extensions;
-using Restia.Common.Utilities.Mvc;
+using Restia.Common.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();

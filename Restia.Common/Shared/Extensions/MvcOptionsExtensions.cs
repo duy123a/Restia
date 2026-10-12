@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Restia.Common.Shared.Services;
 
-namespace Restia.Common.Utilities.Mvc
+namespace Restia.Common.Shared.Extensions
 {
     public static class MvcOptionsExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Restia.Common.Utilities.Mvc
+namespace Restia.Common.Shared.Services
 {
     public class TrimStringModelBinder : IModelBinder
     {

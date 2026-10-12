@@ -53,7 +53,7 @@ namespace Restia.Common.Data.Interceptors
                 entry.State = EntityState.Modified;
                 entry.Entity.IsDeleted = true;
                 entry.Entity.DeletedAt = now;
-                entry.Entity.DeletedBy = currentUser;
+                entry.Entity.DeletedUserId = currentUser;
             }
         }
     }

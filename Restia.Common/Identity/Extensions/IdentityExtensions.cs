@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Common.Data.Context;
-using Restia.Common.Entities;
 using Restia.Common.Identity.Configurations;
 using Restia.Common.Identity.Services;
+using Restia.Common.Shared.Entities;
 
 namespace Restia.Common.Identity.Extensions
 {
@@ -13,7 +13,7 @@ namespace Restia.Common.Identity.Extensions
         public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
-            services.Configure<SeedAdminSettings>(configuration.GetSection("SeedUserSettings"));
+            services.Configure<SeedAdminSettings>(configuration.GetSection(nameof(SeedAdminSettings)));
 
             services.AddIdentity<AppUser, AppRole>(options =>
             {

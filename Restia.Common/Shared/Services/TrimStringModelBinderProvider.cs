@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Restia.Common.Utilities.Mvc
+namespace Restia.Common.Shared.Services
 {
     public class TrimStringModelBinderProvider : IModelBinderProvider
     {

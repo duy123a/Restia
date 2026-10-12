@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Restia.Common.Entities;
+using Restia.Common.Identity.Constants;
+using Restia.Common.Shared.Entities;
 using System.Security.Claims;
 
 namespace Restia.Common.Identity.Services
@@ -19,7 +20,7 @@ namespace Restia.Common.Identity.Services
         {
             var identity = await base.GenerateClaimsAsync(user);
 
-            identity.AddClaim(new Claim(Constants.IdentityConstants.DisplayName, user.DisplayName ?? string.Empty));
+            identity.AddClaim(new Claim(CustomClaimTypes.DisplayName, user.DisplayName ?? string.Empty));
 
             return identity;
         }

@@ -1,10 +1,10 @@
-﻿namespace Restia.Common.Menu.Models
+﻿namespace Restia.Common.Form.Models
 {
-    public class MenuItemDto
+    public class FormItemDto
     {
         public string NameKey { get; set; } = string.Empty;
         public string? Url { get; set; }
         public string? Icon { get; set; }
-        public List<MenuItemDto> Children { get; set; } = [];
+        public List<FormItemDto> Children { get; set; } = [];
     }
 }

@@ -49,14 +49,12 @@ namespace Restia.Common.Data.Interceptors
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedAt = now;
-                        entry.Entity.CreatedBy = currentUser;
-                        entry.Entity.UpdatedAt = now;
-                        entry.Entity.UpdatedBy = currentUser;
+                        entry.Entity.CreatedUserId = currentUser;
                         break;
 
                     case EntityState.Modified:
                         entry.Entity.UpdatedAt = now;
-                        entry.Entity.UpdatedBy = currentUser;
+                        entry.Entity.UpdatedUserId = currentUser;
                         break;
                 }
             }
