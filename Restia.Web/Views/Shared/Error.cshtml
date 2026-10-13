@@ -1,14 +1,53 @@
-﻿@model ErrorViewModel
+@model ErrorViewModel
+@using Restia.Common.Localization.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResources> Localizer
+
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = !string.IsNullOrEmpty(Model.Title)
+        ? Model.Title
+        : (Model.StatusCode.HasValue ? $"{Model.StatusCode} - {Localizer["Error_Title"]}" : Localizer["Error_Title"].Value);
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">@Model.ErrorMessage</h2>
+<div class="container">
+    <div class="row justify-content-center align-items-center error-page">
+        <div class="col-md-8 col-lg-6">
+            <div class="app-card error-card">
+                <div class="app-card-body text-center">
+                    <div class="error-icon-wrap">
+                        <i class="bi @(Model.StatusCode == 404 ? "bi-search" : "bi-exclamation-triangle-fill") error-icon" aria-hidden="true"></i>
+                    </div>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+                    <h1 class="app-card-title mb-3">
+                        @(Model.Title ?? Localizer["Error_Title"].Value)
+                    </h1>
+
+                    <p class="app-card-subtitle mb-4">
+                        @Model.ErrorMessage
+                    </p>
+
+                    @if (Model.ShowRequestId)
+                    {
+                        <div class="alert alert-light border app-alert mb-4 text-start p-3">
+                            <span class="fw-semibold text-dark d-block mb-1">@Localizer["Error_RequestId"]</span>
+                            <code class="text-break text-danger">@Model.RequestId</code>
+                        </div>
+                    }
+
+                    <hr class="my-4 text-muted opacity-25">
+
+                    <div class="d-flex justify-content-center gap-3 error-actions">
+                        <a href="javascript:history.back()" class="btn app-btn app-btn-secondary app-btn-lg">
+                            <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
+                            @Localizer["Button_GoBack"]
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn app-btn app-btn-primary app-btn-lg">
+                            <i class="bi bi-house-door me-2" aria-hidden="true"></i>
+                            @Localizer["Button_Home"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

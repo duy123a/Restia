@@ -470,18 +470,21 @@ body {
     font-size: 0.9rem;
 }
 
-/* ── Access denied ───────────────────────────────────────── */
+/* ── Access denied & Error page ──────────────────────────── */
 
-.access-denied-page {
+.access-denied-page,
+.error-page {
     min-height: 75vh;
 }
 
-.access-denied-card {
+.access-denied-card,
+.error-card {
     max-width: 36rem;
     margin: 0 auto;
 }
 
-.access-denied-icon-wrap {
+.access-denied-icon-wrap,
+.error-icon-wrap {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -492,21 +495,25 @@ body {
     margin-bottom: 1rem;
 }
 
-.access-denied-icon {
+.access-denied-icon,
+.error-icon {
     font-size: 2.75rem;
     color: var(--danger-500);
 }
 
-.access-denied-actions {
+.access-denied-actions,
+.error-actions {
     flex-wrap: wrap;
 }
 
 @media (max-width: 575.98px) {
-    .access-denied-actions {
+    .access-denied-actions,
+    .error-actions {
         flex-direction: column;
     }
 
-        .access-denied-actions .btn {
+        .access-denied-actions .btn,
+        .error-actions .btn {
             width: 100%;
         }
 }

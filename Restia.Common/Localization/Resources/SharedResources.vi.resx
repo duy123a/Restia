@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -197,5 +197,44 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>Vui lòng nhập {0}.</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="Error_Default" xml:space="preserve">
+    <value>Đã xảy ra lỗi không mong muốn trên máy chủ.</value>
+  </data>
+  <data name="Error_400_Title" xml:space="preserve">
+    <value>Yêu cầu không hợp lệ</value>
+  </data>
+  <data name="Error_400" xml:space="preserve">
+    <value>Yêu cầu không hợp lệ hoặc máy chủ không thể xử lý.</value>
+  </data>
+  <data name="Error_401_Title" xml:space="preserve">
+    <value>Chưa xác thực</value>
+  </data>
+  <data name="Error_401" xml:space="preserve">
+    <value>Bạn cần đăng nhập để truy cập tài nguyên này.</value>
+  </data>
+  <data name="Error_403_Title" xml:space="preserve">
+    <value>Từ chối truy cập</value>
+  </data>
+  <data name="Error_403" xml:space="preserve">
+    <value>Bạn không có quyền truy cập tài nguyên này.</value>
+  </data>
+  <data name="Error_404_Title" xml:space="preserve">
+    <value>Không tìm thấy trang</value>
+  </data>
+  <data name="Error_404" xml:space="preserve">
+    <value>Trang bạn đang tìm kiếm không tồn tại.</value>
+  </data>
+  <data name="Error_500_Title" xml:space="preserve">
+    <value>Lỗi máy chủ</value>
+  </data>
+  <data name="Error_500" xml:space="preserve">
+    <value>Đã xảy ra lỗi không mong muốn trên máy chủ.</value>
+  </data>
+  <data name="Error_RequestId" xml:space="preserve">
+    <value>Mã yêu cầu:</value>
   </data>
 </root>

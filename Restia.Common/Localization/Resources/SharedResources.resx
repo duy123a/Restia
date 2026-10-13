@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -197,5 +197,44 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>Please enter {0}.</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error_Default" xml:space="preserve">
+    <value>An unexpected error occurred on the server.</value>
+  </data>
+  <data name="Error_400_Title" xml:space="preserve">
+    <value>Bad Request</value>
+  </data>
+  <data name="Error_400" xml:space="preserve">
+    <value>The request could not be understood or was invalid.</value>
+  </data>
+  <data name="Error_401_Title" xml:space="preserve">
+    <value>Unauthorized</value>
+  </data>
+  <data name="Error_401" xml:space="preserve">
+    <value>You must be logged in to access this resource.</value>
+  </data>
+  <data name="Error_403_Title" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="Error_403" xml:space="preserve">
+    <value>You do not have permission to access this resource.</value>
+  </data>
+  <data name="Error_404_Title" xml:space="preserve">
+    <value>Page Not Found</value>
+  </data>
+  <data name="Error_404" xml:space="preserve">
+    <value>The page you are looking for was not found.</value>
+  </data>
+  <data name="Error_500_Title" xml:space="preserve">
+    <value>Server Error</value>
+  </data>
+  <data name="Error_500" xml:space="preserve">
+    <value>An unexpected error occurred on the server.</value>
+  </data>
+  <data name="Error_RequestId" xml:space="preserve">
+    <value>Request ID:</value>
   </data>
 </root>
