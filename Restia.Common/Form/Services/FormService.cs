@@ -1,4 +1,4 @@
-﻿using Restia.Common.Form.Models;
+using Restia.Common.Form.Models;
 using Restia.Common.Form.Repository.Interfaces;
 using Restia.Common.Form.Services.Interfaces;
 using Restia.Common.Permission.Services.Interfaces;
@@ -10,14 +10,14 @@ namespace Restia.Common.Form.Services
     public class FormService : IFormService
     {
         private readonly IFormRepository _formRepository;
-        private readonly IPermissionChecker _permissionChecker;
+        private readonly IPermissionService _permissionService;
 
         public FormService(
             IFormRepository formRepository,
-            IPermissionChecker permissionChecker)
+            IPermissionService permissionService)
         {
             _formRepository = formRepository;
-            _permissionChecker = permissionChecker;
+            _permissionService = permissionService;
         }
 
         public async Task<IReadOnlyList<FormItemDto>> GetSidebarMenuAsync(
@@ -57,7 +57,7 @@ namespace Restia.Common.Form.Services
                 }
             }
 
-            // Form có URL: đây là một màn hình có thể truy cập trực tiếp.
+            // Form with URL: directly accessible screen.
             if (!string.IsNullOrWhiteSpace(menu.Url))
             {
                 if (!await CanAccessFormAsync(menu, user))
@@ -74,7 +74,7 @@ namespace Restia.Common.Form.Services
                 };
             }
 
-            // Form cha không có URL: chỉ hiện nếu có con được phép truy cập.
+            // Parent form without URL: only shown if child items are accessible.
             if (children.Count == 0)
             {
                 return null;
@@ -114,10 +114,10 @@ namespace Restia.Common.Form.Services
             FormEntity form,
             ClaimsPrincipal user)
         {
-            // Thay đổi format policy theo quy ước thực tế của bạn.
+            // Adjust policy format to match your conventions.
             var policyName = $"Form:{form.Id}";
 
-            return await _permissionChecker.HasPermissionAsync(
+            return await _permissionService.HasPermissionAsync(
                 user,
                 policyName);
         }

@@ -12,7 +12,7 @@ using Restia.Common.Data.Context;
 namespace Restia.Common.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261001085446_InitialCreate")]
+    [Migration("20261013025727_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -131,7 +131,132 @@ namespace Restia.Common.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Restia.Common.Entities.AppRole", b =>
+            modelBuilder.Entity("Restia.Common.Form.Entities.Form", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("integer");
+
+                    b.Property<uint>("RV")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id")
+                        .HasName("pk_form");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Forms");
+                });
+
+            modelBuilder.Entity("Restia.Common.Permission.Entities.RolePermission", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FormId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("FormAuthoritySec")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoleId", "FormId")
+                        .HasName("pk_role_permission");
+
+                    b.ToTable("RolePermission");
+                });
+
+            modelBuilder.Entity("Restia.Common.Permission.Entities.UserPermission", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FormId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("FormAuthoritySec")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<uint>("RV")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedUserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "FormId")
+                        .HasName("pk_user_permission");
+
+                    b.ToTable("UserPermission");
+                });
+
+            modelBuilder.Entity("Restia.Common.Shared.Entities.AppRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -140,10 +265,10 @@ namespace Restia.Common.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -154,10 +279,10 @@ namespace Restia.Common.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedUserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -169,7 +294,7 @@ namespace Restia.Common.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Restia.Common.Entities.AppUser", b =>
+            modelBuilder.Entity("Restia.Common.Shared.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -181,10 +306,10 @@ namespace Restia.Common.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreatedUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("DisplayName")
@@ -231,10 +356,10 @@ namespace Restia.Common.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdatedUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("UserName")
@@ -255,7 +380,7 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Entities.AppRole", null)
+                    b.HasOne("Restia.Common.Shared.Entities.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -264,7 +389,7 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -273,7 +398,7 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -282,13 +407,13 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Entities.AppRole", null)
+                    b.HasOne("Restia.Common.Shared.Entities.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restia.Common.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -297,11 +422,26 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Restia.Common.Form.Entities.Form", b =>
+                {
+                    b.HasOne("Restia.Common.Form.Entities.Form", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Restia.Common.Form.Entities.Form", b =>
+                {
+                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

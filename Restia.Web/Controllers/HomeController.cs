@@ -17,9 +17,22 @@ namespace Restia.Web.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("Error/{statusCode?}")]
+        public IActionResult Error(int? statusCode = null)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var requestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+
+            var viewModel = new ErrorViewModel
+            {
+                RequestId = requestId,
+                StatusCode = statusCode,
+                ErrorMessage = statusCode == 404
+                    ? "The page you are looking for was not found."
+                    : "An unexpected error occurred on the server.",
+                Timestamp = DateTimeOffset.UtcNow
+            };
+
+            return View(viewModel);
         }
     }
 }
