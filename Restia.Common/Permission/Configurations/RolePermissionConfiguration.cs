@@ -8,7 +8,7 @@ namespace Restia.Common.Permission.Configurations
     {
         public void Configure(EntityTypeBuilder<RolePermission> builder)
         {
-            builder.HasKey(e => new { e.RoleId, e.FormId }).HasName("pk_role_permission");
+            builder.HasKey(e => new { e.RoleId, e.FormCode }).HasName("pk_role_permission");
         }
     }
 }

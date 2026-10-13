@@ -1,4 +1,5 @@
-﻿using Restia.Common.Data.Context;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using Restia.Common.Data.Context;
 using Restia.Common.Shared.Repository.Interfaces;
 
 namespace Restia.Common.Shared.Repository
@@ -16,6 +17,13 @@ namespace Restia.Common.Shared.Repository
             CancellationToken cancellationToken = default)
         {
             return _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public Task<IDbContextTransaction> BeginTransactionAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return _context.Database.BeginTransactionAsync(
+                cancellationToken);
         }
     }
 }

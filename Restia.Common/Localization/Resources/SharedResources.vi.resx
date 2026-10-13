@@ -237,4 +237,13 @@
   <data name="Error_RequestId" xml:space="preserve">
     <value>Mã yêu cầu:</value>
   </data>
+  <data name="Form_Administrator" xml:space="preserve">
+    <value>Quản trị</value>
+  </data>
+  <data name="Form_Users" xml:space="preserve">
+    <value>Người dùng</value>
+  </data>
+  <data name="Form_Roles" xml:space="preserve">
+    <value>Nhóm</value>
+  </data>
 </root>

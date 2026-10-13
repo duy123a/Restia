@@ -19,9 +19,9 @@ namespace Restia.Common.Permission.Services
             _rolePermissionRepository = rolePermissionRepository;
         }
 
-        public async Task<FormAuthoritySec> GetAuthoritySecAsync(string userId, IEnumerable<string> roleIds, string formId)
+        public async Task<FormAuthoritySec> GetAuthoritySecAsync(string userId, IEnumerable<string> roleIds, string formCode)
         {
-            var userAuthority = await _userPermissionRepository.GetByIdAsync(new object[] { userId, formId });
+            var userAuthority = await _userPermissionRepository.GetByIdAsync(new object[] { userId, formCode });
             if (userAuthority != null && userAuthority.FormAuthoritySec != FormAuthoritySec.None)
             {
                 return userAuthority.FormAuthoritySec;
@@ -32,7 +32,7 @@ namespace Restia.Common.Permission.Services
             foreach (var roleId in roleIds.Distinct())
             {
                 var roleAuthority = await _rolePermissionRepository
-                    .GetByIdAsync(new object[] { roleId, formId });
+                    .GetByIdAsync(new object[] { roleId, formCode });
 
                 if (roleAuthority != null &&
                     roleAuthority.FormAuthoritySec != FormAuthoritySec.None)

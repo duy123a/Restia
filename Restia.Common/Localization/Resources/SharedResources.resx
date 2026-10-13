@@ -237,4 +237,13 @@
   <data name="Error_RequestId" xml:space="preserve">
     <value>Request ID:</value>
   </data>
+  <data name="Form_Administrator" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="Form_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Form_Roles" xml:space="preserve">
+    <value>Groups</value>
+  </data>
 </root>

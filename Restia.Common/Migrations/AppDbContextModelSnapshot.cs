@@ -136,6 +136,10 @@ namespace Restia.Common.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -187,6 +191,9 @@ namespace Restia.Common.Migrations
                     b.HasKey("Id")
                         .HasName("pk_form");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
                     b.HasIndex("ParentId");
 
                     b.ToTable("Forms");
@@ -197,13 +204,13 @@ namespace Restia.Common.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("text");
 
-                    b.Property<string>("FormId")
+                    b.Property<string>("FormCode")
                         .HasColumnType("text");
 
                     b.Property<int>("FormAuthoritySec")
                         .HasColumnType("integer");
 
-                    b.HasKey("RoleId", "FormId")
+                    b.HasKey("RoleId", "FormCode")
                         .HasName("pk_role_permission");
 
                     b.ToTable("RolePermission");
@@ -214,7 +221,7 @@ namespace Restia.Common.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
-                    b.Property<string>("FormId")
+                    b.Property<string>("FormCode")
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("CreatedAt")
@@ -247,7 +254,7 @@ namespace Restia.Common.Migrations
                     b.Property<string>("UpdatedUserId")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId", "FormId")
+                    b.HasKey("UserId", "FormCode")
                         .HasName("pk_user_permission");
 
                     b.ToTable("UserPermission");

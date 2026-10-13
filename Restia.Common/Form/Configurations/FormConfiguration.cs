@@ -10,6 +10,8 @@ namespace Restia.Common.Form.Configurations
         {
             builder.HasKey(x => x.Id).HasName("pk_form");
 
+            builder.HasIndex(x => x.Code).IsUnique();
+
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(200);

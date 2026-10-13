@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
-using Restia.Common.Identity.Services;
 using Restia.Common.Localization.Extensions;
 using Restia.Common.Shared.Extensions;
 
@@ -20,8 +19,6 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod()
               .AllowCredentials());
 });
-
-builder.Services.AddHostedService<IdentitySeedWorker>();
 
 var app = builder.Build();
 

@@ -42,12 +42,12 @@ namespace Restia.Common.Form.Services
         }
 
         private async Task<FormItemDto?> MapMenuAsync(
-            FormEntity menu,
+            FormEntity form,
             ClaimsPrincipal user)
         {
             var children = new List<FormItemDto>();
 
-            foreach (var child in menu.Children.OrderBy(c => c.DisplayOrder))
+            foreach (var child in form.Children.OrderBy(c => c.DisplayOrder))
             {
                 var dto = await MapLeafAsync(child, user);
 
@@ -58,18 +58,18 @@ namespace Restia.Common.Form.Services
             }
 
             // Form with URL: directly accessible screen.
-            if (!string.IsNullOrWhiteSpace(menu.Url))
+            if (!string.IsNullOrWhiteSpace(form.Url))
             {
-                if (!await CanAccessFormAsync(menu, user))
+                if (!await CanAccessFormAsync(form, user))
                 {
                     return null;
                 }
 
                 return new FormItemDto
                 {
-                    NameKey = menu.Name,
-                    Url = menu.Url,
-                    Icon = menu.Icon,
+                    NameKey = form.Name,
+                    Url = form.Url,
+                    Icon = form.Icon,
                     Children = children
                 };
             }
@@ -82,31 +82,31 @@ namespace Restia.Common.Form.Services
 
             return new FormItemDto
             {
-                NameKey = menu.Name,
-                Icon = menu.Icon,
+                NameKey = form.Name,
+                Icon = form.Icon,
                 Children = children
             };
         }
 
         private async Task<FormItemDto?> MapLeafAsync(
-            FormEntity menu,
+            FormEntity form,
             ClaimsPrincipal user)
         {
-            if (string.IsNullOrWhiteSpace(menu.Url))
+            if (string.IsNullOrWhiteSpace(form.Url))
             {
                 return null;
             }
 
-            if (!await CanAccessFormAsync(menu, user))
+            if (!await CanAccessFormAsync(form, user))
             {
                 return null;
             }
 
             return new FormItemDto
             {
-                NameKey = menu.Name,
-                Url = menu.Url,
-                Icon = menu.Icon
+                NameKey = form.Name,
+                Url = form.Url,
+                Icon = form.Icon
             };
         }
 
@@ -115,7 +115,7 @@ namespace Restia.Common.Form.Services
             ClaimsPrincipal user)
         {
             // Adjust policy format to match your conventions.
-            var policyName = $"Form:{form.Id}";
+            var policyName = $"Form:{form.Code}";
 
             return await _permissionService.HasPermissionAsync(
                 user,

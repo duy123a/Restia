@@ -7,7 +7,7 @@ namespace Restia.Common.Permission.Entities
     {
         public string UserId { get; set; } = string.Empty;
 
-        public string FormId { get; set; } = string.Empty;
+        public string FormCode { get; set; } = string.Empty;
 
         public FormAuthoritySec FormAuthoritySec { get; set; }
             = FormAuthoritySec.None;

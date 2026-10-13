@@ -5,7 +5,7 @@ namespace Restia.Common.Permission.Services.Interfaces
 {
     public interface IPermissionService
     {
-        Task<FormAuthoritySec> GetAuthoritySecAsync(string userId, IEnumerable<string> roleIds, string formId);
+        Task<FormAuthoritySec> GetAuthoritySecAsync(string userId, IEnumerable<string> roleIds, string formCode);
 
         Task<bool> HasPermissionAsync(ClaimsPrincipal user, string policyName);
     }
