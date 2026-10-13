@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Common.Data.Extensions;
 using Restia.Common.Form.Repository;
@@ -10,13 +10,16 @@ using Restia.Common.Permission.Repository;
 using Restia.Common.Permission.Repository.Interfaces;
 using Restia.Common.Permission.Services;
 using Restia.Common.Permission.Services.Interfaces;
+using Restia.Common.Shared.Helpers;
 
-namespace Restia.Common.Infrastructure.Extensions
+namespace Restia.Common.Shared.Extensions
 {
     public static class InfrastructureExtensions
     {
         public static IServiceCollection AddInfrastructureModules(this IServiceCollection services, IConfiguration configuration)
         {
+            DateTimeOffsetHelper.Initialize(configuration);
+
             services.AddPersistenceModule(configuration);
             services.AddDataModule(configuration);
             services.AddIdentityModule(configuration);

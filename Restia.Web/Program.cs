@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Identity.Services;
-using Restia.Common.Infrastructure.Extensions;
 using Restia.Common.Localization.Extensions;
 using Restia.Common.Shared.Extensions;
 
