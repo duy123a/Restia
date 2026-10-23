@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Repository.Interfaces;

@@ -2,7 +2,13 @@
 {
     public static class PermissionConstants
     {
-        public const string Permission = "Permission";
-        public const string LocalAuthority = "LOCAL AUTHORITY";
+        public static class User
+        {
+            public const string Default = "Form:User";
+            public const string None = "Form:User:None";
+            public const string Available = "Form:User:Available";
+            public const string ReferablePrintable = "Form:User:ReferablePrintable";
+            public const string Unavailable = "Form:User:Unavailable";
+        }
     }
 }

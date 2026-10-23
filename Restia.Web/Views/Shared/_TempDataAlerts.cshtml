@@ -1,0 +1,19 @@
+﻿@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@inject IStringLocalizer<SharedResources> Localizer
+
+@if (TempData["Success"] is string successKey)
+{
+    <div class="alert alert-success app-alert alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>@Localizer[successKey]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Error"] is string errorKey)
+{
+    <div class="alert alert-danger app-alert alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>@Localizer[errorKey]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

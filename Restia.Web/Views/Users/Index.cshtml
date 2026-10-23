@@ -1,0 +1,120 @@
+﻿@model PaginationViewModel<UserViewModel>
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@using Restia.Common.Permission.Constants
+@using Restia.Common.Permission.Services.Interfaces
+@using X.PagedList.Mvc.Core
+@inject IStringLocalizer<SharedResources> Localizer
+@inject IPermissionService PermissionService
+
+@{
+    ViewData["Title"] = Localizer["User_Title"];
+    var canModify = await PermissionService.HasPermissionAsync(User, PermissionConstants.User.Available);
+}
+
+<div class="user-page">
+    <div class="user-page-header">
+        <div>
+            <h1 class="user-page-title">@Localizer["User_Title"]</h1>
+            <p class="user-page-subtitle">@Localizer["User_Subtitle"]</p>
+        </div>
+        @if (canModify)
+        {
+            <a asp-action="Create" class="btn app-btn app-btn-primary">
+                <i class="bi bi-person-plus me-1"></i>@Localizer["Button_Create"]
+            </a>
+        }
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card user-card">
+        <partial name="_PaginationToolbar" model="new PaginationViewModel<object> {
+            Search = Model.Search,
+            PageSize = Model.PageSize,
+            SearchPlaceholderKey = Model.SearchPlaceholderKey
+        }" />
+
+        <div class="table-responsive">
+            <table class="table user-table mb-0">
+                <thead>
+                    <tr>
+                        <th>@Localizer["User_DisplayName"]</th>
+                        <th>@Localizer["User_Email"]</th>
+                        <th>@Localizer["User_Roles"]</th>
+                        <th class="text-end">@Localizer["User_Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Items.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                @Localizer["User_NoRecords"]
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var user in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    @{
+                                        var initial = !string.IsNullOrWhiteSpace(user.DisplayName)
+                                            ? user.DisplayName[0]
+                                            : !string.IsNullOrWhiteSpace(user.Email)
+                                                ? user.Email[0]
+                                                : '?';
+                                    }
+                                    <span class="admin-avatar">@initial</span>
+                                    <div>
+                                        <div class="fw-semibold">@user.DisplayName</div>
+                                        @if (user.IsLockedOut)
+                                        {
+                                            <span class="badge bg-danger-subtle text-danger">@Localizer["User_LockedOut"]</span>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@user.Email</td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var role in user.Roles)
+                                    {
+                                        <span class="badge user-role-badge">@role</span>
+                                    }
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <partial name="_TableActions"
+                                     model="@(new TableActionsViewModel
+                                     {
+                                         CanModify = canModify,
+                                         EditUrl = Url.Action("Edit", new { id = user.Id }),
+                                         DeleteAction = "Delete",
+                                         DeleteId = user.Id
+                                     })" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.Items.PageCount > 1)
+        {
+            <div class="pagination">
+                @Html.PagedListPager(
+                    Model.Items,
+                    page => Url.Action("Index", new { search = Model.Search, page, pageSize = Model.PageSize })!,
+                    new PagedListRenderOptions
+                    {
+                        LiElementClasses = ["pagination-li-element"],
+                        PageClasses = ["pagination-page"],
+                        UlElementClasses = ["pagination-ul-element", "mb-0"]
+                    })
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@model TableActionsViewModel
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@inject IStringLocalizer<SharedResources> Localizer
+
+<div class="table-actions">
+    @if (Model.CanModify &&
+         !string.IsNullOrEmpty(Model.EditUrl))
+    {
+        <a href="@Model.EditUrl"
+           class="table-icon-btn table-icon-btn-edit"
+           title="@Localizer["Button_Edit"]"
+           aria-label="@Localizer["Button_Edit"]">
+            <i class="bi bi-pencil-square" aria-hidden="true"></i>
+        </a>
+    }
+
+    @if (Model.CanModify &&
+         !string.IsNullOrEmpty(Model.DeleteId))
+    {
+        <form asp-action="@Model.DeleteAction"
+              asp-route-id="@Model.DeleteId"
+              method="post"
+              class="d-inline m-0 table-delete-form">
+            @Html.AntiForgeryToken()
+
+            <button type="button"
+                    class="table-icon-btn table-icon-btn-delete table-delete-trigger"
+                    title="@Localizer["Button_Delete"]"
+                    aria-label="@Localizer["Button_Delete"]">
+                <i class="bi bi-trash3" aria-hidden="true"></i>
+            </button>
+        </form>
+    }
+</div>

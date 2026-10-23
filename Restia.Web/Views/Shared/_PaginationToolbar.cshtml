@@ -1,0 +1,37 @@
+﻿@model PaginationViewModel<object>
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@using Restia.Common.Shared.Constants
+@inject IStringLocalizer<SharedResources> Localizer
+
+<form method="get" class="pagination-toolbar">
+    <div class="pagination-toolbar-search">
+        <input type="search"
+               name="search"
+               value="@Model.Search"
+               class="form-control pagination-toolbar-input"
+               placeholder="@Localizer[Model.SearchPlaceholderKey]" />
+        <button type="submit"
+                class="btn app-btn app-btn-primary pagination-toolbar-search-btn"
+                title="@Localizer["Button_Search"]"
+                aria-label="@Localizer["Button_Search"]">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+    <div class="pagination-toolbar-pagesize">
+        <label for="pageSize" class="pagination-toolbar-label">@Localizer["Pagination_ItemsPerPage"]</label>
+        <select id="pageSize" name="pageSize" class="form-select" onchange="this.form.submit()">
+            @foreach (var size in PaginationConstants.PageSizeOptions)
+            {
+                if (Model.PageSize == size)
+                {
+                    <option value="@size" selected>@size</option>
+                }
+                else
+                {
+                    <option value="@size">@size</option>
+                }
+            }
+        </select>
+    </div>
+</form>
