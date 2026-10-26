@@ -240,10 +240,55 @@
   <data name="Form_Administrator" xml:space="preserve">
     <value>Quản trị</value>
   </data>
-  <data name="Form_Users" xml:space="preserve">
+  <data name="Form_User" xml:space="preserve">
     <value>Người dùng</value>
   </data>
-  <data name="Form_Roles" xml:space="preserve">
+  <data name="Form_Role" xml:space="preserve">
     <value>Nhóm</value>
+  </data>
+  <data name="User_Title" xml:space="preserve">
+    <value>Người dùng</value>
+  </data>
+  <data name="User_Subtitle" xml:space="preserve">
+    <value>Quản lý tài khoản</value>
+  </data>
+  <data name="User_DisplayName" xml:space="preserve">
+    <value>Tên hiển thị</value>
+  </data>
+  <data name="User_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="User_Roles" xml:space="preserve">
+    <value>Nhóm</value>
+  </data>
+  <data name="User_Actions" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="User_SearchPlaceholder" xml:space="preserve">
+    <value>Tìm theo tên hiển thị hoặc email</value>
+  </data>
+  <data name="Pagination_ItemsPerPage" xml:space="preserve">
+    <value>Số mục mỗi trang</value>
+  </data>
+  <data name="Button_Create" xml:space="preserve">
+    <value>Tạo mới</value>
+  </data>
+  <data name="User_NoRecords" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="User_Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="User_ConfirmPassword" xml:space="preserve">
+    <value>Xác nhận mật khẩu</value>
+  </data>
+  <data name="User_EmailInvalid" xml:space="preserve">
+    <value>Vui lòng nhập email hợp lệ.</value>
+  </data>
+  <data name="User_PasswordMismatch" xml:space="preserve">
+    <value>Mật khẩu không khớp.</value>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>Lưu</value>
   </data>
 </root>

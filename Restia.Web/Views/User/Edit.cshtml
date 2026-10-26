@@ -1,0 +1,76 @@
+﻿@model UserFormViewModel
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["UserEdit_Title"];
+}
+
+<div class="user-page">
+    <div class="user-page-header">
+        <div>
+            <h1 class="user-page-title">@Localizer["UserEdit_Title"]</h1>
+            <p class="user-page-subtitle">@Model.DisplayName</p>
+        </div>
+        <a asp-action="Index" class="btn app-btn app-btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i>@Localizer["Button_GoBack"]
+        </a>
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card user-card">
+        <div class="app-card-body">
+            <form asp-action="Edit" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="DisplayName" class="app-form-label"></label>
+                        <input asp-for="DisplayName" class="form-control app-form-control" />
+                        <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="app-form-label"></label>
+                        <input asp-for="Email" class="form-control app-form-control" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Password" class="app-form-label"></label>
+                        <input asp-for="Password" class="form-control app-form-control" placeholder="@Localizer["UserEdit_LeaveBlankPassword"]" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ConfirmPassword" class="app-form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control app-form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <h5 class="mb-3"><i class="bi bi-person-badge me-2"></i>@Localizer["UserCreate_AssignRoles"]</h5>
+                <div class="role-check-grid">
+                    @foreach (var role in Model.AvailableRoles)
+                    {
+                        <label class="role-check-item">
+                            <input type="checkbox" class="form-check-input" name="SelectedRoles" value="@role.Name"
+                            @(role.IsSelected ? "checked" : "") />
+                            <span>@role.Name</span>
+                        </label>
+                    }
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-action="Index" class="btn app-btn app-btn-secondary">@Localizer["Button_Cancel"]</a>
+                    <button type="submit" class="btn app-btn app-btn-primary">
+                        <i class="bi bi-check-lg me-1"></i>@Localizer["Button_Save"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

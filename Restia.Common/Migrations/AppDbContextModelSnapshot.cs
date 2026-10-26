@@ -213,7 +213,7 @@ namespace Restia.Common.Migrations
                     b.HasKey("RoleId", "FormCode")
                         .HasName("pk_role_permission");
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Restia.Common.Permission.Entities.UserPermission", b =>
@@ -257,7 +257,7 @@ namespace Restia.Common.Migrations
                     b.HasKey("UserId", "FormCode")
                         .HasName("pk_user_permission");
 
-                    b.ToTable("UserPermission");
+                    b.ToTable("UserPermissions");
                 });
 
             modelBuilder.Entity("Restia.Common.Shared.Entities.AppRole", b =>

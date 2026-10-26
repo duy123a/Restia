@@ -94,7 +94,7 @@ namespace Restia.Common.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RolePermission",
+                name: "RolePermissions",
                 columns: table => new
                 {
                     RoleId = table.Column<string>(type: "text", nullable: false),
@@ -107,7 +107,7 @@ namespace Restia.Common.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserPermission",
+                name: "UserPermissions",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
@@ -304,10 +304,10 @@ namespace Restia.Common.Migrations
                 name: "Forms");
 
             migrationBuilder.DropTable(
-                name: "RolePermission");
+                name: "RolePermissions");
 
             migrationBuilder.DropTable(
-                name: "UserPermission");
+                name: "UserPermissions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

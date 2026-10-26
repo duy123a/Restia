@@ -240,10 +240,55 @@
   <data name="Form_Administrator" xml:space="preserve">
     <value>Administrator</value>
   </data>
-  <data name="Form_Users" xml:space="preserve">
-    <value>Users</value>
+  <data name="Form_User" xml:space="preserve">
+    <value>User</value>
   </data>
-  <data name="Form_Roles" xml:space="preserve">
-    <value>Groups</value>
+  <data name="Form_Role" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="User_Title" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="User_Subtitle" xml:space="preserve">
+    <value>Manage user accounts</value>
+  </data>
+  <data name="User_DisplayName" xml:space="preserve">
+    <value>Display name</value>
+  </data>
+  <data name="User_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="User_Roles" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="User_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="User_SearchPlaceholder" xml:space="preserve">
+    <value>Search by display name or email</value>
+  </data>
+  <data name="Pagination_ItemsPerPage" xml:space="preserve">
+    <value>Items per page</value>
+  </data>
+  <data name="Button_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="User_NoRecords" xml:space="preserve">
+    <value>No records found</value>
+  </data>
+  <data name="User_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="User_ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="User_EmailInvalid" xml:space="preserve">
+    <value>Please enter a valid email address.</value>
+  </data>
+  <data name="User_PasswordMismatch" xml:space="preserve">
+    <value>Passwords do not match.</value>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>

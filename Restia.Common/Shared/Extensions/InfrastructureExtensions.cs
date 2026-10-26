@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Common.Data.Extensions;
@@ -9,6 +10,7 @@ using Restia.Common.Identity.Extensions;
 using Restia.Common.Identity.Repository;
 using Restia.Common.Identity.Repository.Interfaces;
 using Restia.Common.Identity.Services;
+using Restia.Common.Identity.Services.Interfaces;
 using Restia.Common.Permission.Repository;
 using Restia.Common.Permission.Repository.Interfaces;
 using Restia.Common.Permission.Services;
@@ -37,6 +39,8 @@ namespace Restia.Common.Shared.Extensions
         public static IServiceCollection AddPersistenceModule(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
             services.AddScoped<IFormRepository, FormRepository>();
             services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
@@ -47,6 +51,8 @@ namespace Restia.Common.Shared.Extensions
 
             services.AddScoped<IFormService, FormService>();
             services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             return services;
         }

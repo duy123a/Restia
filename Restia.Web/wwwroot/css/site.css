@@ -52,8 +52,8 @@ body {
     height: 3.5rem;
     margin-bottom: 0.75rem;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--btn) 12%, var(--surface-0));
-    color: var(--btn);
+    background: color-mix(in srgb, var(--brand-primary) 12%, var(--bg-card));
+    color: var(--brand-primary);
     font-size: 1.75rem;
     filter: var(--drop-shadow);
 }
@@ -85,14 +85,14 @@ body {
 }
 
     .app-form-control:focus {
-        border-color: var(--btn);
-        box-shadow: 0 0 0 0.1rem var(--surface-0), 0 0 0 0.25rem var(--btn);
+        border-color: var(--brand-primary);
+        box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
     }
 
 .form-check-input:checked,
 .app-form-check-input:checked {
-    background-color: var(--btn);
-    border-color: var(--btn);
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
 }
 
 .app-btn {
@@ -103,20 +103,20 @@ body {
 }
 
 .app-btn-primary {
-    background: var(--btn);
-    border: 1px solid var(--btn);
-    color: var(--surface-0);
+    background: var(--brand-primary);
+    border: 1px solid var(--brand-primary);
+    color: var(--text-white);
 }
 
     .app-btn-primary:hover,
     .app-btn-primary:focus-visible {
-        background: var(--btn-hover);
-        border-color: var(--btn-hover);
-        color: var(--surface-0);
+        background: var(--brand-hover);
+        border-color: var(--brand-hover);
+        color: var(--text-white);
     }
 
 .app-btn-secondary {
-    background: var(--surface-0);
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
 }
@@ -129,16 +129,16 @@ body {
     }
 
 .app-btn-danger {
-    background: var(--text-danger);
-    border: 1px solid var(--text-danger);
-    color: var(--surface-0);
+    background: var(--danger);
+    border: 1px solid var(--danger);
+    color: var(--text-white);
 }
 
     .app-btn-danger:hover,
     .app-btn-danger:focus-visible {
-        background: var(--text-danger-hover);
-        border-color: var(--text-danger-hover);
-        color: var(--surface-0);
+        background: var(--danger-hover);
+        border-color: var(--danger-hover);
+        color: var(--text-white);
     }
 
 .app-btn-lg {
@@ -151,7 +151,7 @@ body {
 .btn-link.nav-link:focus,
 .form-control:focus,
 .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem var(--surface-0), 0 0 0 0.25rem var(--btn);
+    box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
 }
 
 .app-alert {
@@ -167,7 +167,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 1.5rem 1rem;
-    /* Use flat token background to avoid edge artifacts */
     background: var(--bg-page);
 }
 
@@ -198,7 +197,7 @@ body {
 .app-modal .modal-body {
     padding: 1.5rem;
     text-align: center;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     font-size: 1rem;
 }
 
@@ -210,8 +209,8 @@ body {
     height: 3.25rem;
     margin-bottom: 1rem;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--danger-500) 12%, var(--surface-0));
-    color: var(--danger-500);
+    background: color-mix(in srgb, var(--danger) 12%, var(--bg-card));
+    color: var(--danger);
     font-size: 1.5rem;
 }
 
@@ -248,14 +247,14 @@ body {
 }
 
     .user-dropdown-item.active {
-        background: color-mix(in srgb, var(--btn) 10%, var(--surface-0));
-        color: var(--btn);
+        background: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
+        color: var(--brand-primary);
     }
 
     .user-dropdown-item:hover,
     .user-dropdown-item:focus {
-        background: color-mix(in srgb, var(--danger-500) 10%, var(--surface-0));
-        color: var(--danger-500);
+        background: color-mix(in srgb, var(--danger) 10%, var(--bg-card));
+        color: var(--danger);
     }
 
     .user-dropdown-item i {
@@ -306,6 +305,11 @@ body {
     z-index: 999;
 }
 
+.sidebar-group {
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-link,
 .sidebar a {
     color: var(--sidebar-text);
     text-decoration: none;
@@ -315,14 +319,16 @@ body {
     transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
+    .sidebar-link:hover,
     .sidebar a:hover {
         background-color: var(--sidebar-hover);
-        border-left-color: var(--btn);
+        border-left-color: var(--brand-primary);
     }
 
+    .sidebar-link.active,
     .sidebar a.active {
         background-color: var(--sidebar-hover);
-        border-left-color: var(--btn);
+        border-left-color: var(--brand-primary);
     }
 
 .main-content {
@@ -371,12 +377,12 @@ body {
         }
 
 .avatar-circle {
-    background: var(--surface-0);
+    background: var(--bg-card);
     padding: 4px;
 }
 
 .dropdown-toggle::after {
-    border-top-color: var(--surface-0) !important;
+    border-top-color: var(--bg-card) !important;
     transition: transform 0.3s ease;
 }
 
@@ -491,14 +497,14 @@ body {
     width: 5rem;
     height: 5rem;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--danger-500) 12%, var(--surface-0));
+    background: color-mix(in srgb, var(--danger) 12%, var(--bg-card));
     margin-bottom: 1rem;
 }
 
 .access-denied-icon,
 .error-icon {
     font-size: 2.75rem;
-    color: var(--danger-500);
+    color: var(--danger);
 }
 
 .access-denied-actions,
@@ -516,4 +522,279 @@ body {
         .error-actions .btn {
             width: 100%;
         }
+}
+
+/* ── Users management page ───────────────────────────────── */
+
+.user-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.user-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.user-page-title {
+    margin: 0;
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.user-page-subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.user-card {
+    width: 100%;
+}
+
+.user-table th {
+    background: var(--bg-page);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.user-table td {
+    padding: 1rem 1.25rem;
+    vertical-align: middle;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.925rem;
+}
+
+.user-table tbody tr:hover td {
+    background-color: color-mix(in srgb, var(--brand-primary) 3%, var(--bg-card));
+}
+
+.user-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-primary) 12%, var(--bg-card));
+    color: var(--brand-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.user-role-badge {
+    background-color: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
+    color: var(--brand-primary);
+    border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, var(--bg-card));
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--radius-sm);
+}
+
+/* ── Pagination Toolbar ──────────────────────────────────── */
+
+.pagination-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pagination-toolbar-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 340px;
+    width: 100%;
+}
+
+.pagination-toolbar-input {
+    border-radius: var(--radius-sm);
+    border-color: var(--border-color);
+    padding: 0.5rem 0.85rem;
+    font-size: 0.9rem;
+}
+
+    .pagination-toolbar-input:focus {
+        border-color: var(--brand-primary);
+        box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
+    }
+
+.pagination-toolbar-search-btn {
+    padding: 0.5rem 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+}
+
+.pagination-toolbar-pagesize {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-toolbar-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.pagination-toolbar-pagesize .form-select {
+    width: auto;
+    min-width: 4.5rem;
+    border-radius: var(--radius-sm);
+    border-color: var(--border-color);
+    font-size: 0.875rem;
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+}
+
+    .pagination-toolbar-pagesize .form-select:focus {
+        border-color: var(--brand-primary);
+        box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
+    }
+
+/* ── Table row action buttons ────────────────────────────── */
+
+.table-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem;
+}
+
+.table-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.125rem;
+    height: 2.125rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+    padding: 0;
+}
+
+.table-icon-btn-edit:hover,
+.table-icon-btn-edit:focus-visible {
+    background: color-mix(in srgb, var(--brand-primary) 12%, var(--bg-card));
+    color: var(--brand-primary);
+    border-color: color-mix(in srgb, var(--brand-primary) 25%, var(--bg-card));
+}
+
+.table-icon-btn-delete:hover,
+.table-icon-btn-delete:focus-visible {
+    background: color-mix(in srgb, var(--danger) 12%, var(--bg-card));
+    color: var(--danger);
+    border-color: color-mix(in srgb, var(--danger) 25%, var(--bg-card));
+}
+
+.table-delete-trigger {
+    cursor: pointer;
+}
+
+.table-delete-form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* ── Pagination list & controls ──────────────────────────── */
+
+.user-pagination,
+.user-card > .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-card);
+}
+
+.pagination-ul-element {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination-li-element {
+    display: inline-flex;
+}
+
+.pagination-page,
+.pagination-li-element > a,
+.pagination-li-element > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.65rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+}
+
+    .pagination-page:hover,
+    .pagination-li-element > a:hover {
+        background: var(--bg-page);
+        border-color: var(--brand-primary);
+        color: var(--brand-primary);
+    }
+
+.pagination-li-element.active .pagination-page,
+.pagination-li-element.active > span,
+.pagination-li-element.active > a {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.pagination-li-element.disabled .pagination-page,
+.pagination-li-element.disabled > span,
+.pagination-li-element.disabled > a {
+    color: var(--text-muted);
+    pointer-events: none;
+    background: var(--bg-page);
+    border-color: var(--border-color);
+    opacity: 0.6;
 }

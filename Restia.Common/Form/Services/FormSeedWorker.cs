@@ -42,8 +42,8 @@ namespace Restia.Common.Form.Services
                 new FormEntity
                 {
                     Code = "User",
-                    Name = "Form_Users",
-                    Url = "/Users",
+                    Name = "Form_User",
+                    Url = "/User",
                     Icon = "bi-people",
                     ParentId = administrator.Id,
                     DisplayOrder = 1,
@@ -52,8 +52,8 @@ namespace Restia.Common.Form.Services
                 new FormEntity
                 {
                     Code = "Role",
-                    Name = "Form_Roles",
-                    Url = "/Roles",
+                    Name = "Form_Role",
+                    Url = "/Role",
                     Icon = "bi-person-badge",
                     ParentId = administrator.Id,
                     DisplayOrder = 2,

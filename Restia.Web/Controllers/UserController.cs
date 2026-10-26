@@ -46,7 +46,7 @@ namespace Restia.Web.Controllers
                     items, result.PageNumber, result.PageSize, result.TotalCount),
                 Search = search,
                 PageSize = pageSize,
-                SearchPlaceholderKey = "User_Placeholder"
+                SearchPlaceholderKey = "User_SearchPlaceholder"
             };
 
             return View(model);
@@ -61,6 +61,44 @@ namespace Restia.Web.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = PermissionConstants.User.Available)]
+        public async Task<IActionResult> Create(UserFormViewModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Password))
+            {
+                ModelState.Remove(nameof(model.Password));
+                ModelState.Remove(nameof(model.ConfirmPassword));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.AvailableRoles = await BuildRoleOptionsAsync(model.SelectedRoles);
+                return View(model);
+            }
+
+            var result = await _userService.CreateAsync(new UserCreateDto
+            {
+                Email = model.Email,
+                DisplayName = model.DisplayName,
+                Password = model.Password!,
+                SelectedRoles = model.SelectedRoles
+            });
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error);
+
+                model.AvailableRoles = await BuildRoleOptionsAsync(model.SelectedRoles);
+                return View(model);
+            }
+
+            TempData["Success"] = "User_CreateSuccess";
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Policy = PermissionConstants.User.Available)]
@@ -125,7 +163,7 @@ namespace Restia.Web.Controllers
                 return View(model);
             }
 
-            TempData["Success"] = "User_SaveSuccess";
+            TempData["Success"] = "User_EditSuccess";
             return RedirectToAction(nameof(Index));
         }
 

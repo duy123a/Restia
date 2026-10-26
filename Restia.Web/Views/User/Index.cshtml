@@ -1,4 +1,4 @@
-﻿@model PaginationViewModel<UserViewModel>
+@model PaginationViewModel<UserViewModel>
 @using Microsoft.Extensions.Localization
 @using Restia.Common.Localization.Resources
 @using Restia.Common.Permission.Constants
@@ -104,7 +104,7 @@
 
         @if (Model.Items.PageCount > 1)
         {
-            <div class="pagination">
+            <div class="user-pagination">
                 @Html.PagedListPager(
                     Model.Items,
                     page => Url.Action("Index", new { search = Model.Search, page, pageSize = Model.PageSize })!,

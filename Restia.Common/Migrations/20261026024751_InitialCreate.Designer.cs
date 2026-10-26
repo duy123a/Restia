@@ -12,7 +12,7 @@ using Restia.Common.Data.Context;
 namespace Restia.Common.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261013073640_InitialCreate")]
+    [Migration("20261026024751_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -216,7 +216,7 @@ namespace Restia.Common.Migrations
                     b.HasKey("RoleId", "FormCode")
                         .HasName("pk_role_permission");
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Restia.Common.Permission.Entities.UserPermission", b =>
@@ -260,7 +260,7 @@ namespace Restia.Common.Migrations
                     b.HasKey("UserId", "FormCode")
                         .HasName("pk_user_permission");
 
-                    b.ToTable("UserPermission");
+                    b.ToTable("UserPermissions");
                 });
 
             modelBuilder.Entity("Restia.Common.Shared.Entities.AppRole", b =>

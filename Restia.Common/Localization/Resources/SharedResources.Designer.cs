@@ -196,6 +196,15 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Button_Create {
+            get {
+                return ResourceManager.GetString("Button_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go back.
         /// </summary>
         public static string Button_GoBack {
@@ -219,6 +228,15 @@ namespace Restia.Common.Localization.Resources {
         public static string Button_Logout {
             get {
                 return ResourceManager.GetString("Button_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Button_Save {
+            get {
+                return ResourceManager.GetString("Button_Save", resourceCulture);
             }
         }
         
@@ -349,20 +367,20 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Groups.
+        ///   Looks up a localized string similar to Group.
         /// </summary>
-        public static string Form_Roles {
+        public static string Form_Role {
             get {
-                return ResourceManager.GetString("Form_Roles", resourceCulture);
+                return ResourceManager.GetString("Form_Role", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Users.
+        ///   Looks up a localized string similar to User.
         /// </summary>
-        public static string Form_Users {
+        public static string Form_User {
             get {
-                return ResourceManager.GetString("Form_Users", resourceCulture);
+                return ResourceManager.GetString("Form_User", resourceCulture);
             }
         }
         
@@ -439,11 +457,128 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items per page.
+        /// </summary>
+        public static string Pagination_ItemsPerPage {
+            get {
+                return ResourceManager.GetString("Pagination_ItemsPerPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter {0}..
         /// </summary>
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string User_Actions {
+            get {
+                return ResourceManager.GetString("User_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password.
+        /// </summary>
+        public static string User_ConfirmPassword {
+            get {
+                return ResourceManager.GetString("User_ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display name.
+        /// </summary>
+        public static string User_DisplayName {
+            get {
+                return ResourceManager.GetString("User_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string User_Email {
+            get {
+                return ResourceManager.GetString("User_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a valid email address..
+        /// </summary>
+        public static string User_EmailInvalid {
+            get {
+                return ResourceManager.GetString("User_EmailInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No records found.
+        /// </summary>
+        public static string User_NoRecords {
+            get {
+                return ResourceManager.GetString("User_NoRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string User_Password {
+            get {
+                return ResourceManager.GetString("User_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords do not match..
+        /// </summary>
+        public static string User_PasswordMismatch {
+            get {
+                return ResourceManager.GetString("User_PasswordMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string User_Roles {
+            get {
+                return ResourceManager.GetString("User_Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by display name or email.
+        /// </summary>
+        public static string User_SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("User_SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage user accounts.
+        /// </summary>
+        public static string User_Subtitle {
+            get {
+                return ResourceManager.GetString("User_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string User_Title {
+            get {
+                return ResourceManager.GetString("User_Title", resourceCulture);
             }
         }
     }
