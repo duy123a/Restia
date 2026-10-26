@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Services.Interfaces;
 using Restia.Common.Shared.Entities;
@@ -20,9 +20,9 @@ namespace Restia.Common.Identity.Services
             _uow = uow;
         }
 
-        public Task<PagedResult<UserGetDto>> GetPagedListAsync(string? search, int page, int pageSize)
+        public Task<PagedResult<UserGetDto>> GetPagedListAsync(SearchParam? searchParam, int page, int pageSize)
         {
-            return _uow.UserRepository.GetPagedListAsync(search, page, pageSize);
+            return _uow.UserRepository.GetPagedListAsync(searchParam, page, pageSize);
         }
 
         public async Task<UserUpdateDto?> GetInfoForUpdateAsync(string id)

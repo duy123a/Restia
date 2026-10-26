@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Restia.Common.Identity.Enums;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Services.Interfaces;
@@ -25,11 +25,11 @@ namespace Restia.Common.Identity.Services
         }
 
         public Task<PagedResult<RoleGetDto>> GetPagedListAsync(
-            string? search,
+            SearchParam? searchParam,
             int page,
             int pageSize)
         {
-            return _uow.RoleRepository.GetPagedListAsync(search, page, pageSize);
+            return _uow.RoleRepository.GetPagedListAsync(searchParam, page, pageSize);
         }
 
         public async Task<RoleUpdateDto?> GetInfoForUpdateAsync(string id)

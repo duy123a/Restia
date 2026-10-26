@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Restia.Common.Identity.Models;
@@ -6,6 +6,7 @@ using Restia.Common.Identity.Services.Interfaces;
 using Restia.Common.Localization.Resources;
 using Restia.Common.Permission.Constants;
 using Restia.Common.Shared.Constants;
+using Restia.Common.Shared.Models;
 using Restia.Web.Models;
 using X.PagedList;
 
@@ -25,11 +26,21 @@ namespace Restia.Web.Controllers
         }
 
         [Authorize(Policy = PermissionConstants.User.Default)]
-        public async Task<IActionResult> Index(string? search, int page = 1, int pageSize = PaginationConstants.DefaultPageSize)
+        public async Task<IActionResult> Index(
+            string? searchTerm,
+            string? orderBy,
+            int page = 1,
+            int pageSize = PaginationConstants.DefaultPageSize)
         {
             pageSize = PaginationConstants.NormalizePageSize(pageSize);
 
-            var result = await _userService.GetPagedListAsync(search, page, pageSize);
+            var searchParam = new SearchParam
+            {
+                SearchTerm = searchTerm,
+                OrderBy = orderBy
+            };
+
+            var result = await _userService.GetPagedListAsync(searchParam, page, pageSize);
 
             var items = result.Items.Select(u => new UserViewModel
             {
@@ -44,7 +55,8 @@ namespace Restia.Web.Controllers
             {
                 Items = new StaticPagedList<UserViewModel>(
                     items, result.PageNumber, result.PageSize, result.TotalCount),
-                Search = search,
+                SearchTerm = searchTerm,
+                OrderBy = orderBy,
                 PageSize = pageSize,
                 SearchPlaceholderKey = "User_SearchPlaceholder"
             };

@@ -570,6 +570,41 @@ body {
     white-space: nowrap;
 }
 
+.sort-header-link {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--transition-base);
+}
+
+.sort-header-link:hover {
+    color: var(--brand-primary);
+}
+
+.sort-icons {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 0.55;
+    font-size: 0.65rem;
+    vertical-align: middle;
+}
+
+.sort-icon {
+    color: var(--text-secondary);
+    opacity: 0.35;
+    transition: opacity var(--transition-base), color var(--transition-base);
+}
+
+.sort-icon.active {
+    color: var(--brand-primary);
+    opacity: 1;
+}
+
 .user-table td {
     padding: 1rem 1.25rem;
     vertical-align: middle;

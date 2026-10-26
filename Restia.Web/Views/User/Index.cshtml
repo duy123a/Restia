@@ -30,7 +30,8 @@
 
     <div class="app-card user-card">
         <partial name="_PaginationToolbar" model="new PaginationViewModel<object> {
-            Search = Model.Search,
+            SearchTerm = Model.SearchTerm,
+            OrderBy = Model.OrderBy,
             PageSize = Model.PageSize,
             SearchPlaceholderKey = Model.SearchPlaceholderKey
         }" />
@@ -39,8 +40,32 @@
             <table class="table user-table mb-0">
                 <thead>
                     <tr>
-                        <th>@Localizer["User_DisplayName"]</th>
-                        <th>@Localizer["User_Email"]</th>
+                        <th>
+                            <a asp-action="Index"
+                               asp-route-searchTerm="@Model.SearchTerm"
+                               asp-route-orderBy="@(Model.OrderBy == AppConstants.DisplayNameDesc ? AppConstants.DisplayNameAsc : AppConstants.DisplayNameDesc)"
+                               asp-route-pageSize="@Model.PageSize"
+                               class="sort-header-link">
+                                <span>@Localizer["User_DisplayName"]</span>
+                                <span class="sort-icons">
+                                    <i class="bi bi-caret-up-fill sort-icon @(Model.OrderBy == AppConstants.DisplayNameAsc ? "active" : "")"></i>
+                                    <i class="bi bi-caret-down-fill sort-icon @(Model.OrderBy == AppConstants.DisplayNameDesc ? "active" : "")"></i>
+                                </span>
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index"
+                               asp-route-searchTerm="@Model.SearchTerm"
+                               asp-route-orderBy="@(Model.OrderBy == AppConstants.EmailDesc ? AppConstants.EmailAsc : AppConstants.EmailDesc)"
+                               asp-route-pageSize="@Model.PageSize"
+                               class="sort-header-link">
+                                <span>@Localizer["User_Email"]</span>
+                                <span class="sort-icons">
+                                    <i class="bi bi-caret-up-fill sort-icon @(Model.OrderBy == AppConstants.EmailAsc ? "active" : "")"></i>
+                                    <i class="bi bi-caret-down-fill sort-icon @(Model.OrderBy == AppConstants.EmailDesc ? "active" : "")"></i>
+                                </span>
+                            </a>
+                        </th>
                         <th>@Localizer["User_Roles"]</th>
                         <th class="text-end">@Localizer["User_Actions"]</th>
                     </tr>
@@ -107,7 +132,7 @@
             <div class="user-pagination">
                 @Html.PagedListPager(
                     Model.Items,
-                    page => Url.Action("Index", new { search = Model.Search, page, pageSize = Model.PageSize })!,
+                    page => Url.Action("Index", new { searchTerm = Model.SearchTerm, orderBy = Model.OrderBy, page, pageSize = Model.PageSize })!,
                     new PagedListRenderOptions
                     {
                         LiElementClasses = ["pagination-li-element"],

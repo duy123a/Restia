@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Repository.Interfaces;
+using Restia.Common.Shared.Constants;
 using Restia.Common.Shared.Entities;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.Repository;
@@ -14,13 +15,13 @@ namespace Restia.Common.Identity.Repository
         {
         }
 
-        public async Task<PagedResult<UserGetDto>> GetPagedListAsync(string? search, int page, int pageSize)
+        public async Task<PagedResult<UserGetDto>> GetPagedListAsync(SearchParam? searchParam, int page, int pageSize)
         {
             var query = Context.Users.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(search))
+            if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))
             {
-                var term = search.Trim();
+                var term = searchParam.SearchTerm.Trim();
 
                 query = query.Where(u =>
                     (u.DisplayName != null && u.DisplayName.Contains(term)) ||
@@ -29,9 +30,16 @@ namespace Restia.Common.Identity.Repository
 
             var totalCount = await query.CountAsync();
 
+            query = searchParam?.OrderBy switch
+            {
+                AppConstants.DisplayNameAsc => query.OrderBy(u => u.DisplayName).ThenBy(u => u.Id),
+                AppConstants.DisplayNameDesc => query.OrderByDescending(u => u.DisplayName).ThenBy(u => u.Id),
+                AppConstants.EmailDesc => query.OrderByDescending(u => u.Email).ThenBy(u => u.Id),
+                AppConstants.EmailAsc => query.OrderBy(u => u.Email).ThenBy(u => u.Id),
+                _ => query.OrderBy(u => u.Email).ThenBy(u => u.Id)
+            };
+
             var users = await query
-                .OrderBy(u => u.Email)
-                .ThenBy(u => u.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

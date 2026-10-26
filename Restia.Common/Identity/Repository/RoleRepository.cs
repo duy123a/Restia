@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Repository.Interfaces;
 using Restia.Common.Permission.Entities;
+using Restia.Common.Shared.Constants;
 using Restia.Common.Shared.Entities;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.Repository;
@@ -26,15 +27,15 @@ namespace Restia.Common.Identity.Repository
         }
 
         public async Task<PagedResult<RoleGetDto>> GetPagedListAsync(
-            string? search,
+            SearchParam? searchParam,
             int page,
             int pageSize)
         {
             var query = Context.Roles.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(search))
+            if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))
             {
-                var term = search.Trim();
+                var term = searchParam.SearchTerm.Trim();
 
                 query = query.Where(r =>
                     r.Name != null && r.Name.Contains(term));
@@ -42,9 +43,14 @@ namespace Restia.Common.Identity.Repository
 
             var totalCount = await query.CountAsync();
 
+            query = searchParam?.OrderBy switch
+            {
+                AppConstants.NameDesc => query.OrderByDescending(r => r.Name).ThenBy(r => r.Id),
+                AppConstants.NameAsc => query.OrderBy(r => r.Name).ThenBy(r => r.Id),
+                _ => query.OrderBy(r => r.Name).ThenBy(r => r.Id)
+            };
+
             var roles = await query
-                .OrderBy(r => r.Name)
-                .ThenBy(r => r.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

@@ -306,4 +306,10 @@
   <data name="UserEdit_Subtitle" xml:space="preserve">
     <value>Edit an existing user account</value>
   </data>
+  <data name="Button_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>
