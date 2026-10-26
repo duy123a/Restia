@@ -558,6 +558,51 @@ body {
     width: 100%;
 }
 
+.user-table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 680px;
+}
+
+.user-table .col-displayname {
+    width: 32%;
+}
+
+.user-table .col-email {
+    width: 32%;
+}
+
+.user-table .col-roles {
+    width: 22%;
+}
+
+.user-table .col-actions {
+    width: 14%;
+}
+
+.user-cell-content {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.user-info-text {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.user-display-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-email-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .user-table th {
     background: var(--bg-page);
     color: var(--text-secondary);

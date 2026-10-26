@@ -40,7 +40,7 @@
             <table class="table user-table mb-0">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="col-displayname">
                             <a asp-action="Index"
                                asp-route-searchTerm="@Model.SearchTerm"
                                asp-route-orderBy="@(Model.OrderBy == AppConstants.DisplayNameDesc ? AppConstants.DisplayNameAsc : AppConstants.DisplayNameDesc)"
@@ -53,7 +53,7 @@
                                 </span>
                             </a>
                         </th>
-                        <th>
+                        <th class="col-email">
                             <a asp-action="Index"
                                asp-route-searchTerm="@Model.SearchTerm"
                                asp-route-orderBy="@(Model.OrderBy == AppConstants.EmailDesc ? AppConstants.EmailAsc : AppConstants.EmailDesc)"
@@ -66,8 +66,8 @@
                                 </span>
                             </a>
                         </th>
-                        <th>@Localizer["User_Roles"]</th>
-                        <th class="text-end">@Localizer["User_Actions"]</th>
+                        <th class="col-roles">@Localizer["User_Roles"]</th>
+                        <th class="col-actions text-end">@Localizer["User_Actions"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,7 +84,7 @@
                     {
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center gap-2">
+                                <div class="d-flex align-items-center gap-2 user-cell-content">
                                     @{
                                         var initial = !string.IsNullOrWhiteSpace(user.DisplayName)
                                             ? user.DisplayName[0]
@@ -93,8 +93,8 @@
                                                 : '?';
                                     }
                                     <span class="admin-avatar">@initial</span>
-                                    <div>
-                                        <div class="fw-semibold">@user.DisplayName</div>
+                                    <div class="user-info-text">
+                                        <div class="fw-semibold user-display-name" title="@user.DisplayName">@user.DisplayName</div>
                                         @if (user.IsLockedOut)
                                         {
                                             <span class="badge bg-danger-subtle text-danger">@Localizer["User_LockedOut"]</span>
@@ -102,7 +102,9 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>@user.Email</td>
+                            <td>
+                                <div class="user-email-text" title="@user.Email">@user.Email</div>
+                            </td>
                             <td>
                                 <div class="d-flex flex-wrap gap-1">
                                     @foreach (var role in user.Roles)
