@@ -25,5 +25,10 @@ namespace Restia.Common.Shared.Repository
             return _context.Database.BeginTransactionAsync(
                 cancellationToken);
         }
+
+        public IExecutionStrategy CreateExecutionStrategy()
+        {
+            return _context.Database.CreateExecutionStrategy();
+        }
     }
 }

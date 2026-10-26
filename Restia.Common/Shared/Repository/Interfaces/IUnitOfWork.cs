@@ -9,5 +9,7 @@ namespace Restia.Common.Shared.Repository.Interfaces
 
         Task<IDbContextTransaction> BeginTransactionAsync(
             CancellationToken cancellationToken = default);
+
+        IExecutionStrategy CreateExecutionStrategy();
     }
 }

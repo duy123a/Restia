@@ -48,125 +48,143 @@ namespace Restia.Common.Identity.Services
 
         public async Task<ServiceResult> CreateAsync(UserCreateDto dto)
         {
-            await using var transaction = await _uow.BeginTransactionAsync();
+            var strategy = _uow.CreateExecutionStrategy();
 
-            try
-            {
-                var user = new AppUser
+            return await strategy.ExecuteAsync(
+                state: dto,
+                operation: async (_, state, cancellationToken) =>
                 {
-                    Email = dto.Email,
-                    UserName = dto.Email,
-                    DisplayName = dto.DisplayName,
-                    EmailConfirmed = true
-                };
+                    await using var transaction = await _uow.BeginTransactionAsync();
 
-                var result = await _userManager.CreateAsync(user, dto.Password);
+                    try
+                    {
+                        var user = new AppUser
+                        {
+                            Email = dto.Email,
+                            UserName = dto.Email,
+                            DisplayName = dto.DisplayName,
+                            EmailConfirmed = true
+                        };
 
-                if (!result.Succeeded)
-                {
-                    await transaction.RollbackAsync();
-                    return ServiceResult.FromIdentityResult(result);
-                }
+                        var result = await _userManager.CreateAsync(user, dto.Password);
 
-                if (dto.SelectedRoles.Count > 0)
-                {
-                    var roleResult = await _userManager.AddToRolesAsync(
-                        user, dto.SelectedRoles);
+                        if (!result.Succeeded)
+                        {
+                            await transaction.RollbackAsync();
+                            return ServiceResult.FromIdentityResult(result);
+                        }
 
-                    if (!roleResult.Succeeded)
+                        if (dto.SelectedRoles.Count > 0)
+                        {
+                            var roleResult = await _userManager.AddToRolesAsync(
+                                user, dto.SelectedRoles);
+
+                            if (!roleResult.Succeeded)
+                            {
+                                await transaction.RollbackAsync();
+                                return ServiceResult.FromIdentityResult(roleResult);
+                            }
+                        }
+
+                        await transaction.CommitAsync();
+
+                        return ServiceResult.Success();
+                    }
+                    catch
                     {
                         await transaction.RollbackAsync();
-                        return ServiceResult.FromIdentityResult(roleResult);
+                        throw;
                     }
-                }
-
-                await transaction.CommitAsync();
-
-                return ServiceResult.Success();
-            }
-            catch
-            {
-                await transaction.RollbackAsync();
-                throw;
-            }
+                },
+                verifySucceeded: null,
+                cancellationToken: CancellationToken.None);
         }
 
         public async Task<ServiceResult> UpdateAsync(UserUpdateDto dto)
         {
-            await using var transaction = await _uow.BeginTransactionAsync();
+            var strategy = _uow.CreateExecutionStrategy();
 
-            try
-            {
-                var user = await _userManager.FindByIdAsync(dto.Id);
-
-                if (user == null)
-                    return ServiceResult.Fail("User_NotFound");
-
-                user.Email = dto.Email;
-                user.UserName = dto.Email;
-                user.DisplayName = dto.DisplayName;
-
-                var updateResult = await _userManager.UpdateAsync(user);
-
-                if (!updateResult.Succeeded)
-                    return ServiceResult.FromIdentityResult(updateResult);
-
-                if (!string.IsNullOrWhiteSpace(dto.Password))
+            return await strategy.ExecuteAsync(
+                state: dto,
+                operation: async (_, state, cancellationToken) =>
                 {
-                    var token =
-                        await _userManager.GeneratePasswordResetTokenAsync(user);
+                    await using var transaction = await _uow.BeginTransactionAsync();
 
-                    var passwordResult =
-                        await _userManager.ResetPasswordAsync(
-                            user, token, dto.Password);
+                    try
+                    {
+                        var user = await _userManager.FindByIdAsync(dto.Id);
 
-                    if (!passwordResult.Succeeded)
-                        return ServiceResult.FromIdentityResult(passwordResult);
-                }
+                        if (user == null)
+                            return ServiceResult.Fail("User_NotFound");
 
-                var currentRoles = await _userManager.GetRolesAsync(user);
+                        user.Email = dto.Email;
+                        user.UserName = dto.Email;
+                        user.DisplayName = dto.DisplayName;
 
-                var rolesToRemove = currentRoles
-                    .Except(dto.SelectedRoles, StringComparer.OrdinalIgnoreCase)
-                    .ToArray();
+                        var updateResult = await _userManager.UpdateAsync(user);
 
-                var rolesToAdd = dto.SelectedRoles
-                    .Except(currentRoles, StringComparer.OrdinalIgnoreCase)
-                    .ToArray();
+                        if (!updateResult.Succeeded)
+                            return ServiceResult.FromIdentityResult(updateResult);
 
-                if (rolesToRemove.Length > 0)
-                {
-                    var removeResult =
-                        await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+                        if (!string.IsNullOrWhiteSpace(dto.Password))
+                        {
+                            var token =
+                                await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                    if (!removeResult.Succeeded)
-                        return ServiceResult.FromIdentityResult(removeResult);
-                }
+                            var passwordResult =
+                                await _userManager.ResetPasswordAsync(
+                                    user, token, dto.Password);
 
-                if (rolesToAdd.Length > 0)
-                {
-                    var addResult =
-                        await _userManager.AddToRolesAsync(user, rolesToAdd);
+                            if (!passwordResult.Succeeded)
+                                return ServiceResult.FromIdentityResult(passwordResult);
+                        }
 
-                    if (!addResult.Succeeded)
-                        return ServiceResult.FromIdentityResult(addResult);
-                }
+                        var currentRoles = await _userManager.GetRolesAsync(user);
 
-                var stampResult =
-                    await _userManager.UpdateSecurityStampAsync(user);
+                        var rolesToRemove = currentRoles
+                            .Except(dto.SelectedRoles, StringComparer.OrdinalIgnoreCase)
+                            .ToArray();
 
-                if (!stampResult.Succeeded)
-                    return ServiceResult.FromIdentityResult(stampResult);
+                        var rolesToAdd = dto.SelectedRoles
+                            .Except(currentRoles, StringComparer.OrdinalIgnoreCase)
+                            .ToArray();
 
-                await transaction.CommitAsync();
+                        if (rolesToRemove.Length > 0)
+                        {
+                            var removeResult =
+                                await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
 
-                return ServiceResult.Success();
-            }
-            catch
-            {
-                await transaction.RollbackAsync();
-                throw;
-            }
+                            if (!removeResult.Succeeded)
+                                return ServiceResult.FromIdentityResult(removeResult);
+                        }
+
+                        if (rolesToAdd.Length > 0)
+                        {
+                            var addResult =
+                                await _userManager.AddToRolesAsync(user, rolesToAdd);
+
+                            if (!addResult.Succeeded)
+                                return ServiceResult.FromIdentityResult(addResult);
+                        }
+
+                        var stampResult =
+                            await _userManager.UpdateSecurityStampAsync(user);
+
+                        if (!stampResult.Succeeded)
+                            return ServiceResult.FromIdentityResult(stampResult);
+
+                        await transaction.CommitAsync();
+
+                        return ServiceResult.Success();
+                    }
+                    catch
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                },
+                verifySucceeded: null,
+                cancellationToken: CancellationToken.None);
         }
 
         public async Task<ServiceResult> DeleteAsync(string id, string currentUserId)

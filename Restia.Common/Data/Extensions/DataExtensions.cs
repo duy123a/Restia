@@ -26,7 +26,10 @@ namespace Restia.Common.Data.Extensions
 
                 options.UseNpgsql(connectionString, sql =>
                 {
-                    sql.EnableRetryOnFailure();
+                    sql.EnableRetryOnFailure(
+                        maxRetryCount: 6,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorCodesToAdd: null);
                 });
             });
 

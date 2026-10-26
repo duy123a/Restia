@@ -291,4 +291,19 @@
   <data name="Button_Save" xml:space="preserve">
     <value>Lưu</value>
   </data>
+  <data name="UserCreate_Title" xml:space="preserve">
+    <value>Tạo người dùng</value>
+  </data>
+  <data name="UserCreate_Subtitle" xml:space="preserve">
+    <value>Thêm tài khoản người dùng mới</value>
+  </data>
+  <data name="UserCreate_AssignRoles" xml:space="preserve">
+    <value>Gán nhóm</value>
+  </data>
+  <data name="UserEdit_Title" xml:space="preserve">
+    <value>Sửa người dùng</value>
+  </data>
+  <data name="UserEdit_Subtitle" xml:space="preserve">
+    <value>Chỉnh sửa tài khoản người dùng đã tồn tại</value>
+  </data>
 </root>

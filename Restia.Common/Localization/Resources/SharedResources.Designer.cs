@@ -581,5 +581,50 @@ namespace Restia.Common.Localization.Resources {
                 return ResourceManager.GetString("User_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign groups.
+        /// </summary>
+        public static string UserCreate_AssignRoles {
+            get {
+                return ResourceManager.GetString("UserCreate_AssignRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new user account.
+        /// </summary>
+        public static string UserCreate_Subtitle {
+            get {
+                return ResourceManager.GetString("UserCreate_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create user.
+        /// </summary>
+        public static string UserCreate_Title {
+            get {
+                return ResourceManager.GetString("UserCreate_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit an existing user account.
+        /// </summary>
+        public static string UserEdit_Subtitle {
+            get {
+                return ResourceManager.GetString("UserEdit_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit user.
+        /// </summary>
+        public static string UserEdit_Title {
+            get {
+                return ResourceManager.GetString("UserEdit_Title", resourceCulture);
+            }
+        }
     }
 }

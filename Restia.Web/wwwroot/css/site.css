@@ -611,6 +611,57 @@ body {
     border-radius: var(--radius-sm);
 }
 
+.user-card hr {
+    border-color: var(--border-color);
+    opacity: 1;
+}
+
+.user-card h5 {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.role-check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.role-check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    cursor: pointer;
+    user-select: none;
+    transition: border-color var(--transition-base), background-color var(--transition-base);
+}
+
+    .role-check-item:hover {
+        border-color: var(--brand-primary);
+        background-color: color-mix(in srgb, var(--brand-primary) 4%, var(--bg-card));
+    }
+
+    .role-check-item:has(input:checked) {
+        border-color: var(--brand-primary);
+        background-color: color-mix(in srgb, var(--brand-primary) 8%, var(--bg-card));
+    }
+
+    .role-check-item .form-check-input {
+        margin-top: 0;
+        cursor: pointer;
+    }
+
+    .role-check-item span {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+    }
+
 /* ── Pagination Toolbar ──────────────────────────────────── */
 
 .pagination-toolbar {
