@@ -1,4 +1,4 @@
-﻿using Restia.Common.Localization.Resources;
+using Restia.Common.Localization.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace Restia.Web.Models
@@ -7,7 +7,7 @@ namespace Restia.Web.Models
     {
         public string Id { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string DisplayName { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public IList<string> Roles { get; set; } = [];
         public bool IsLockedOut { get; set; }
     }
@@ -17,6 +17,10 @@ namespace Restia.Web.Models
         public string? Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(SharedResources), ErrorMessageResourceName = "Required")]
+        [Display(ResourceType = typeof(SharedResources), Name = "User_UserName")]
+        public string UserName { get; set; } = string.Empty;
+
+        [Required(ErrorMessageResourceType = typeof(SharedResources), ErrorMessageResourceName = "Required")]
         [Display(ResourceType = typeof(SharedResources), Name = "User_Email")]
         [EmailAddress(ErrorMessageResourceType = typeof(SharedResources), ErrorMessageResourceName = "User_EmailInvalid")]
         public string Email { get; set; } = string.Empty;
@@ -24,6 +28,10 @@ namespace Restia.Web.Models
         [Required(ErrorMessageResourceType = typeof(SharedResources), ErrorMessageResourceName = "Required")]
         [Display(ResourceType = typeof(SharedResources), Name = "User_DisplayName")]
         public string DisplayName { get; set; } = string.Empty;
+
+        [Display(ResourceType = typeof(SharedResources), Name = "User_PhoneNumber")]
+        [Phone(ErrorMessageResourceType = typeof(SharedResources), ErrorMessageResourceName = "User_PhoneInvalid")]
+        public string? PhoneNumber { get; set; }
 
         [Display(ResourceType = typeof(SharedResources), Name = "User_Password")]
         [DataType(DataType.Password)]

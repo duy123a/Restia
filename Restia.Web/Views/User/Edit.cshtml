@@ -1,4 +1,4 @@
-﻿@model UserFormViewModel
+@model UserFormViewModel
 @using Microsoft.Extensions.Localization
 @using Restia.Common.Localization.Resources
 @inject IStringLocalizer<SharedResources> Localizer
@@ -29,14 +29,24 @@
 
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label asp-for="DisplayName" class="app-form-label"></label>
-                        <input asp-for="DisplayName" class="form-control app-form-control" />
-                        <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                        <label asp-for="UserName" class="app-form-label"></label>
+                        <input asp-for="UserName" class="form-control app-form-control" />
+                        <span asp-validation-for="UserName" class="text-danger small"></span>
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Email" class="app-form-label"></label>
                         <input asp-for="Email" class="form-control app-form-control" />
                         <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DisplayName" class="app-form-label"></label>
+                        <input asp-for="DisplayName" class="form-control app-form-control" />
+                        <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="PhoneNumber" class="app-form-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control app-form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
                     </div>
                     <div class="col-md-6">
                         <label asp-for="Password" class="app-form-label"></label>

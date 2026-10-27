@@ -1,15 +1,15 @@
-﻿using Restia.Common.Localization.Resources;
+using Restia.Common.Localization.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace Restia.Web.Models
 {
     public class LoginViewModel
     {
-        [Display(ResourceType = typeof(SharedResources), Name = "Login_Email")]
+        [Display(ResourceType = typeof(SharedResources), Name = "Login_LoginInfo")]
         [Required(
             ErrorMessageResourceName = "Required",
             ErrorMessageResourceType = typeof(SharedResources))]
-        public string Email { get; set; } = string.Empty;
+        public string LoginInfo { get; set; } = string.Empty;
 
         [Display(ResourceType = typeof(SharedResources), Name = "Login_Password")]
         [Required(

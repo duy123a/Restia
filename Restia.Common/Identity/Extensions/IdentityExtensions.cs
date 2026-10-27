@@ -17,6 +17,8 @@ namespace Restia.Common.Identity.Extensions
 
             services.AddIdentity<AppUser, AppRole>(options =>
             {
+                options.User.RequireUniqueEmail = true;
+
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 

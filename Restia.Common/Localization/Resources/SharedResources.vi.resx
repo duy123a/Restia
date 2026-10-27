@@ -174,6 +174,9 @@
   <data name="Login_Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Login_LoginInfo" xml:space="preserve">
+    <value>Tên đăng nhập hoặc email</value>
+  </data>
   <data name="Login_Failed" xml:space="preserve">
     <value>Địa chỉ email hoặc mật khẩu không chính xác.</value>
   </data>
@@ -255,6 +258,15 @@
   <data name="User_DisplayName" xml:space="preserve">
     <value>Tên hiển thị</value>
   </data>
+  <data name="User_UserName" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="User_PhoneNumber" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
+  <data name="User_PhoneInvalid" xml:space="preserve">
+    <value>Số điện thoại không hợp lệ.</value>
+  </data>
   <data name="User_Email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -265,7 +277,7 @@
     <value>Thao tác</value>
   </data>
   <data name="User_SearchPlaceholder" xml:space="preserve">
-    <value>Tìm theo tên hiển thị hoặc email</value>
+    <value>Tìm theo tên đăng nhập hoặc email</value>
   </data>
   <data name="Pagination_ItemsPerPage" xml:space="preserve">
     <value>Số mục mỗi trang</value>

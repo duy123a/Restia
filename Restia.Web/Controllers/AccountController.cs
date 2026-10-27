@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +61,9 @@ namespace Restia.Web.Controllers
                     : DateTimeOffset.UtcNow.AddSeconds(_cookieSettings.DefaultExpireSeconds)
             };
 
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var loginInfo = model.LoginInfo?.Trim() ?? string.Empty;
+            var user = await _userManager.FindByEmailAsync(loginInfo)
+                ?? await _userManager.FindByNameAsync(loginInfo);
 
             if (user != null)
             {

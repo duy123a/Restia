@@ -36,8 +36,10 @@ namespace Restia.Common.Identity.Services
             return new UserUpdateDto
             {
                 Id = user.Id,
+                UserName = user.UserName ?? string.Empty,
                 Email = user.Email ?? string.Empty,
                 DisplayName = user.DisplayName,
+                PhoneNumber = user.PhoneNumber,
                 SelectedRoles = selectedRoles.ToList(),
                 AvailableRoles = availableRoles
             };
@@ -60,8 +62,9 @@ namespace Restia.Common.Identity.Services
                     {
                         var user = new AppUser
                         {
+                            UserName = dto.UserName,
                             Email = dto.Email,
-                            UserName = dto.Email,
+                            PhoneNumber = dto.PhoneNumber,
                             DisplayName = dto.DisplayName,
                             EmailConfirmed = true
                         };
@@ -117,8 +120,9 @@ namespace Restia.Common.Identity.Services
                         if (user == null)
                             return ServiceResult.Fail("User_NotFound");
 
+                        user.UserName = dto.UserName;
                         user.Email = dto.Email;
-                        user.UserName = dto.Email;
+                        user.PhoneNumber = dto.PhoneNumber;
                         user.DisplayName = dto.DisplayName;
 
                         var updateResult = await _userManager.UpdateAsync(user);

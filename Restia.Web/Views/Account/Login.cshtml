@@ -1,4 +1,4 @@
-﻿@using Restia.Common.Localization.Resources;
+@using Restia.Common.Localization.Resources;
 @using Microsoft.Extensions.Localization;
 @inject IStringLocalizer<SharedResources> Localizer;
 
@@ -23,12 +23,12 @@
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger app-alert"></div>
 
                 <div class="mb-3">
-                    <label asp-for="Email" class="form-label app-form-label">@Localizer["Login_Email"]</label>
-                    <input asp-for="Email"
+                    <label asp-for="LoginInfo" class="form-label app-form-label">@Localizer["Login_LoginInfo"]</label>
+                    <input asp-for="LoginInfo"
                            class="form-control app-form-control"
-                           placeholder="@Localizer["Login_Email"]"
+                           placeholder="@Localizer["Login_LoginInfo"]"
                            autocomplete="username" />
-                    <span asp-validation-for="Email" class="text-danger small"></span>
+                    <span asp-validation-for="LoginInfo" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">

@@ -61,7 +61,9 @@ namespace Restia.Common.Identity.Services
             admin = new AppUser
             {
                 Email = _seedOptions.AdminEmail,
-                UserName = _seedOptions.AdminEmail,
+                UserName = _seedOptions.AdminEmail?
+                    .Split('@')[0]
+                    ?? string.Empty,
                 EmailConfirmed = true,
                 DisplayName = AppRoles.SuperAdmin.ToString()
             };

@@ -40,16 +40,16 @@
             <table class="table user-table mb-0">
                 <thead>
                     <tr>
-                        <th class="col-displayname">
+                        <th class="col-username">
                             <a asp-action="Index"
                                asp-route-searchTerm="@Model.SearchTerm"
-                               asp-route-orderBy="@(Model.OrderBy == AppConstants.DisplayNameDesc ? AppConstants.DisplayNameAsc : AppConstants.DisplayNameDesc)"
+                               asp-route-orderBy="@(Model.OrderBy == AppConstants.UserNameDesc ? AppConstants.UserNameAsc : AppConstants.UserNameDesc)"
                                asp-route-pageSize="@Model.PageSize"
                                class="sort-header-link">
-                                <span>@Localizer["User_DisplayName"]</span>
+                                <span>@Localizer["User_UserName"]</span>
                                 <span class="sort-icons">
-                                    <i class="bi bi-caret-up-fill sort-icon @(Model.OrderBy == AppConstants.DisplayNameAsc ? "active" : "")"></i>
-                                    <i class="bi bi-caret-down-fill sort-icon @(Model.OrderBy == AppConstants.DisplayNameDesc ? "active" : "")"></i>
+                                    <i class="bi bi-caret-up-fill sort-icon @(Model.OrderBy == AppConstants.UserNameAsc ? "active" : "")"></i>
+                                    <i class="bi bi-caret-down-fill sort-icon @(Model.OrderBy == AppConstants.UserNameDesc ? "active" : "")"></i>
                                 </span>
                             </a>
                         </th>
@@ -86,15 +86,15 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2 user-cell-content">
                                     @{
-                                        var initial = !string.IsNullOrWhiteSpace(user.DisplayName)
-                                            ? user.DisplayName[0]
+                                        var initial = !string.IsNullOrWhiteSpace(user.UserName)
+                                            ? user.UserName[0]
                                             : !string.IsNullOrWhiteSpace(user.Email)
                                                 ? user.Email[0]
                                                 : '?';
                                     }
                                     <span class="admin-avatar">@initial</span>
                                     <div class="user-info-text">
-                                        <div class="fw-semibold user-display-name" title="@user.DisplayName">@user.DisplayName</div>
+                                        <div class="fw-semibold user-display-name" title="@user.UserName">@user.UserName</div>
                                         @if (user.IsLockedOut)
                                         {
                                             <span class="badge bg-danger-subtle text-danger">@Localizer["User_LockedOut"]</span>

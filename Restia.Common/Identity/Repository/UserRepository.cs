@@ -24,6 +24,7 @@ namespace Restia.Common.Identity.Repository
                 var term = searchParam.SearchTerm.Trim();
 
                 query = query.Where(u =>
+                    (u.UserName != null && u.UserName.Contains(term)) ||
                     (u.DisplayName != null && u.DisplayName.Contains(term)) ||
                     (u.Email != null && u.Email.Contains(term)));
             }
@@ -32,11 +33,11 @@ namespace Restia.Common.Identity.Repository
 
             query = searchParam?.OrderBy switch
             {
-                AppConstants.DisplayNameAsc => query.OrderBy(u => u.DisplayName).ThenBy(u => u.Id),
-                AppConstants.DisplayNameDesc => query.OrderByDescending(u => u.DisplayName).ThenBy(u => u.Id),
+                AppConstants.UserNameAsc => query.OrderBy(u => u.UserName).ThenBy(u => u.Id),
+                AppConstants.UserNameDesc => query.OrderByDescending(u => u.UserName).ThenBy(u => u.Id),
                 AppConstants.EmailDesc => query.OrderByDescending(u => u.Email).ThenBy(u => u.Id),
                 AppConstants.EmailAsc => query.OrderBy(u => u.Email).ThenBy(u => u.Id),
-                _ => query.OrderBy(u => u.Email).ThenBy(u => u.Id)
+                _ => query.OrderBy(u => u.UserName).ThenBy(u => u.Id)
             };
 
             var users = await query
@@ -53,7 +54,7 @@ namespace Restia.Common.Identity.Repository
             var items = users.Select(u => new UserGetDto(
                 u.Id,
                 u.Email ?? string.Empty,
-                u.DisplayName,
+                u.UserName ?? string.Empty,
                 Roles: rolesByUser.TryGetValue(u.Id, out var roles)
                     ? roles
                     : [],

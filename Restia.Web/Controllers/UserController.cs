@@ -46,7 +46,7 @@ namespace Restia.Web.Controllers
             {
                 Id = u.Id,
                 Email = u.Email,
-                DisplayName = u.DisplayName,
+                UserName = u.UserName,
                 Roles = u.Roles,
                 IsLockedOut = u.IsLockedOut
             }).ToList();
@@ -94,8 +94,10 @@ namespace Restia.Web.Controllers
 
             var result = await _userService.CreateAsync(new UserCreateDto
             {
+                UserName = model.UserName,
                 Email = model.Email,
                 DisplayName = model.DisplayName,
+                PhoneNumber = model.PhoneNumber,
                 Password = model.Password!,
                 SelectedRoles = model.SelectedRoles
             });
@@ -124,8 +126,10 @@ namespace Restia.Web.Controllers
             return View(new UserFormViewModel
             {
                 Id = dto.Id,
+                UserName = dto.UserName,
                 Email = dto.Email,
                 DisplayName = dto.DisplayName,
+                PhoneNumber = dto.PhoneNumber,
                 SelectedRoles = dto.SelectedRoles,
                 AvailableRoles = dto.AvailableRoles.Select(r => new RoleOptionViewModel
                 {
@@ -158,8 +162,10 @@ namespace Restia.Web.Controllers
             var result = await _userService.UpdateAsync(new UserUpdateDto
             {
                 Id = model.Id,
+                UserName = model.UserName,
                 Email = model.Email,
                 DisplayName = model.DisplayName,
+                PhoneNumber = model.PhoneNumber,
                 Password = model.Password,
                 SelectedRoles = model.SelectedRoles
             });
