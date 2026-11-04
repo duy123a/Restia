@@ -23,7 +23,7 @@
         @if (canModify)
         {
             <a asp-action="Create" class="btn app-btn app-btn-primary">
-                <i class="bi bi-person-plus me-1"></i>@Localizer["Button_Create"]
+                <i class="bi bi-plus-lg me-1"></i>@Localizer["Button_Create"]
             </a>
         }
     </div>
@@ -108,12 +108,23 @@
                                 <div class="user-email-text" title="@user.Email">@user.Email</div>
                             </td>
                             <td>
-                                <div class="d-flex flex-wrap gap-1">
-                                    @foreach (var role in user.Roles)
-                                    {
-                                        <span class="badge app-badge">@role</span>
-                                    }
-                                </div>
+                                @if (user.Roles.Count > 0)
+                                {
+                                    <div class="d-flex align-items-center gap-1 flex-nowrap user-cell-content">
+                                        <span class="badge app-badge text-truncate" title="@user.Roles[0]">@user.Roles[0]</span>
+                                        @if (user.Roles.Count > 1)
+                                        {
+                                            <span class="badge app-badge-more"
+                                                  title="@string.Join(", ", user.Roles.Skip(1))">
+                                                +@(user.Roles.Count - 1)
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">-</span>
+                                }
                             </td>
                             <td class="text-end">
                                 <partial name="_TableActions"

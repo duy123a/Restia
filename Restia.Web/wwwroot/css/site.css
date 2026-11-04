@@ -622,6 +622,18 @@ body {
     flex-shrink: 0;
 }
 
+.app-badge-more {
+    background-color: var(--bg-page);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--radius-sm);
+    cursor: default;
+    flex-shrink: 0;
+}
+
 .app-badge {
     background-color: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
     color: var(--brand-primary);
