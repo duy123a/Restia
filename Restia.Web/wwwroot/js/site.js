@@ -69,16 +69,6 @@ if (logoutConfirmBtn && logoutForm) {
     logoutConfirmBtn.addEventListener('click', () => logoutForm.submit());
 }
 
-// Auto submit for select/inputs with [data-auto-submit]
-document.addEventListener('change', function (e) {
-    if (e.target && e.target.matches('[data-auto-submit]')) {
-        const form = e.target.form;
-        if (form) {
-            form.requestSubmit ? form.requestSubmit() : form.submit();
-        }
-    }
-});
-
 // Bulk column selector for permission matrix
 document.addEventListener('click', function (e) {
     const btn = e.target.closest('[data-select-column]');

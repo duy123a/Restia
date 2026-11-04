@@ -57,18 +57,11 @@
                     @(Model.Type == PermissionTargetType.Role ? Localizer["Permission_SelectRole"] : Localizer["Permission_SelectUser"]):
                 </label>
                 <div class="d-flex align-items-center gap-2 flex-grow-1 permission-target-wrapper">
-                    <select id="targetSelect" name="id" class="form-select" data-auto-submit>
-                        <option value="">-- @Localizer["Permission_ChooseTargetPlaceholder"] --</option>
+                    <select id="targetSelect" name="id" class="form-select" placeholder="@Localizer["Permission_ChooseTargetPlaceholder"]">
+                        <option value=""></option>
                         @foreach (var opt in Model.TargetOptions)
                         {
-                            if (opt.Id == Model.TargetId)
-                            {
-                                <option value="@opt.Id" selected>@opt.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@opt.Id">@opt.Name</option>
-                            }
+                            <option value="@opt.Id" selected="@(opt.Id == Model.TargetId)">@opt.Name</option>
                         }
                     </select>
                     <noscript>
@@ -268,3 +261,24 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const el = document.getElementById('targetSelect');
+            if (!el) return;
+
+            const ts = new TomSelect(el, {
+                create: false,
+                maxItems: 1,
+                allowEmptyOption: false,
+                placeholder: '@Localizer["Permission_ChooseTargetPlaceholder"]',
+                onChange: function (value) {
+                    if (value && this.input.form) {
+                        this.input.form.submit();
+                    }
+                }
+            });
+        });
+    </script>
+}

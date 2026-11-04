@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Localization;
 using Restia.Common.Localization.Resources;
 using Restia.Common.Permission.Constants;
@@ -133,14 +134,18 @@ namespace Restia.Web.Controllers
                 TempData["Success"] = "Permission_SaveSuccess";
             }
 
-            return RedirectToAction(nameof(Index), new
-            {
-                type = model.Type,
-                id = model.TargetId,
-                searchTerm = model.SearchTerm,
-                page = model.Page,
-                pageSize = model.PageSize
-            });
+            var url = QueryHelpers.AddQueryString(
+                Url.Action(nameof(Index))!,
+                new Dictionary<string, string?>
+                {
+                    ["type"] = model.Type.ToString(),
+                    ["id"] = model.TargetId,
+                    ["searchTerm"] = model.SearchTerm,
+                    ["page"] = model.Page.ToString(),
+                    ["pageSize"] = model.PageSize.ToString()
+                });
+
+            return Redirect(url);
         }
     }
 }
