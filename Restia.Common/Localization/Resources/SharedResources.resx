@@ -334,7 +334,7 @@
     <value>Select</value>
   </data>
   <data name="Form_Permission" xml:space="preserve">
-    <value>Permissions</value>
+    <value>Permission</value>
   </data>
   <data name="FormAuthoritySec_Available" xml:space="preserve">
     <value>Available</value>

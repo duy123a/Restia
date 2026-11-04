@@ -412,7 +412,7 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Permissions.
+        ///   Looks up a localized string similar to Permission.
         /// </summary>
         public static string Form_Permission {
             get {

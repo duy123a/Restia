@@ -526,6 +526,7 @@ body {
     border-radius: 0;
     color: var(--text-secondary);
     font-weight: 600;
+    font-size: 0.9rem;
     padding: 0.75rem 1.25rem;
     transition: color var(--transition-base), border-color var(--transition-base);
 }
@@ -685,8 +686,9 @@ body {
 .permission-matrix .matrix-group-row td {
     background-color: var(--bg-page);
     color: var(--text-primary);
+    font-size: 0.85rem;
     font-weight: 700;
-    padding: 0.75rem 1.25rem;
+    padding: 0.625rem 1.25rem;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }
@@ -701,38 +703,27 @@ body {
     height: 1.15rem;
 }
 
-.matrix-radio-available-label {
-    color: var(--success);
+.matrix-select-all-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 0.725rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: normal;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: color var(--transition-base);
 }
 
-.matrix-radio-referable-label {
+.matrix-select-all-btn:hover,
+.matrix-select-all-btn:focus-visible {
     color: var(--brand-primary);
 }
 
-.matrix-radio-unavailable-label {
-    color: var(--danger);
-}
-
-.matrix-radio-none-label {
-    color: var(--text-secondary);
-}
-
-.matrix-radio-available:checked {
-    background-color: var(--success);
-    border-color: var(--success);
-}
-
-.matrix-radio-referable:checked {
-    background-color: var(--brand-primary);
-    border-color: var(--brand-primary);
-}
-
-.matrix-radio-unavailable:checked {
-    background-color: var(--danger);
-    border-color: var(--danger);
-}
-
-.matrix-radio-none:checked {
+.matrix-radio:checked {
     background-color: var(--text-secondary);
     border-color: var(--text-secondary);
 }
@@ -743,8 +734,29 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+.permission-toolbar-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
 .permission-target-wrapper {
-    max-width: 400px;
+    max-width: 340px;
+}
+
+.permission-target-wrapper .form-select {
+    border-radius: var(--radius-sm);
+    border-color: var(--border-color);
+    font-size: 0.875rem;
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.permission-target-wrapper .form-select:focus {
+    border-color: var(--brand-primary);
+    box-shadow: var(--focus-ring);
 }
 
 .permission-footer {
@@ -754,6 +766,17 @@ body {
     padding: 1.25rem 1.5rem;
     border-top: 1px solid var(--border-color);
     background: var(--bg-card);
+}
+
+.permission-empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem 1rem;
+}
+
+.permission-empty-state p {
+    font-size: 0.925rem;
+    margin-bottom: 0;
 }
 
 /* ── Check Grid (Role / Options) ─────────────────────────── */

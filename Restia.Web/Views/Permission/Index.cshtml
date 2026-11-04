@@ -52,12 +52,12 @@
         <div class="permission-toolbar">
             <form method="get" asp-action="Index" class="d-flex align-items-center gap-3 flex-wrap">
                 <input type="hidden" name="type" value="@Model.Type" />
-                <label for="targetSelect" class="app-form-label mb-0 fw-semibold text-nowrap">
+                <label for="targetSelect" class="permission-toolbar-label">
                     <i class="bi @(Model.Type == PermissionTargetType.Role ? "bi-person-badge" : "bi-person") me-1"></i>
                     @(Model.Type == PermissionTargetType.Role ? Localizer["Permission_SelectRole"] : Localizer["Permission_SelectUser"]):
                 </label>
                 <div class="d-flex align-items-center gap-2 flex-grow-1 permission-target-wrapper">
-                    <select id="targetSelect" name="id" class="form-select app-form-control" data-auto-submit>
+                    <select id="targetSelect" name="id" class="form-select" data-auto-submit>
                         <option value="">-- @Localizer["Permission_ChooseTargetPlaceholder"] --</option>
                         @foreach (var opt in Model.TargetOptions)
                         {
@@ -80,9 +80,9 @@
 
         @if (Model.Matrix == null)
         {
-            <div class="text-center text-muted py-5 px-3">
-                <i class="bi bi-shield-check display-5 d-block mb-3 opacity-50"></i>
-                <p class="mb-0 fs-6">@Localizer["Permission_SelectPrompt"]</p>
+            <div class="permission-empty-state">
+                <i class="bi bi-shield-check display-6 d-block mb-3 opacity-50"></i>
+                <p>@Localizer["Permission_SelectPrompt"]</p>
             </div>
         }
         else
@@ -113,10 +113,10 @@
                                 <th class="col-matrix-screen">@Localizer["Permission_ColScreen"]</th>
                                 <th class="col-matrix-sec text-center">
                                     <div class="d-flex flex-column align-items-center gap-1">
-                                        <span class="matrix-radio-available-label fw-bold">@Localizer["FormAuthoritySec_Available"]</span>
+                                        <span>@Localizer["FormAuthoritySec_Available"]</span>
                                         @if (canEdit)
                                         {
-                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                            <button type="button" class="matrix-select-all-btn"
                                                     data-select-column="Available" title="@Localizer["Permission_SelectAllColumn"]">
                                                 <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
                                             </button>
@@ -125,10 +125,10 @@
                                 </th>
                                 <th class="col-matrix-sec text-center">
                                     <div class="d-flex flex-column align-items-center gap-1">
-                                        <span class="matrix-radio-referable-label fw-bold">@Localizer["FormAuthoritySec_ReferablePrintable"]</span>
+                                        <span>@Localizer["FormAuthoritySec_ReferablePrintable"]</span>
                                         @if (canEdit)
                                         {
-                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                            <button type="button" class="matrix-select-all-btn"
                                                     data-select-column="ReferablePrintable" title="@Localizer["Permission_SelectAllColumn"]">
                                                 <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
                                             </button>
@@ -137,10 +137,10 @@
                                 </th>
                                 <th class="col-matrix-sec text-center">
                                     <div class="d-flex flex-column align-items-center gap-1">
-                                        <span class="matrix-radio-unavailable-label fw-bold">@Localizer["FormAuthoritySec_Unavailable"]</span>
+                                        <span>@Localizer["FormAuthoritySec_Unavailable"]</span>
                                         @if (canEdit)
                                         {
-                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                            <button type="button" class="matrix-select-all-btn"
                                                     data-select-column="Unavailable" title="@Localizer["Permission_SelectAllColumn"]">
                                                 <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
                                             </button>
@@ -149,10 +149,10 @@
                                 </th>
                                 <th class="col-matrix-sec text-center">
                                     <div class="d-flex flex-column align-items-center gap-1">
-                                        <span class="matrix-radio-none-label fw-bold">@Localizer["FormAuthoritySec_None"]</span>
+                                        <span>@Localizer["FormAuthoritySec_None"]</span>
                                         @if (canEdit)
                                         {
-                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                            <button type="button" class="matrix-select-all-btn"
                                                     data-select-column="None" title="@Localizer["Permission_SelectAllColumn"]">
                                                 <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
                                             </button>
@@ -181,7 +181,7 @@
                                     <tr class="matrix-group-row">
                                         <td colspan="5" class="matrix-group-cell">
                                             <i class="bi bi-folder2-open me-2"></i>
-                                            <span class="fw-bold">@Localizer[group.Key]</span>
+                                            <span>@Localizer[group.Key]</span>
                                         </td>
                                     </tr>
                                     @foreach (var item in group)
@@ -194,11 +194,11 @@
                                             <td class="align-middle ps-4">
                                                 <input type="hidden" name="@formCodeName" value="@item.FormCode" />
                                                 <span class="fw-semibold">@Localizer[item.FormNameKey]</span>
-                                                <span class="text-muted small ms-2">(@item.FormCode)</span>
+                                                <span class="text-muted ms-2" style="font-size: 0.8rem;">(@item.FormCode)</span>
                                             </td>
                                             <td class="text-center align-middle">
                                                 <input type="radio"
-                                                       class="form-check-input matrix-radio matrix-radio-available"
+                                                       class="form-check-input matrix-radio"
                                                        name="@radioName"
                                                        value="@FormAuthoritySec.Available"
                                                        data-column="Available"
@@ -207,7 +207,7 @@
                                             </td>
                                             <td class="text-center align-middle">
                                                 <input type="radio"
-                                                       class="form-check-input matrix-radio matrix-radio-referable"
+                                                       class="form-check-input matrix-radio"
                                                        name="@radioName"
                                                        value="@FormAuthoritySec.ReferablePrintable"
                                                        data-column="ReferablePrintable"
@@ -216,7 +216,7 @@
                                             </td>
                                             <td class="text-center align-middle">
                                                 <input type="radio"
-                                                       class="form-check-input matrix-radio matrix-radio-unavailable"
+                                                       class="form-check-input matrix-radio"
                                                        name="@radioName"
                                                        value="@FormAuthoritySec.Unavailable"
                                                        data-column="Unavailable"
@@ -225,7 +225,7 @@
                                             </td>
                                             <td class="text-center align-middle">
                                                 <input type="radio"
-                                                       class="form-check-input matrix-radio matrix-radio-none"
+                                                       class="form-check-input matrix-radio"
                                                        name="@radioName"
                                                        value="@FormAuthoritySec.None"
                                                        data-column="None"
