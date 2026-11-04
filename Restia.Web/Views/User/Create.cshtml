@@ -7,11 +7,11 @@
     ViewData["Title"] = Localizer["UserCreate_Title"];
 }
 
-<div class="user-page">
-    <div class="user-page-header">
+<div class="page">
+    <div class="page-header">
         <div>
-            <h1 class="user-page-title">@Localizer["UserCreate_Title"]</h1>
-            <p class="user-page-subtitle">@Localizer["UserCreate_Subtitle"]</p>
+            <h1 class="page-title">@Localizer["UserCreate_Title"]</h1>
+            <p class="page-subtitle">@Localizer["UserCreate_Subtitle"]</p>
         </div>
         <a asp-action="Index" class="btn app-btn app-btn-secondary">
             <i class="bi bi-arrow-left me-1"></i>@Localizer["Button_GoBack"]
@@ -20,7 +20,7 @@
 
     <partial name="_TempDataAlerts" />
 
-    <div class="app-card user-card">
+    <div class="app-card page-card">
         <div class="app-card-body">
             <form asp-action="Create" method="post" novalidate>
                 @Html.AntiForgeryToken()
@@ -62,10 +62,10 @@
                 <hr class="my-4" />
 
                 <h5 class="mb-3"><i class="bi bi-person-badge me-2"></i>@Localizer["UserCreate_AssignRoles"]</h5>
-                <div class="role-check-grid">
+                <div class="check-grid">
                     @foreach (var role in Model.AvailableRoles)
                     {
-                        <label class="role-check-item">
+                        <label class="check-item">
                             <input type="checkbox" class="form-check-input" name="SelectedRoles" value="@role.Name"
                             @(role.IsSelected ? "checked" : "") />
                             <span>@role.Name</span>

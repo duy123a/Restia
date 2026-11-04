@@ -13,7 +13,7 @@ namespace Restia.Common.Shared.Repository
             _context = context;
         }
 
-        public Task<int> SaveAsync(
+        public Task<int> SaveChangesAsync(
             CancellationToken cancellationToken = default)
         {
             return _context.SaveChangesAsync(cancellationToken);

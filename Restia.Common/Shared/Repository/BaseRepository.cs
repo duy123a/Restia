@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Shared.Repository.Interfaces;
 using System.Linq.Expressions;
@@ -17,9 +17,9 @@ namespace Restia.Common.Shared.Repository
             DbSet = context.Set<T>();
         }
 
-        public virtual ValueTask<T?> GetByIdAsync(object id)
+        public virtual ValueTask<T?> GetByIdAsync(params object[] ids)
         {
-            return DbSet.FindAsync(id);
+            return DbSet.FindAsync(ids);
         }
 
         public virtual async Task<List<T>> GetAllAsync(

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Restia.Common.Identity.Extensions;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Services.Interfaces;
 using Restia.Common.Localization.Resources;
@@ -33,6 +34,7 @@ namespace Restia.Web.Controllers
             int pageSize = PaginationConstants.DefaultPageSize)
         {
             pageSize = PaginationConstants.NormalizePageSize(pageSize);
+            page = Math.Max(1, page);
 
             var searchParam = new SearchParam
             {
@@ -190,7 +192,8 @@ namespace Restia.Web.Controllers
         [Authorize(Policy = PermissionConstants.User.Available)]
         public async Task<IActionResult> Delete(string id)
         {
-            var result = await _userService.DeleteAsync(id, User.Identity?.Name ?? string.Empty);
+            var currentUserId = User.GetLoginId();
+            var result = await _userService.DeleteAsync(id, currentUserId);
 
             if (result.ErrorCode == "User_NotFound") return NotFound();
 

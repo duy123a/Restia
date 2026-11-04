@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Services.Interfaces;
-using Restia.Common.Shared.Entities;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
 
@@ -196,14 +197,44 @@ namespace Restia.Common.Identity.Services
             if (string.Equals(id, currentUserId, StringComparison.Ordinal))
                 return ServiceResult.Fail("User_CannotDeleteYourself");
 
-            var user = await _userManager.FindByIdAsync(id);
+            var strategy = _uow.CreateExecutionStrategy();
 
-            if (user is null)
-                return ServiceResult.Fail("User_NotFound");
+            return await strategy.ExecuteAsync(async () =>
+            {
+                await using var transaction = await _uow.BeginTransactionAsync();
 
-            var result = await _userManager.DeleteAsync(user);
+                try
+                {
+                    var user = await _userManager.FindByIdAsync(id);
 
-            return ServiceResult.FromIdentityResult(result);
+                    if (user is null)
+                        return ServiceResult.Fail("User_NotFound");
+
+                    var permissions = await _uow.UserPermissionRepository.FindAsync(up => up.UserId == id);
+                    foreach (var permission in permissions)
+                    {
+                        _uow.UserPermissionRepository.Delete(permission);
+                    }
+                    await _uow.SaveChangesAsync();
+
+                    var result = await _userManager.DeleteAsync(user);
+
+                    if (!result.Succeeded)
+                    {
+                        await transaction.RollbackAsync();
+                        return ServiceResult.FromIdentityResult(result);
+                    }
+
+                    await transaction.CommitAsync();
+
+                    return ServiceResult.Success();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
         }
     }
 }

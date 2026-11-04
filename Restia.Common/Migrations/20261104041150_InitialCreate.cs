@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -99,7 +100,11 @@ namespace Restia.Common.Migrations
                 {
                     RoleId = table.Column<string>(type: "text", nullable: false),
                     FormCode = table.Column<string>(type: "text", nullable: false),
-                    FormAuthoritySec = table.Column<int>(type: "integer", nullable: false)
+                    FormAuthoritySec = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    CreatedUserId = table.Column<string>(type: "text", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -113,14 +118,10 @@ namespace Restia.Common.Migrations
                     UserId = table.Column<string>(type: "text", nullable: false),
                     FormCode = table.Column<string>(type: "text", nullable: false),
                     FormAuthoritySec = table.Column<int>(type: "integer", nullable: false),
-                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedUserId = table.Column<string>(type: "text", nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    UpdatedUserId = table.Column<string>(type: "text", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DeletedUserId = table.Column<string>(type: "text", nullable: true)
+                    UpdatedUserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

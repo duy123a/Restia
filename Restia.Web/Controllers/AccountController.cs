@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Restia.Common.Identity.Configurations;
+using Restia.Common.Identity.Entities;
 using Restia.Common.Localization.Resources;
-using Restia.Common.Shared.Entities;
 using Restia.Web.Models;
 
 namespace Restia.Web.Controllers

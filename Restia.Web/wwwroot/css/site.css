@@ -1,4 +1,4 @@
-@import url('_variables.css');
+/* ── Base ─────────────────────────────────────────────────── */
 
 html {
     font-size: 14px;
@@ -84,10 +84,10 @@ body {
     transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-    .app-form-control:focus {
-        border-color: var(--brand-primary);
-        box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
-    }
+.app-form-control:focus {
+    border-color: var(--brand-primary);
+    box-shadow: var(--focus-ring);
+}
 
 .form-check-input:checked,
 .app-form-check-input:checked {
@@ -108,12 +108,12 @@ body {
     color: var(--text-white);
 }
 
-    .app-btn-primary:hover,
-    .app-btn-primary:focus-visible {
-        background: var(--brand-hover);
-        border-color: var(--brand-hover);
-        color: var(--text-white);
-    }
+.app-btn-primary:hover,
+.app-btn-primary:focus-visible {
+    background: var(--brand-hover);
+    border-color: var(--brand-hover);
+    color: var(--text-white);
+}
 
 .app-btn-secondary {
     background: var(--bg-card);
@@ -121,12 +121,12 @@ body {
     color: var(--text-secondary);
 }
 
-    .app-btn-secondary:hover,
-    .app-btn-secondary:focus-visible {
-        background: var(--bg-page);
-        border-color: var(--text-secondary);
-        color: var(--text-primary);
-    }
+.app-btn-secondary:hover,
+.app-btn-secondary:focus-visible {
+    background: var(--bg-page);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
 
 .app-btn-danger {
     background: var(--danger);
@@ -134,12 +134,12 @@ body {
     color: var(--text-white);
 }
 
-    .app-btn-danger:hover,
-    .app-btn-danger:focus-visible {
-        background: var(--danger-hover);
-        border-color: var(--danger-hover);
-        color: var(--text-white);
-    }
+.app-btn-danger:hover,
+.app-btn-danger:focus-visible {
+    background: var(--danger-hover);
+    border-color: var(--danger-hover);
+    color: var(--text-white);
+}
 
 .app-btn-lg {
     padding: 0.75rem 1.5rem;
@@ -151,7 +151,7 @@ body {
 .btn-link.nav-link:focus,
 .form-control:focus,
 .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
+    box-shadow: var(--focus-ring);
 }
 
 .app-alert {
@@ -221,9 +221,9 @@ body {
     background: var(--bg-page);
 }
 
-    .app-modal .modal-footer .btn {
-        min-width: 6.5rem;
-    }
+.app-modal .modal-footer .btn {
+    min-width: 6.5rem;
+}
 
 /* ── User dropdown ───────────────────────────────────────── */
 
@@ -246,24 +246,24 @@ body {
     transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-    .user-dropdown-item.active {
-        background: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
-        color: var(--brand-primary);
-    }
+.user-dropdown-item.active {
+    background: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
+    color: var(--brand-primary);
+}
 
-    .user-dropdown-item:hover,
-    .user-dropdown-item:focus {
-        background: color-mix(in srgb, var(--danger) 10%, var(--bg-card));
-        color: var(--danger);
-    }
+.user-dropdown-item:hover,
+.user-dropdown-item:focus {
+    background: color-mix(in srgb, var(--danger) 10%, var(--bg-card));
+    color: var(--danger);
+}
 
-    .user-dropdown-item i {
-        font-size: 1.1rem;
-    }
+.user-dropdown-item i {
+    font-size: 1.1rem;
+}
 
 /* ── Layout: sidebar & navbar ────────────────────────────── */
 
-#sidebarToggle:focus {
+#sidebarToggle:focus:not(:focus-visible) {
     outline: none;
     box-shadow: none;
 }
@@ -301,7 +301,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-bg);
     z-index: 999;
 }
 
@@ -319,17 +319,13 @@ body {
     transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
-    .sidebar-link:hover,
-    .sidebar a:hover {
-        background-color: var(--sidebar-hover);
-        border-left-color: var(--brand-primary);
-    }
-
-    .sidebar-link.active,
-    .sidebar a.active {
-        background-color: var(--sidebar-hover);
-        border-left-color: var(--brand-primary);
-    }
+.sidebar-link:hover,
+.sidebar a:hover,
+.sidebar-link.active,
+.sidebar a.active {
+    background-color: var(--sidebar-hover);
+    border-left-color: var(--brand-primary);
+}
 
 .main-content {
     margin-left: var(--sidebar-width);
@@ -337,9 +333,9 @@ body {
     min-height: 100vh;
 }
 
-    .main-content.no-sidebar {
-        margin-left: 0;
-    }
+.main-content.no-sidebar {
+    margin-left: 0;
+}
 
 .top-navbar {
     position: fixed;
@@ -348,7 +344,7 @@ body {
     right: 0;
     z-index: 999;
     min-height: var(--navbar-height);
-    background-color: var(--sidebar-bg) !important;
+    background-color: var(--sidebar-bg) !important; /* override bootstrap bg-dark */
 }
 
 #langDropdown,
@@ -357,24 +353,20 @@ body {
     opacity: 0.9;
 }
 
-    #langDropdown .lang-code {
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        font-size: 0.85rem;
-        line-height: 1;
-    }
+#langDropdown .lang-code {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+    line-height: 1;
+}
 
-    #langDropdown:hover,
-    #langDropdown:focus-visible {
-        color: var(--sidebar-text) !important;
-        opacity: 1;
-    }
-
-        #langDropdown:hover i,
-        #langDropdown:focus-visible i {
-            color: var(--sidebar-text) !important;
-            opacity: 1;
-        }
+#langDropdown:hover,
+#langDropdown:focus-visible,
+#langDropdown:hover i,
+#langDropdown:focus-visible i {
+    color: var(--sidebar-text) !important;
+    opacity: 1;
+}
 
 .avatar-circle {
     background: var(--bg-card);
@@ -395,21 +387,21 @@ body {
         transform: translateX(-100%);
     }
 
-        .sidebar.show {
-            transform: translateX(0);
-        }
+    .sidebar.show {
+        transform: translateX(0);
+    }
 
-            .sidebar.show .sidebar-close {
-                display: block;
-            }
+    .sidebar.show .sidebar-close {
+        display: block;
+    }
 
-            .sidebar.show ~ .sidebar-overlay {
-                display: block;
-            }
+    .sidebar.show ~ .sidebar-overlay {
+        display: block;
+    }
 
-            .sidebar.show ~ .main-content {
-                filter: brightness(0.7);
-            }
+    .sidebar.show ~ .main-content {
+        filter: brightness(0.7);
+    }
 
     .main-content {
         margin-left: 0;
@@ -429,9 +421,9 @@ body {
         transform: translateX(-100%);
     }
 
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 0;
-        }
+    .sidebar.collapsed ~ .main-content {
+        margin-left: 0;
+    }
 
     #sidebarToggle {
         position: absolute;
@@ -458,81 +450,33 @@ body {
     transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-    .sidebar-section-label:hover {
-        background-color: var(--sidebar-hover);
-        opacity: 1;
-    }
+.sidebar-section-label:hover {
+    background-color: var(--sidebar-hover);
+    opacity: 1;
+}
 
-    .sidebar-section-label .bi-chevron-down {
-        transition: transform var(--transition-base);
-    }
+.sidebar-section-label .bi-chevron-down {
+    transition: transform var(--transition-base);
+}
 
-    .sidebar-section-label[aria-expanded="true"] .bi-chevron-down {
-        transform: rotate(180deg);
-    }
+.sidebar-section-label[aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(180deg);
+}
 
 .sidebar-sub-link {
     padding-left: 40px !important;
     font-size: 0.9rem;
 }
 
-/* ── Access denied & Error page ──────────────────────────── */
+/* ── Generic Page Layout ─────────────────────────────────── */
 
-.access-denied-page,
-.error-page {
-    min-height: 75vh;
-}
-
-.access-denied-card,
-.error-card {
-    max-width: 36rem;
-    margin: 0 auto;
-}
-
-.access-denied-icon-wrap,
-.error-icon-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--danger) 12%, var(--bg-card));
-    margin-bottom: 1rem;
-}
-
-.access-denied-icon,
-.error-icon {
-    font-size: 2.75rem;
-    color: var(--danger);
-}
-
-.access-denied-actions,
-.error-actions {
-    flex-wrap: wrap;
-}
-
-@media (max-width: 575.98px) {
-    .access-denied-actions,
-    .error-actions {
-        flex-direction: column;
-    }
-
-        .access-denied-actions .btn,
-        .error-actions .btn {
-            width: 100%;
-        }
-}
-
-/* ── Users management page ───────────────────────────────── */
-
-.user-page {
+.page {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.user-page-header {
+.page-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -540,7 +484,7 @@ body {
     gap: 1rem;
 }
 
-.user-page-title {
+.page-title {
     margin: 0;
     font-size: 1.625rem;
     font-weight: 700;
@@ -548,36 +492,100 @@ body {
     letter-spacing: -0.01em;
 }
 
-.user-page-subtitle {
+.page-subtitle {
     margin: 0.25rem 0 0;
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
-.user-card {
+.page-card {
     width: 100%;
 }
 
-.user-table {
+.page-card hr {
+    border-color: var(--border-color);
+    opacity: 1;
+}
+
+.page-card h5 {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+/* ── Navigation Tabs ─────────────────────────────────────── */
+
+.page-tabs {
+    border-bottom: 2px solid var(--border-color);
+    gap: 0.5rem;
+}
+
+.page-tabs .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.page-tabs .nav-link:hover {
+    color: var(--brand-primary);
+}
+
+.page-tabs .nav-link.active {
+    color: var(--brand-primary);
+    background: transparent;
+    border-bottom-color: var(--brand-primary);
+}
+
+/* ── Data Tables ─────────────────────────────────────────── */
+
+.data-table {
     table-layout: fixed;
     width: 100%;
     min-width: 680px;
 }
 
-.user-table .col-username {
-    width: 32%;
+/* Users table columns */
+.data-table--users .col-username { width: 32%; }
+.data-table--users .col-email { width: 32%; }
+.data-table--users .col-roles { width: 22%; }
+.data-table--users .col-actions { width: 14%; }
+
+/* Roles table columns */
+.data-table--roles .col-role-name { width: 45%; }
+.data-table--roles .col-role-users { width: 20%; }
+.data-table--roles .col-role-permissions { width: 20%; }
+.data-table--roles .col-actions { width: 15%; }
+
+.data-table th {
+    background: var(--bg-page);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
 }
 
-.user-table .col-email {
-    width: 32%;
+.data-table td {
+    padding: 1rem 1.25rem;
+    vertical-align: middle;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.925rem;
 }
 
-.user-table .col-roles {
-    width: 22%;
+.data-table tbody tr:hover td {
+    background-color: color-mix(in srgb, var(--brand-primary) 3%, var(--bg-card));
 }
 
-.user-table .col-actions {
-    width: 14%;
+.data-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .user-cell-content {
@@ -591,28 +599,36 @@ body {
     overflow: hidden;
 }
 
-.user-display-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
+.user-display-name,
 .user-email-text {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.user-table th {
-    background: var(--bg-page);
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    font-weight: 600;
+.admin-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-primary) 12%, var(--bg-card));
+    color: var(--brand-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0.875rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.app-badge {
+    background-color: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
+    color: var(--brand-primary);
+    border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, var(--bg-card));
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--radius-sm);
 }
 
 .sort-header-link {
@@ -650,65 +666,105 @@ body {
     opacity: 1;
 }
 
-.user-table td {
-    padding: 1rem 1.25rem;
-    vertical-align: middle;
-    color: var(--text-primary);
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.925rem;
+/* ── Permission Matrix ───────────────────────────────────── */
+
+.permission-matrix {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 600px;
 }
 
-.user-table tbody tr:hover td {
+.permission-matrix .col-matrix-screen {
+    width: 40%;
+}
+
+.permission-matrix .col-matrix-sec {
+    width: 15%;
+}
+
+.permission-matrix .matrix-group-row td {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-weight: 700;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.permission-matrix .matrix-item-row:hover td {
     background-color: color-mix(in srgb, var(--brand-primary) 3%, var(--bg-card));
 }
 
-.user-table tbody tr:last-child td {
-    border-bottom: none;
+.matrix-radio {
+    cursor: pointer;
+    width: 1.15rem;
+    height: 1.15rem;
 }
 
-.admin-avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--brand-primary) 12%, var(--bg-card));
+.matrix-radio-available-label {
+    color: var(--success);
+}
+
+.matrix-radio-referable-label {
     color: var(--brand-primary);
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    flex-shrink: 0;
 }
 
-.user-role-badge {
-    background-color: color-mix(in srgb, var(--brand-primary) 10%, var(--bg-card));
-    color: var(--brand-primary);
-    border: 1px solid color-mix(in srgb, var(--brand-primary) 22%, var(--bg-card));
-    font-weight: 600;
-    font-size: 0.75rem;
-    padding: 0.3rem 0.55rem;
-    border-radius: var(--radius-sm);
+.matrix-radio-unavailable-label {
+    color: var(--danger);
 }
 
-.user-card hr {
-    border-color: var(--border-color);
-    opacity: 1;
+.matrix-radio-none-label {
+    color: var(--text-secondary);
 }
 
-.user-card h5 {
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 1.05rem;
+.matrix-radio-available:checked {
+    background-color: var(--success);
+    border-color: var(--success);
 }
 
-.role-check-grid {
+.matrix-radio-referable:checked {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.matrix-radio-unavailable:checked {
+    background-color: var(--danger);
+    border-color: var(--danger);
+}
+
+.matrix-radio-none:checked {
+    background-color: var(--text-secondary);
+    border-color: var(--text-secondary);
+}
+
+.permission-toolbar {
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.permission-target-wrapper {
+    max-width: 400px;
+}
+
+.permission-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-card);
+}
+
+/* ── Check Grid (Role / Options) ─────────────────────────── */
+
+.check-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 0.75rem;
 }
 
-.role-check-item {
+.check-item {
     display: flex;
     align-items: center;
     gap: 0.625rem;
@@ -721,26 +777,26 @@ body {
     transition: border-color var(--transition-base), background-color var(--transition-base);
 }
 
-    .role-check-item:hover {
-        border-color: var(--brand-primary);
-        background-color: color-mix(in srgb, var(--brand-primary) 4%, var(--bg-card));
-    }
+.check-item:hover {
+    border-color: var(--brand-primary);
+    background-color: color-mix(in srgb, var(--brand-primary) 4%, var(--bg-card));
+}
 
-    .role-check-item:has(input:checked) {
-        border-color: var(--brand-primary);
-        background-color: color-mix(in srgb, var(--brand-primary) 8%, var(--bg-card));
-    }
+.check-item:has(input:checked) {
+    border-color: var(--brand-primary);
+    background-color: color-mix(in srgb, var(--brand-primary) 8%, var(--bg-card));
+}
 
-    .role-check-item .form-check-input {
-        margin-top: 0;
-        cursor: pointer;
-    }
+.check-item .form-check-input {
+    margin-top: 0;
+    cursor: pointer;
+}
 
-    .role-check-item span {
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: var(--text-primary);
-    }
+.check-item span {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
 
 /* ── Pagination Toolbar ──────────────────────────────────── */
 
@@ -770,10 +826,10 @@ body {
     font-size: 0.9rem;
 }
 
-    .pagination-toolbar-input:focus {
-        border-color: var(--brand-primary);
-        box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
-    }
+.pagination-toolbar-input:focus {
+    border-color: var(--brand-primary);
+    box-shadow: var(--focus-ring);
+}
 
 .pagination-toolbar-search-btn {
     padding: 0.5rem 0.875rem;
@@ -806,12 +862,12 @@ body {
     padding: 0.45rem 2rem 0.45rem 0.75rem;
 }
 
-    .pagination-toolbar-pagesize .form-select:focus {
-        border-color: var(--brand-primary);
-        box-shadow: 0 0 0 0.1rem var(--bg-card), 0 0 0 0.25rem var(--brand-primary);
-    }
+.pagination-toolbar-pagesize .form-select:focus {
+    border-color: var(--brand-primary);
+    box-shadow: var(--focus-ring);
+}
 
-/* ── Table row action buttons ────────────────────────────── */
+/* ── Table Row Action Buttons ────────────────────────────── */
 
 .table-actions {
     display: inline-flex;
@@ -844,6 +900,13 @@ body {
     border-color: color-mix(in srgb, var(--brand-primary) 25%, var(--bg-card));
 }
 
+.table-icon-btn-permission:hover,
+.table-icon-btn-permission:focus-visible {
+    background: color-mix(in srgb, var(--info) 14%, var(--bg-card));
+    color: #087990;
+    border-color: color-mix(in srgb, var(--info) 30%, var(--bg-card));
+}
+
 .table-icon-btn-delete:hover,
 .table-icon-btn-delete:focus-visible {
     background: color-mix(in srgb, var(--danger) 12%, var(--bg-card));
@@ -860,10 +923,9 @@ body {
     margin: 0;
 }
 
-/* ── Pagination list & controls ──────────────────────────── */
+/* ── Pagination List & Controls ──────────────────────────── */
 
-.user-pagination,
-.user-card > .pagination {
+.data-table-pagination {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -904,12 +966,12 @@ body {
     transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
 }
 
-    .pagination-page:hover,
-    .pagination-li-element > a:hover {
-        background: var(--bg-page);
-        border-color: var(--brand-primary);
-        color: var(--brand-primary);
-    }
+.pagination-page:hover,
+.pagination-li-element > a:hover {
+    background: var(--bg-page);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
 
 .pagination-li-element.active .pagination-page,
 .pagination-li-element.active > span,

@@ -1,10 +1,10 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace Restia.Common.Shared.Repository.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        ValueTask<T?> GetByIdAsync(object id);
+        ValueTask<T?> GetByIdAsync(params object[] ids);
 
         Task<List<T>> GetAllAsync(
             CancellationToken cancellationToken = default);

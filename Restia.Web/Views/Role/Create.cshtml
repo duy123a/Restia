@@ -1,0 +1,46 @@
+@model RoleFormViewModel
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["RoleCreate_Title"];
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">@Localizer["RoleCreate_Title"]</h1>
+            <p class="page-subtitle">@Localizer["RoleCreate_Subtitle"]</p>
+        </div>
+        <a asp-action="Index" class="btn app-btn app-btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i>@Localizer["Button_GoBack"]
+        </a>
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card page-card">
+        <div class="app-card-body">
+            <form asp-action="Create" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="app-form-label"></label>
+                        <input asp-for="Name" class="form-control app-form-control" autofocus />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-action="Index" class="btn app-btn app-btn-secondary">@Localizer["Button_Cancel"]</a>
+                    <button type="submit" class="btn app-btn app-btn-primary">
+                        <i class="bi bi-check-lg me-1"></i>@Localizer["Button_Save"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Extensions;
+using Restia.Common.Identity.Entities;
 using Restia.Common.Permission.Entities;
-using Restia.Common.Shared.Entities;
 using System.Reflection;
 using FormEntity = Restia.Common.Form.Entities.Form;
 

@@ -3,8 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restia.Common.Data.Context;
 using Restia.Common.Identity.Configurations;
+using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Services;
-using Restia.Common.Shared.Entities;
 
 namespace Restia.Common.Identity.Extensions
 {

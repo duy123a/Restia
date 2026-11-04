@@ -1,8 +1,9 @@
 ﻿using Restia.Common.Permission.Constants;
+using Restia.Common.Shared.Entities;
 
 namespace Restia.Common.Permission.Entities
 {
-    public class RolePermission
+    public class RolePermission : BaseAudit
     {
         public string RoleId { get; set; } = string.Empty;
 

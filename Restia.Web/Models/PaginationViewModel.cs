@@ -9,5 +9,6 @@ namespace Restia.Web.Models
         public string? OrderBy { get; set; }
         public int PageSize { get; set; }
         public string SearchPlaceholderKey { get; set; } = string.Empty;
+        public Dictionary<string, string?> ExtraParameters { get; set; } = [];
     }
 }

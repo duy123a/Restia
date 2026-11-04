@@ -1,0 +1,270 @@
+@model PermissionPageViewModel
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@using Restia.Common.Permission.Constants
+@using Restia.Common.Permission.Models
+@using X.PagedList.Mvc.Core
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["Permission_Title"];
+    var canEdit = Model.CanModify && (Model.Matrix != null && !Model.Matrix.IsReadOnly);
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">@Localizer["Permission_Title"]</h1>
+            <p class="page-subtitle">@Localizer["Permission_Subtitle"]</p>
+        </div>
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    @if (Model.Matrix != null && Model.Matrix.IsReadOnly)
+    {
+        <div class="alert alert-danger app-alert alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>@Localizer["Permission_ReadOnlySuperAdmin"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Navigation Tabs: Role / User -->
+    <ul class="nav page-tabs">
+        <li class="nav-item">
+            <a class="nav-link @(Model.Type == PermissionTargetType.Role ? "active" : "")"
+               asp-action="Index"
+               asp-route-type="@PermissionTargetType.Role">
+                <i class="bi bi-person-badge me-2"></i>@Localizer["Permission_TabRole"]
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(Model.Type == PermissionTargetType.User ? "active" : "")"
+               asp-action="Index"
+               asp-route-type="@PermissionTargetType.User">
+                <i class="bi bi-people me-2"></i>@Localizer["Permission_TabUser"]
+            </a>
+        </li>
+    </ul>
+
+    <div class="app-card page-card">
+        <!-- Target Selection Form -->
+        <div class="permission-toolbar">
+            <form method="get" asp-action="Index" class="d-flex align-items-center gap-3 flex-wrap">
+                <input type="hidden" name="type" value="@Model.Type" />
+                <label for="targetSelect" class="app-form-label mb-0 fw-semibold text-nowrap">
+                    <i class="bi @(Model.Type == PermissionTargetType.Role ? "bi-person-badge" : "bi-person") me-1"></i>
+                    @(Model.Type == PermissionTargetType.Role ? Localizer["Permission_SelectRole"] : Localizer["Permission_SelectUser"]):
+                </label>
+                <div class="d-flex align-items-center gap-2 flex-grow-1 permission-target-wrapper">
+                    <select id="targetSelect" name="id" class="form-select app-form-control" data-auto-submit>
+                        <option value="">-- @Localizer["Permission_ChooseTargetPlaceholder"] --</option>
+                        @foreach (var opt in Model.TargetOptions)
+                        {
+                            if (opt.Id == Model.TargetId)
+                            {
+                                <option value="@opt.Id" selected>@opt.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@opt.Id">@opt.Name</option>
+                            }
+                        }
+                    </select>
+                    <noscript>
+                        <button type="submit" class="btn app-btn app-btn-secondary">@Localizer["Button_Select"]</button>
+                    </noscript>
+                </div>
+            </form>
+        </div>
+
+        @if (Model.Matrix == null)
+        {
+            <div class="text-center text-muted py-5 px-3">
+                <i class="bi bi-shield-check display-5 d-block mb-3 opacity-50"></i>
+                <p class="mb-0 fs-6">@Localizer["Permission_SelectPrompt"]</p>
+            </div>
+        }
+        else
+        {
+            <partial name="_PaginationToolbar" model='new PaginationViewModel<object> {
+                SearchTerm = Model.SearchTerm,
+                PageSize = Model.PageSize,
+                SearchPlaceholderKey = "Permission_SearchPlaceholder",
+                ExtraParameters = new()
+                {
+                    ["type"] = Model.Type.ToString(),
+                    ["id"] = Model.TargetId
+                }
+            }' />
+
+            <form asp-action="Save" method="post" class="p-0">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Type" value="@Model.Type" />
+                <input type="hidden" name="TargetId" value="@Model.TargetId" />
+                <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                <input type="hidden" name="Page" value="@Model.Page" />
+                <input type="hidden" name="PageSize" value="@Model.PageSize" />
+
+                <div class="table-responsive">
+                    <table class="table data-table permission-matrix mb-0">
+                        <thead>
+                            <tr>
+                                <th class="col-matrix-screen">@Localizer["Permission_ColScreen"]</th>
+                                <th class="col-matrix-sec text-center">
+                                    <div class="d-flex flex-column align-items-center gap-1">
+                                        <span class="matrix-radio-available-label fw-bold">@Localizer["FormAuthoritySec_Available"]</span>
+                                        @if (canEdit)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                                    data-select-column="Available" title="@Localizer["Permission_SelectAllColumn"]">
+                                                <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
+                                            </button>
+                                        }
+                                    </div>
+                                </th>
+                                <th class="col-matrix-sec text-center">
+                                    <div class="d-flex flex-column align-items-center gap-1">
+                                        <span class="matrix-radio-referable-label fw-bold">@Localizer["FormAuthoritySec_ReferablePrintable"]</span>
+                                        @if (canEdit)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                                    data-select-column="ReferablePrintable" title="@Localizer["Permission_SelectAllColumn"]">
+                                                <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
+                                            </button>
+                                        }
+                                    </div>
+                                </th>
+                                <th class="col-matrix-sec text-center">
+                                    <div class="d-flex flex-column align-items-center gap-1">
+                                        <span class="matrix-radio-unavailable-label fw-bold">@Localizer["FormAuthoritySec_Unavailable"]</span>
+                                        @if (canEdit)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                                    data-select-column="Unavailable" title="@Localizer["Permission_SelectAllColumn"]">
+                                                <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
+                                            </button>
+                                        }
+                                    </div>
+                                </th>
+                                <th class="col-matrix-sec text-center">
+                                    <div class="d-flex flex-column align-items-center gap-1">
+                                        <span class="matrix-radio-none-label fw-bold">@Localizer["FormAuthoritySec_None"]</span>
+                                        @if (canEdit)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none small text-muted"
+                                                    data-select-column="None" title="@Localizer["Permission_SelectAllColumn"]">
+                                                <i class="bi bi-check2-all me-1"></i>@Localizer["Permission_SelectAll"]
+                                            </button>
+                                        }
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.PagedRows == null || !Model.PagedRows.Any())
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-5">
+                                        <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                        @Localizer["Permission_NoRecords"]
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                var itemIndex = 0;
+                                var groups = Model.PagedRows.GroupBy(r => r.ParentFormNameKey);
+
+                                foreach (var group in groups)
+                                {
+                                    <tr class="matrix-group-row">
+                                        <td colspan="5" class="matrix-group-cell">
+                                            <i class="bi bi-folder2-open me-2"></i>
+                                            <span class="fw-bold">@Localizer[group.Key]</span>
+                                        </td>
+                                    </tr>
+                                    @foreach (var item in group)
+                                    {
+                                        var currentSec = item.FormAuthoritySec;
+                                        var radioName = $"Items[{itemIndex}].Sec";
+                                        var formCodeName = $"Items[{itemIndex}].FormCode";
+
+                                        <tr class="matrix-item-row">
+                                            <td class="align-middle ps-4">
+                                                <input type="hidden" name="@formCodeName" value="@item.FormCode" />
+                                                <span class="fw-semibold">@Localizer[item.FormNameKey]</span>
+                                                <span class="text-muted small ms-2">(@item.FormCode)</span>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="radio"
+                                                       class="form-check-input matrix-radio matrix-radio-available"
+                                                       name="@radioName"
+                                                       value="@FormAuthoritySec.Available"
+                                                       data-column="Available"
+                                                       checked="@(currentSec == FormAuthoritySec.Available)"
+                                                       disabled="@(!canEdit)" />
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="radio"
+                                                       class="form-check-input matrix-radio matrix-radio-referable"
+                                                       name="@radioName"
+                                                       value="@FormAuthoritySec.ReferablePrintable"
+                                                       data-column="ReferablePrintable"
+                                                       checked="@(currentSec == FormAuthoritySec.ReferablePrintable)"
+                                                       disabled="@(!canEdit)" />
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="radio"
+                                                       class="form-check-input matrix-radio matrix-radio-unavailable"
+                                                       name="@radioName"
+                                                       value="@FormAuthoritySec.Unavailable"
+                                                       data-column="Unavailable"
+                                                       checked="@(currentSec == FormAuthoritySec.Unavailable)"
+                                                       disabled="@(!canEdit)" />
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="radio"
+                                                       class="form-check-input matrix-radio matrix-radio-none"
+                                                       name="@radioName"
+                                                       value="@FormAuthoritySec.None"
+                                                       data-column="None"
+                                                       checked="@(currentSec == FormAuthoritySec.None)"
+                                                       disabled="@(!canEdit)" />
+                                            </td>
+                                        </tr>
+                                        itemIndex++;
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (canEdit)
+                {
+                    <div class="permission-footer">
+                        <button type="submit" class="btn app-btn app-btn-primary">
+                            <i class="bi bi-check-lg me-1"></i>@Localizer["Button_Save"]
+                        </button>
+                    </div>
+                }
+            </form>
+
+            @if (Model.PagedRows != null && Model.PagedRows.PageCount > 1)
+            {
+                <div class="data-table-pagination">
+                    @Html.PagedListPager(
+                        Model.PagedRows,
+                        page => Url.Action("Index", new { type = Model.Type, id = Model.TargetId, searchTerm = Model.SearchTerm, page, pageSize = Model.PageSize })!,
+                        new PagedListRenderOptions
+                        {
+                            LiElementClasses = ["pagination-li-element"],
+                            PageClasses = ["pagination-page"],
+                            UlElementClasses = ["pagination-ul-element", "mb-0"]
+                        })
+                </div>
+            }
+        }
+    </div>
+</div>

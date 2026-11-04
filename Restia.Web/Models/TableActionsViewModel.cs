@@ -1,4 +1,4 @@
-﻿namespace Restia.Web.Models
+namespace Restia.Web.Models
 {
     public class TableActionsViewModel
     {
@@ -6,5 +6,6 @@
         public string? EditUrl { get; set; }
         public string DeleteAction { get; set; } = "Delete";
         public string? DeleteId { get; set; }
+        public string? PermissionUrl { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Restia.Common.Permission.Constants;
 
 namespace Restia.Common.Permission.Requirements
@@ -6,6 +6,7 @@ namespace Restia.Common.Permission.Requirements
     internal class PermissionRequirement : IAuthorizationRequirement
     {
         public const string SEPARATOR = ":";
+        public string PolicyName { get; }
         public string Module { get; }
         public string Screen { get; }
 
@@ -14,6 +15,7 @@ namespace Restia.Common.Permission.Requirements
 
         public PermissionRequirement(string policyName)
         {
+            PolicyName = policyName;
             var parts = policyName.Split(SEPARATOR);
 
             Module = parts[0];
@@ -24,7 +26,7 @@ namespace Restia.Common.Permission.Requirements
             {
                 FormAuthoritySec = null;
             }
-            else if (Enum.TryParse<Constants.FormAuthoritySec>(
+            else if (Enum.TryParse<FormAuthoritySec>(
                  parts[2], out var authority)
              && Enum.IsDefined(typeof(FormAuthoritySec), authority))
             {

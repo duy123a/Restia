@@ -4,19 +4,21 @@
 @using Restia.Common.Permission.Constants
 @using Restia.Common.Permission.Services.Interfaces
 @using X.PagedList.Mvc.Core
+@using Microsoft.AspNetCore.WebUtilities;
 @inject IStringLocalizer<SharedResources> Localizer
 @inject IPermissionService PermissionService
 
 @{
     ViewData["Title"] = Localizer["User_Title"];
     var canModify = await PermissionService.HasPermissionAsync(User, PermissionConstants.User.Available);
+    var canManagePermission = await PermissionService.HasPermissionAsync(User, PermissionConstants.Permission.Default);
 }
 
-<div class="user-page">
-    <div class="user-page-header">
+<div class="page">
+    <div class="page-header">
         <div>
-            <h1 class="user-page-title">@Localizer["User_Title"]</h1>
-            <p class="user-page-subtitle">@Localizer["User_Subtitle"]</p>
+            <h1 class="page-title">@Localizer["User_Title"]</h1>
+            <p class="page-subtitle">@Localizer["User_Subtitle"]</p>
         </div>
         @if (canModify)
         {
@@ -28,7 +30,7 @@
 
     <partial name="_TempDataAlerts" />
 
-    <div class="app-card user-card">
+    <div class="app-card page-card">
         <partial name="_PaginationToolbar" model="new PaginationViewModel<object> {
             SearchTerm = Model.SearchTerm,
             OrderBy = Model.OrderBy,
@@ -37,7 +39,7 @@
         }" />
 
         <div class="table-responsive">
-            <table class="table user-table mb-0">
+            <table class="table data-table data-table--users mb-0">
                 <thead>
                     <tr>
                         <th class="col-username">
@@ -109,7 +111,7 @@
                                 <div class="d-flex flex-wrap gap-1">
                                     @foreach (var role in user.Roles)
                                     {
-                                        <span class="badge user-role-badge">@role</span>
+                                        <span class="badge app-badge">@role</span>
                                     }
                                 </div>
                             </td>
@@ -120,7 +122,16 @@
                                          CanModify = canModify,
                                          EditUrl = Url.Action("Edit", new { id = user.Id }),
                                          DeleteAction = "Delete",
-                                         DeleteId = user.Id
+                                         DeleteId = user.Id,
+                                         PermissionUrl = canManagePermission
+                                            ? QueryHelpers.AddQueryString(
+                                                Url.Action("Index", "Permission")!,
+                                                new Dictionary<string, string?>
+                                                {
+                                                    ["type"] = "User",
+                                                    ["id"] = user.Id
+                                                })
+                                            : null
                                      })" />
                             </td>
                         </tr>
@@ -131,7 +142,7 @@
 
         @if (Model.Items.PageCount > 1)
         {
-            <div class="user-pagination">
+            <div class="data-table-pagination">
                 @Html.PagedListPager(
                     Model.Items,
                     page => Url.Action("Index", new { searchTerm = Model.SearchTerm, orderBy = Model.OrderBy, page, pageSize = Model.PageSize })!,

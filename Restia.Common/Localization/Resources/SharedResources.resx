@@ -324,4 +324,169 @@
   <data name="Button_Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Button_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Button_Permission" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="Button_Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Form_Permission" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="FormAuthoritySec_Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="FormAuthoritySec_ReferablePrintable" xml:space="preserve">
+    <value>View / Print</value>
+  </data>
+  <data name="FormAuthoritySec_Unavailable" xml:space="preserve">
+    <value>Unavailable</value>
+  </data>
+  <data name="Role_Title" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Role_Subtitle" xml:space="preserve">
+    <value>Manage system groups</value>
+  </data>
+  <data name="Role_Name" xml:space="preserve">
+    <value>Role name</value>
+  </data>
+  <data name="Role_UserCount" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Role_PermissionCount" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="Role_SearchPlaceholder" xml:space="preserve">
+    <value>Search by group name</value>
+  </data>
+  <data name="RoleCreate_Title" xml:space="preserve">
+    <value>Create group</value>
+  </data>
+  <data name="RoleCreate_Subtitle" xml:space="preserve">
+    <value>Add a new system group</value>
+  </data>
+  <data name="RoleEdit_Title" xml:space="preserve">
+    <value>Edit group</value>
+  </data>
+  <data name="RoleEdit_Subtitle" xml:space="preserve">
+    <value>Edit system role</value>
+  </data>
+  <data name="Role_CreateSuccess" xml:space="preserve">
+    <value>Group created successfully.</value>
+  </data>
+  <data name="Role_EditSuccess" xml:space="preserve">
+    <value>Role updated successfully.</value>
+  </data>
+  <data name="Role_DeleteSuccess" xml:space="preserve">
+    <value>Group deleted successfully.</value>
+  </data>
+  <data name="Role_DeleteFailed" xml:space="preserve">
+    <value>Failed to delete group.</value>
+  </data>
+  <data name="Role_DeleteSuperAdmin" xml:space="preserve">
+    <value>SuperAdmin role cannot be deleted.</value>
+  </data>
+  <data name="Role_DeleteWhenInUse" xml:space="preserve">
+    <value>Cannot delete group that currently has users assigned.</value>
+  </data>
+  <data name="Role_DuplicateName" xml:space="preserve">
+    <value>Group name already exists.</value>
+  </data>
+  <data name="Role_NotFound" xml:space="preserve">
+    <value>Role not found.</value>
+  </data>
+  <data name="Role_CannotRenameSuperAdmin" xml:space="preserve">
+    <value>SuperAdmin group cannot be renamed.</value>
+  </data>
+  <data name="Role_CannotModifySuperAdminPermissions" xml:space="preserve">
+    <value>SuperAdmin permissions are fixed and cannot be modified.</value>
+  </data>
+  <data name="Permission_Title" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="Permission_Subtitle" xml:space="preserve">
+    <value>Assign screen permissions to roles or users</value>
+  </data>
+  <data name="Permission_TabRole" xml:space="preserve">
+    <value>By Role</value>
+  </data>
+  <data name="Permission_TabUser" xml:space="preserve">
+    <value>By User</value>
+  </data>
+  <data name="Permission_SelectRole" xml:space="preserve">
+    <value>Select group</value>
+  </data>
+  <data name="Permission_SelectUser" xml:space="preserve">
+    <value>Select user</value>
+  </data>
+  <data name="Permission_ChooseTargetPlaceholder" xml:space="preserve">
+    <value>Choose an item</value>
+  </data>
+  <data name="Permission_SelectPrompt" xml:space="preserve">
+    <value>Please select a group or user above to view and edit screen permissions.</value>
+  </data>
+  <data name="Permission_ReadOnlySuperAdmin" xml:space="preserve">
+    <value>SuperAdmin has full access to all system features. These permissions cannot be edited.</value>
+  </data>
+  <data name="Permission_ColScreen" xml:space="preserve">
+    <value>Screen / Function</value>
+  </data>
+  <data name="Permission_SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="Permission_SelectAllColumn" xml:space="preserve">
+    <value>Set this permission for all screens</value>
+  </data>
+  <data name="Permission_SaveSuccess" xml:space="preserve">
+    <value>Permissions saved successfully.</value>
+  </data>
+  <data name="Permission_SaveFailed" xml:space="preserve">
+    <value>Failed to save permissions.</value>
+  </data>
+  <data name="User_CreateSuccess" xml:space="preserve">
+    <value>User created successfully.</value>
+  </data>
+  <data name="User_EditSuccess" xml:space="preserve">
+    <value>User updated successfully.</value>
+  </data>
+  <data name="User_DeleteSuccess" xml:space="preserve">
+    <value>User deleted successfully.</value>
+  </data>
+  <data name="User_DeleteFailed" xml:space="preserve">
+    <value>Failed to delete user.</value>
+  </data>
+  <data name="User_CannotDeleteYourself" xml:space="preserve">
+    <value>You cannot delete your own account.</value>
+  </data>
+  <data name="User_NotFound" xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+  <data name="User_LockedOut" xml:space="preserve">
+    <value>Locked out</value>
+  </data>
+  <data name="UserEdit_LeaveBlankPassword" xml:space="preserve">
+    <value>Leave blank to keep existing password</value>
+  </data>
+  <data name="FormAuthoritySec_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Target_NotFound" xml:space="preserve">
+    <value>Target not found.</value>
+  </data>
+  <data name="Role_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Role_NoRecords" xml:space="preserve">
+    <value>No records found</value>
+  </data>
+  <data name="Permission_SearchPlaceholder" xml:space="preserve">
+    <value>Search by screen name or code</value>
+  </data>
+  <data name="Permission_NoRecords" xml:space="preserve">
+    <value>No screens found</value>
+  </data>
 </root>

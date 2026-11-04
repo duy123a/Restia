@@ -1,5 +1,5 @@
+using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Models;
-using Restia.Common.Shared.Entities;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.Repository.Interfaces;
 

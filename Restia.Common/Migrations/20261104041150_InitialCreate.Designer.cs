@@ -12,7 +12,7 @@ using Restia.Common.Data.Context;
 namespace Restia.Common.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261026024751_InitialCreate")]
+    [Migration("20261104041150_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -202,68 +202,7 @@ namespace Restia.Common.Migrations
                     b.ToTable("Forms");
                 });
 
-            modelBuilder.Entity("Restia.Common.Permission.Entities.RolePermission", b =>
-                {
-                    b.Property<string>("RoleId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FormCode")
-                        .HasColumnType("text");
-
-                    b.Property<int>("FormAuthoritySec")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RoleId", "FormCode")
-                        .HasName("pk_role_permission");
-
-                    b.ToTable("RolePermissions");
-                });
-
-            modelBuilder.Entity("Restia.Common.Permission.Entities.UserPermission", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FormCode")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedUserId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DeletedUserId")
-                        .HasColumnType("text");
-
-                    b.Property<int>("FormAuthoritySec")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<uint>("RV")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UpdatedUserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId", "FormCode")
-                        .HasName("pk_user_permission");
-
-                    b.ToTable("UserPermissions");
-                });
-
-            modelBuilder.Entity("Restia.Common.Shared.Entities.AppRole", b =>
+            modelBuilder.Entity("Restia.Common.Identity.Entities.AppRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -301,7 +240,7 @@ namespace Restia.Common.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Restia.Common.Shared.Entities.AppUser", b =>
+            modelBuilder.Entity("Restia.Common.Identity.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -385,9 +324,67 @@ namespace Restia.Common.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Restia.Common.Permission.Entities.RolePermission", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FormCode")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("FormAuthoritySec")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedUserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("RoleId", "FormCode")
+                        .HasName("pk_role_permission");
+
+                    b.ToTable("RolePermissions");
+                });
+
+            modelBuilder.Entity("Restia.Common.Permission.Entities.UserPermission", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FormCode")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedUserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("FormAuthoritySec")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedUserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "FormCode")
+                        .HasName("pk_user_permission");
+
+                    b.ToTable("UserPermissions");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Shared.Entities.AppRole", null)
+                    b.HasOne("Restia.Common.Identity.Entities.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -396,7 +393,7 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Identity.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -405,7 +402,7 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Identity.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -414,13 +411,13 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Shared.Entities.AppRole", null)
+                    b.HasOne("Restia.Common.Identity.Entities.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Identity.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -429,7 +426,7 @@ namespace Restia.Common.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Restia.Common.Shared.Entities.AppUser", null)
+                    b.HasOne("Restia.Common.Identity.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

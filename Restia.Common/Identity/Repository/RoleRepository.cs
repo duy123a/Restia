@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
+using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Repository.Interfaces;
-using Restia.Common.Permission.Entities;
 using Restia.Common.Shared.Constants;
-using Restia.Common.Shared.Entities;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.Repository;
 
@@ -17,8 +16,7 @@ namespace Restia.Common.Identity.Repository
         {
         }
 
-        public async Task<IReadOnlyList<RoleOptionDto>>
-            GetAllRoleOptionsAsync()
+        public async Task<IReadOnlyList<RoleOptionDto>> GetAllRoleOptionsAsync()
         {
             return await Context.Roles
                 .OrderBy(r => r.Name)
@@ -31,6 +29,7 @@ namespace Restia.Common.Identity.Repository
             int page,
             int pageSize)
         {
+            page = Math.Max(1, page);
             var query = Context.Roles.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))
@@ -91,43 +90,6 @@ namespace Restia.Common.Identity.Repository
                 PageNumber = page,
                 PageSize = pageSize
             };
-        }
-
-        public async Task<IReadOnlyList<RolePermissionDto>>
-            GetPermissionsByRoleIdAsync(string roleId)
-        {
-            return await Context.RolePermissions
-                .Where(rp => rp.RoleId == roleId)
-                .OrderBy(rp => rp.FormCode)
-                .Select(rp => new RolePermissionDto(
-                    rp.FormCode,
-                    rp.FormAuthoritySec))
-                .ToListAsync();
-        }
-
-        public async Task ReplacePermissionsAsync(
-            string roleId,
-            IEnumerable<RolePermissionDto> permissions)
-        {
-            var existing = await Context.RolePermissions
-                .Where(rp => rp.RoleId == roleId)
-                .ToListAsync();
-
-            Context.RolePermissions.RemoveRange(existing);
-
-            var newPermissions = permissions
-                .GroupBy(p => p.FormCode, StringComparer.OrdinalIgnoreCase)
-                .Select(g => g.Last())
-                .Select(p => new RolePermission
-                {
-                    RoleId = roleId,
-                    FormCode = p.FormCode,
-                    FormAuthoritySec = p.FormAuthoritySec
-                })
-                .ToList();
-
-            await Context.RolePermissions.AddRangeAsync(newPermissions);
-            await Context.SaveChangesAsync();
         }
     }
 }

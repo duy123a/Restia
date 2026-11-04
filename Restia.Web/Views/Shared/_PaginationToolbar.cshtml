@@ -5,6 +5,13 @@
 @inject IStringLocalizer<SharedResources> Localizer
 
 <form method="get" class="pagination-toolbar">
+    @foreach (var (key, value) in Model.ExtraParameters)
+    {
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            <input type="hidden" name="@key" value="@value" />
+        }
+    }
     <div class="pagination-toolbar-search">
         <input type="search"
                name="searchTerm"

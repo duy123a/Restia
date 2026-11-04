@@ -1,0 +1,130 @@
+@model PaginationViewModel<RoleViewModel>
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@using Restia.Common.Permission.Constants
+@using Restia.Common.Permission.Services.Interfaces
+@using X.PagedList.Mvc.Core
+@using Microsoft.AspNetCore.WebUtilities;
+@inject IStringLocalizer<SharedResources> Localizer
+@inject IPermissionService PermissionService
+
+@{
+    ViewData["Title"] = Localizer["Role_Title"];
+    var canModify = await PermissionService.HasPermissionAsync(User, PermissionConstants.Role.Available);
+    var canManagePermission = await PermissionService.HasPermissionAsync(User, PermissionConstants.Permission.Default);
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">@Localizer["Role_Title"]</h1>
+            <p class="page-subtitle">@Localizer["Role_Subtitle"]</p>
+        </div>
+        @if (canModify)
+        {
+            <a asp-action="Create" class="btn app-btn app-btn-primary">
+                <i class="bi bi-plus-lg me-1"></i>@Localizer["Button_Create"]
+            </a>
+        }
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card page-card">
+        <partial name="_PaginationToolbar" model="new PaginationViewModel<object> {
+            SearchTerm = Model.SearchTerm,
+            OrderBy = Model.OrderBy,
+            PageSize = Model.PageSize,
+            SearchPlaceholderKey = Model.SearchPlaceholderKey
+        }" />
+
+        <div class="table-responsive">
+            <table class="table data-table data-table--roles mb-0">
+                <thead>
+                    <tr>
+                        <th class="col-role-name">
+                            <a asp-action="Index"
+                               asp-route-searchTerm="@Model.SearchTerm"
+                               asp-route-orderBy="@(Model.OrderBy == AppConstants.NameDesc ? AppConstants.NameAsc : AppConstants.NameDesc)"
+                               asp-route-pageSize="@Model.PageSize"
+                               class="sort-header-link">
+                                <span>@Localizer["Role_Name"]</span>
+                                <span class="sort-icons">
+                                    <i class="bi bi-caret-up-fill sort-icon @(Model.OrderBy == AppConstants.NameAsc ? "active" : "")"></i>
+                                    <i class="bi bi-caret-down-fill sort-icon @(Model.OrderBy == AppConstants.NameDesc ? "active" : "")"></i>
+                                </span>
+                            </a>
+                        </th>
+                        <th class="col-role-users">@Localizer["Role_UserCount"]</th>
+                        <th class="col-role-permissions">@Localizer["Role_PermissionCount"]</th>
+                        <th class="col-actions text-end">@Localizer["Role_Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Items.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                @Localizer["Role_NoRecords"]
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var role in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2 user-cell-content">
+                                    <span class="admin-avatar">@(string.IsNullOrWhiteSpace(role.Name) ? '?' : role.Name[0])</span>
+                                    <div class="user-info-text">
+                                        <div class="fw-semibold user-display-name" title="@role.Name">@role.Name</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge app-badge">@role.UserCount</span>
+                            </td>
+                            <td>
+                                <span class="badge app-badge">@role.PermissionCount</span>
+                            </td>
+                            <td class="text-end">
+                                <partial name="_TableActions"
+                                         model="@(new TableActionsViewModel
+                                         {
+                                             CanModify = canModify,
+                                             EditUrl = Url.Action("Edit", new { id = role.Id }),
+                                             DeleteAction = "Delete",
+                                             DeleteId = role.Id,
+                                             PermissionUrl = canManagePermission
+                                                ? QueryHelpers.AddQueryString(
+                                                    Url.Action("Index", "Permission")!,
+                                                    new Dictionary<string, string?>
+                                                    {
+                                                        ["type"] = "Role",
+                                                        ["id"] = role.Id
+                                                    })
+                                                : null
+                                         })" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.Items.PageCount > 1)
+        {
+            <div class="data-table-pagination">
+                @Html.PagedListPager(
+                    Model.Items,
+                    page => Url.Action("Index", new { searchTerm = Model.SearchTerm, orderBy = Model.OrderBy, page, pageSize = Model.PageSize })!,
+                    new PagedListRenderOptions
+                    {
+                        LiElementClasses = ["pagination-li-element"],
+                        PageClasses = ["pagination-page"],
+                        UlElementClasses = ["pagination-ul-element", "mb-0"]
+                    })
+            </div>
+        }
+    </div>
+</div>

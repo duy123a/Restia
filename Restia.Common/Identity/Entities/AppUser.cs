@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Restia.Common.Entities.Interfaces;
 
-namespace Restia.Common.Shared.Entities
+namespace Restia.Common.Identity.Entities
 {
-    public class AppRole : IdentityRole, IAuditable
+    public class AppUser : IdentityUser, IAuditable
     {
+        public string DisplayName { get; set; } = string.Empty;
+        public string ProfileImg { get; set; } = string.Empty;
+
         // Audit
         public DateTimeOffset? CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         public string? CreatedUserId { get; set; }

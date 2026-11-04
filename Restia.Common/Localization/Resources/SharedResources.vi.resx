@@ -324,4 +324,169 @@
   <data name="Button_Delete" xml:space="preserve">
     <value>Xóa</value>
   </data>
+  <data name="Button_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Button_Permission" xml:space="preserve">
+    <value>Phân quyền</value>
+  </data>
+  <data name="Button_Select" xml:space="preserve">
+    <value>Chọn</value>
+  </data>
+  <data name="Form_Permission" xml:space="preserve">
+    <value>Phân quyền</value>
+  </data>
+  <data name="FormAuthoritySec_Available" xml:space="preserve">
+    <value>Toàn quyền</value>
+  </data>
+  <data name="FormAuthoritySec_ReferablePrintable" xml:space="preserve">
+    <value>Xem / In</value>
+  </data>
+  <data name="FormAuthoritySec_Unavailable" xml:space="preserve">
+    <value>Không có quyền</value>
+  </data>
+  <data name="Role_Title" xml:space="preserve">
+    <value>Nhóm quyền</value>
+  </data>
+  <data name="Role_Subtitle" xml:space="preserve">
+    <value>Quản lý nhóm quyền hệ thống</value>
+  </data>
+  <data name="Role_Name" xml:space="preserve">
+    <value>Tên nhóm quyền</value>
+  </data>
+  <data name="Role_UserCount" xml:space="preserve">
+    <value>Số người dùng</value>
+  </data>
+  <data name="Role_PermissionCount" xml:space="preserve">
+    <value>Số quyền</value>
+  </data>
+  <data name="Role_SearchPlaceholder" xml:space="preserve">
+    <value>Tìm theo tên nhóm quyền</value>
+  </data>
+  <data name="RoleCreate_Title" xml:space="preserve">
+    <value>Tạo nhóm quyền</value>
+  </data>
+  <data name="RoleCreate_Subtitle" xml:space="preserve">
+    <value>Thêm nhóm quyền hệ thống mới</value>
+  </data>
+  <data name="RoleEdit_Title" xml:space="preserve">
+    <value>Sửa nhóm quyền</value>
+  </data>
+  <data name="RoleEdit_Subtitle" xml:space="preserve">
+    <value>Chỉnh sửa nhóm quyền hệ thống</value>
+  </data>
+  <data name="Role_CreateSuccess" xml:space="preserve">
+    <value>Tạo nhóm quyền thành công.</value>
+  </data>
+  <data name="Role_EditSuccess" xml:space="preserve">
+    <value>Cập nhật nhóm quyền thành công.</value>
+  </data>
+  <data name="Role_DeleteSuccess" xml:space="preserve">
+    <value>Xóa nhóm quyền thành công.</value>
+  </data>
+  <data name="Role_DeleteFailed" xml:space="preserve">
+    <value>Xóa nhóm quyền thất bại.</value>
+  </data>
+  <data name="Role_DeleteSuperAdmin" xml:space="preserve">
+    <value>Không thể xóa nhóm SuperAdmin.</value>
+  </data>
+  <data name="Role_DeleteWhenInUse" xml:space="preserve">
+    <value>Không thể xóa nhóm quyền đang có người dùng.</value>
+  </data>
+  <data name="Role_DuplicateName" xml:space="preserve">
+    <value>Tên nhóm quyền đã tồn tại.</value>
+  </data>
+  <data name="Role_NotFound" xml:space="preserve">
+    <value>Không tìm thấy nhóm quyền.</value>
+  </data>
+  <data name="Role_CannotRenameSuperAdmin" xml:space="preserve">
+    <value>Không thể đổi tên nhóm SuperAdmin.</value>
+  </data>
+  <data name="Role_CannotModifySuperAdminPermissions" xml:space="preserve">
+    <value>Quyền của SuperAdmin là cố định và không thể sửa đổi.</value>
+  </data>
+  <data name="Permission_Title" xml:space="preserve">
+    <value>Phân quyền</value>
+  </data>
+  <data name="Permission_Subtitle" xml:space="preserve">
+    <value>Gán quyền màn hình cho nhóm quyền hoặc người dùng</value>
+  </data>
+  <data name="Permission_TabRole" xml:space="preserve">
+    <value>Theo nhóm quyền</value>
+  </data>
+  <data name="Permission_TabUser" xml:space="preserve">
+    <value>Theo người dùng</value>
+  </data>
+  <data name="Permission_SelectRole" xml:space="preserve">
+    <value>Chọn nhóm quyền</value>
+  </data>
+  <data name="Permission_SelectUser" xml:space="preserve">
+    <value>Chọn người dùng</value>
+  </data>
+  <data name="Permission_ChooseTargetPlaceholder" xml:space="preserve">
+    <value>Chọn đối tượng</value>
+  </data>
+  <data name="Permission_SelectPrompt" xml:space="preserve">
+    <value>Vui lòng chọn một nhóm quyền hoặc người dùng ở trên để xem và chỉnh sửa quyền.</value>
+  </data>
+  <data name="Permission_ReadOnlySuperAdmin" xml:space="preserve">
+    <value>SuperAdmin có toàn quyền truy cập hệ thống. Các quyền này không thể sửa đổi.</value>
+  </data>
+  <data name="Permission_ColScreen" xml:space="preserve">
+    <value>Màn hình / Chức năng</value>
+  </data>
+  <data name="Permission_SelectAll" xml:space="preserve">
+    <value>Chọn tất cả</value>
+  </data>
+  <data name="Permission_SelectAllColumn" xml:space="preserve">
+    <value>Đặt quyền này cho tất cả màn hình</value>
+  </data>
+  <data name="Permission_SaveSuccess" xml:space="preserve">
+    <value>Lưu phân quyền thành công.</value>
+  </data>
+  <data name="Permission_SaveFailed" xml:space="preserve">
+    <value>Lưu phân quyền thất bại.</value>
+  </data>
+  <data name="User_CreateSuccess" xml:space="preserve">
+    <value>Tạo người dùng thành công.</value>
+  </data>
+  <data name="User_EditSuccess" xml:space="preserve">
+    <value>Cập nhật người dùng thành công.</value>
+  </data>
+  <data name="User_DeleteSuccess" xml:space="preserve">
+    <value>Xóa người dùng thành công.</value>
+  </data>
+  <data name="User_DeleteFailed" xml:space="preserve">
+    <value>Xóa người dùng thất bại.</value>
+  </data>
+  <data name="User_CannotDeleteYourself" xml:space="preserve">
+    <value>Bạn không thể tự xóa tài khoản của chính mình.</value>
+  </data>
+  <data name="User_NotFound" xml:space="preserve">
+    <value>Không tìm thấy người dùng.</value>
+  </data>
+  <data name="User_LockedOut" xml:space="preserve">
+    <value>Đã khóa</value>
+  </data>
+  <data name="UserEdit_LeaveBlankPassword" xml:space="preserve">
+    <value>Để trống nếu không đổi mật khẩu</value>
+  </data>
+  <data name="FormAuthoritySec_None" xml:space="preserve">
+    <value>Không thiết lập</value>
+  </data>
+  <data name="Target_NotFound" xml:space="preserve">
+    <value>Không tìm thấy đối tượng.</value>
+  </data>
+  <data name="Role_Actions" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="Role_NoRecords" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="Permission_SearchPlaceholder" xml:space="preserve">
+    <value>Tìm theo tên màn hình hoặc mã</value>
+  </data>
+  <data name="Permission_NoRecords" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿// Sidebar and top nav bar
+// Sidebar and top nav bar
 
 const sidebar = document.getElementById('sidebar');
 const sidebarToggle = document.getElementById('sidebarToggle');
@@ -68,3 +68,33 @@ if (logoutOpenBtn && logoutConfirmModalEl && window.bootstrap?.Modal) {
 if (logoutConfirmBtn && logoutForm) {
     logoutConfirmBtn.addEventListener('click', () => logoutForm.submit());
 }
+
+// Auto submit for select/inputs with [data-auto-submit]
+document.addEventListener('change', function (e) {
+    if (e.target && e.target.matches('[data-auto-submit]')) {
+        const form = e.target.form;
+        if (form) {
+            form.requestSubmit ? form.requestSubmit() : form.submit();
+        }
+    }
+});
+
+// Bulk column selector for permission matrix
+document.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-select-column]');
+    if (!btn) return;
+    const col = btn.getAttribute('data-select-column');
+    if (!col) return;
+    const radios = document.querySelectorAll(`input[type="radio"][data-column="${col}"]:not(:disabled)`);
+    radios.forEach(r => { r.checked = true; });
+});
+
+// Table delete confirmation
+document.addEventListener('click', function (e) {
+    const trigger = e.target.closest('.table-delete-trigger');
+    if (!trigger) return;
+    const form = trigger.closest('form');
+    if (form && confirm('Are you sure you want to delete this item?')) {
+        form.submit();
+    }
+});

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
+using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Repository.Interfaces;
 using Restia.Common.Shared.Constants;
-using Restia.Common.Shared.Entities;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.Repository;
 
@@ -17,6 +17,7 @@ namespace Restia.Common.Identity.Repository
 
         public async Task<PagedResult<UserGetDto>> GetPagedListAsync(SearchParam? searchParam, int page, int pageSize)
         {
+            page = Math.Max(1, page);
             var query = Context.Users.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))

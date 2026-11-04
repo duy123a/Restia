@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Restia.Common.Identity.Constants;
-using Restia.Common.Shared.Entities;
+using Restia.Common.Identity.Entities;
 using System.Security.Claims;
 
 namespace Restia.Common.Identity.Services

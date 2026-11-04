@@ -1,9 +1,9 @@
-﻿using Restia.Common.Permission.Constants;
+using Restia.Common.Permission.Constants;
 using Restia.Common.Shared.Entities;
 
 namespace Restia.Common.Permission.Entities
 {
-    public class UserPermission : BaseEntity
+    public class UserPermission : BaseAudit
     {
         public string UserId { get; set; } = string.Empty;
 

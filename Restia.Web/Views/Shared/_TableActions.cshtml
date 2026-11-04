@@ -1,9 +1,19 @@
-﻿@model TableActionsViewModel
+@model TableActionsViewModel
 @using Microsoft.Extensions.Localization
 @using Restia.Common.Localization.Resources
 @inject IStringLocalizer<SharedResources> Localizer
 
 <div class="table-actions">
+    @if (!string.IsNullOrEmpty(Model.PermissionUrl))
+    {
+        <a href="@Model.PermissionUrl"
+           class="table-icon-btn table-icon-btn-permission"
+           title="@Localizer["Button_Permission"]"
+           aria-label="@Localizer["Button_Permission"]">
+            <i class="bi bi-shield-lock" aria-hidden="true"></i>
+        </a>
+    }
+
     @if (Model.CanModify &&
          !string.IsNullOrEmpty(Model.EditUrl))
     {
