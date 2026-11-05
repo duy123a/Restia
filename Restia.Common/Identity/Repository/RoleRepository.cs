@@ -41,6 +41,11 @@ namespace Restia.Common.Identity.Repository
             }
 
             var totalCount = await query.CountAsync();
+            var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
+            if (page > totalPages)
+            {
+                page = totalPages;
+            }
 
             query = searchParam?.OrderBy switch
             {

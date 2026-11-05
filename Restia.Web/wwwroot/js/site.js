@@ -53,7 +53,7 @@ if (userDropdown) {
     });
 }
 
-// Logout button
+// Logout modal
 
 const logoutOpenBtn = document.getElementById('logoutOpenBtn');
 const logoutConfirmBtn = document.getElementById('logoutConfirmBtn');
@@ -79,12 +79,27 @@ document.addEventListener('click', function (e) {
     radios.forEach(r => { r.checked = true; });
 });
 
-// Table delete confirmation
+// Table delete confirmation modal
+const deleteConfirmModalEl = document.getElementById('deleteConfirmModal');
+const deleteConfirmBtn = document.getElementById('deleteConfirmBtn');
+let pendingDeleteForm = null;
+
 document.addEventListener('click', function (e) {
     const trigger = e.target.closest('.table-delete-trigger');
     if (!trigger) return;
     const form = trigger.closest('form');
-    if (form && confirm('Are you sure you want to delete this item?')) {
-        form.submit();
+    if (!form) return;
+
+    if (deleteConfirmModalEl && window.bootstrap?.Modal) {
+        pendingDeleteForm = form;
+        window.bootstrap.Modal.getOrCreateInstance(deleteConfirmModalEl).show();
     }
 });
+
+if (deleteConfirmBtn) {
+    deleteConfirmBtn.addEventListener('click', function () {
+        if (pendingDeleteForm) {
+            pendingDeleteForm.submit();
+        }
+    });
+}

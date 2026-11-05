@@ -12,7 +12,7 @@ using Restia.Common.Data.Context;
 namespace Restia.Common.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261104041150_InitialCreate")]
+    [Migration("20261105041134_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -195,7 +195,8 @@ namespace Restia.Common.Migrations
                         .HasName("pk_form");
 
                     b.HasIndex("Code")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("\"IsDeleted\" = false");
 
                     b.HasIndex("ParentId");
 

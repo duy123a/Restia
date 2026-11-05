@@ -77,6 +77,12 @@ namespace Restia.Web.Controllers
                 }
 
                 var totalCount = allLeafItems.Count;
+                var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
+                if (page > totalPages)
+                {
+                    page = totalPages;
+                }
+
                 var pagedItems = allLeafItems
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)

@@ -4,7 +4,7 @@ using Restia.Common.Localization.Extensions;
 using Restia.Common.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(o => o.AddStringTrimModelBinderProvider());
@@ -14,7 +14,7 @@ builder.Services.AddInfrastructureModules(builder.Configuration);
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
-        policy.WithOrigins(allowedOrigins!)
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());

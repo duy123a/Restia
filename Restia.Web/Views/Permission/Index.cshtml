@@ -172,7 +172,7 @@
                                 foreach (var group in groups)
                                 {
                                     <tr class="matrix-group-row">
-                                        <td colspan="5" class="matrix-group-cell">
+                                        <td colspan="5">
                                             <i class="bi bi-folder2-open me-2"></i>
                                             <span>@Localizer[group.Key]</span>
                                         </td>
@@ -187,7 +187,7 @@
                                             <td class="align-middle ps-4">
                                                 <input type="hidden" name="@formCodeName" value="@item.FormCode" />
                                                 <span class="fw-semibold">@Localizer[item.FormNameKey]</span>
-                                                <span class="text-muted ms-2" style="font-size: 0.8rem;">(@item.FormCode)</span>
+                                                <span class="text-muted small ms-2">(@item.FormCode)</span>
                                             </td>
                                             <td class="text-center align-middle">
                                                 <input type="radio"
@@ -272,7 +272,7 @@
                 create: false,
                 maxItems: 1,
                 allowEmptyOption: false,
-                placeholder: '@Localizer["Permission_ChooseTargetPlaceholder"]',
+                placeholder: el.getAttribute('placeholder') || '',
                 onChange: function (value) {
                     if (value && this.input.form) {
                         this.input.form.submit();

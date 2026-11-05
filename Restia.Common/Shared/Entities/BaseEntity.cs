@@ -1,4 +1,4 @@
-﻿using Restia.Common.Entities.Interfaces;
+using Restia.Common.Entities.Interfaces;
 
 namespace Restia.Common.Shared.Entities
 {
@@ -9,7 +9,7 @@ namespace Restia.Common.Shared.Entities
         public DateTimeOffset? CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         public string? CreatedUserId { get; set; }
 
-        public DateTimeOffset? UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset? UpdatedAt { get; set; }
         public string? UpdatedUserId { get; set; }
 
         public bool IsDeleted { get; set; }

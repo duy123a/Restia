@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -488,5 +488,20 @@
   </data>
   <data name="Permission_NoRecords" xml:space="preserve">
     <value>No screens found</value>
+  </data>
+  <data name="Delete_ConfirmationTitle" xml:space="preserve">
+    <value>Delete confirmation</value>
+  </data>
+  <data name="Delete_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this item?</value>
+  </data>
+  <data name="User_CannotDeleteSuperAdmin" xml:space="preserve">
+    <value>SuperAdmin account cannot be deleted.</value>
+  </data>
+  <data name="User_CannotRemoveSuperAdminRole" xml:space="preserve">
+    <value>Cannot remove SuperAdmin group from SuperAdmin account.</value>
+  </data>
+  <data name="User_CannotAssignSuperAdminRole" xml:space="preserve">
+    <value>Cannot assign SuperAdmin group.</value>
   </data>
 </root>

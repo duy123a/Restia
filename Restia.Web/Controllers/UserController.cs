@@ -84,8 +84,9 @@ namespace Restia.Web.Controllers
         {
             if (string.IsNullOrWhiteSpace(model.Password))
             {
-                ModelState.Remove(nameof(model.Password));
-                ModelState.Remove(nameof(model.ConfirmPassword));
+                ModelState.AddModelError(
+                    nameof(model.Password),
+                    _localizer["Required", _localizer["User_Password"].Value]);
             }
 
             if (!ModelState.IsValid)
@@ -106,6 +107,11 @@ namespace Restia.Web.Controllers
 
             if (!result.Succeeded)
             {
+                if (!string.IsNullOrEmpty(result.ErrorCode))
+                {
+                    ModelState.AddModelError(string.Empty, _localizer[result.ErrorCode]);
+                }
+
                 foreach (var error in result.Errors)
                     ModelState.AddModelError(string.Empty, error);
 
@@ -176,6 +182,11 @@ namespace Restia.Web.Controllers
 
             if (!result.Succeeded)
             {
+                if (!string.IsNullOrEmpty(result.ErrorCode))
+                {
+                    ModelState.AddModelError(string.Empty, _localizer[result.ErrorCode]);
+                }
+
                 foreach (var error in result.Errors)
                     ModelState.AddModelError(string.Empty, error);
 
@@ -197,15 +208,15 @@ namespace Restia.Web.Controllers
 
             if (result.ErrorCode == "User_NotFound") return NotFound();
 
-            if (result.ErrorCode == "User_CannotDeleteYourself")
+            if (!result.Succeeded)
             {
-                TempData["Error"] = "User_CannotDeleteYourself";
+                TempData["Error"] = !string.IsNullOrEmpty(result.ErrorCode)
+                    ? result.ErrorCode
+                    : "User_DeleteFailed";
                 return RedirectToAction(nameof(Index));
             }
 
-            TempData[result.Succeeded ? "Success" : "Error"] =
-                result.Succeeded ? "User_DeleteSuccess" : "User_DeleteFailed";
-
+            TempData["Success"] = "User_DeleteSuccess";
             return RedirectToAction(nameof(Index));
         }
 

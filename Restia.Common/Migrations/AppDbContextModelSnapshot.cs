@@ -192,7 +192,8 @@ namespace Restia.Common.Migrations
                         .HasName("pk_form");
 
                     b.HasIndex("Code")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("\"IsDeleted\" = false");
 
                     b.HasIndex("ParentId");
 

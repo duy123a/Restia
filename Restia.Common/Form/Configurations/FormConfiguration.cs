@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FormEntity = Restia.Common.Form.Entities.Form;
 
@@ -10,7 +10,9 @@ namespace Restia.Common.Form.Configurations
         {
             builder.HasKey(x => x.Id).HasName("pk_form");
 
-            builder.HasIndex(x => x.Code).IsUnique();
+            builder.HasIndex(x => x.Code)
+                .IsUnique()
+                .HasFilter("\"IsDeleted\" = false");
 
             builder.Property(x => x.Name)
                 .IsRequired()

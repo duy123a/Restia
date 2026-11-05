@@ -31,7 +31,7 @@
         <form asp-action="@Model.DeleteAction"
               asp-route-id="@Model.DeleteId"
               method="post"
-              class="d-inline m-0 table-delete-form">
+              class="d-inline m-0">
             @Html.AntiForgeryToken()
 
             <button type="button"

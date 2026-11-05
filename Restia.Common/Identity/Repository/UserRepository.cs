@@ -18,6 +18,7 @@ namespace Restia.Common.Identity.Repository
         public async Task<PagedResult<UserGetDto>> GetPagedListAsync(SearchParam? searchParam, int page, int pageSize)
         {
             page = Math.Max(1, page);
+            pageSize = Math.Max(1, pageSize);
             var query = Context.Users.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))
@@ -31,6 +32,11 @@ namespace Restia.Common.Identity.Repository
             }
 
             var totalCount = await query.CountAsync();
+            var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
+            if (page > totalPages)
+            {
+                page = totalPages;
+            }
 
             query = searchParam?.OrderBy switch
             {

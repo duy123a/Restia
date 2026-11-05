@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Identity.Entities;
+using Restia.Common.Identity.Enums;
 using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Services.Interfaces;
 using Restia.Common.Shared.Models;
@@ -51,6 +52,11 @@ namespace Restia.Common.Identity.Services
 
         public async Task<ServiceResult> CreateAsync(UserCreateDto dto)
         {
+            if (dto.SelectedRoles.Any(r => string.Equals(r, AppRoles.SuperAdmin.ToString(), StringComparison.OrdinalIgnoreCase)))
+            {
+                return ServiceResult.Fail("User_CannotAssignSuperAdminRole");
+            }
+
             var strategy = _uow.CreateExecutionStrategy();
 
             return await strategy.ExecuteAsync(
@@ -121,6 +127,26 @@ namespace Restia.Common.Identity.Services
                         if (user == null)
                             return ServiceResult.Fail("User_NotFound");
 
+                        var currentRoles = await _userManager.GetRolesAsync(user);
+
+                        var rolesToRemove = currentRoles
+                            .Except(dto.SelectedRoles, StringComparer.OrdinalIgnoreCase)
+                            .ToArray();
+
+                        var rolesToAdd = dto.SelectedRoles
+                            .Except(currentRoles, StringComparer.OrdinalIgnoreCase)
+                            .ToArray();
+
+                        if (rolesToRemove.Any(r => string.Equals(r, AppRoles.SuperAdmin.ToString(), StringComparison.OrdinalIgnoreCase)))
+                        {
+                            return ServiceResult.Fail("User_CannotRemoveSuperAdminRole");
+                        }
+
+                        if (rolesToAdd.Any(r => string.Equals(r, AppRoles.SuperAdmin.ToString(), StringComparison.OrdinalIgnoreCase)))
+                        {
+                            return ServiceResult.Fail("User_CannotAssignSuperAdminRole");
+                        }
+
                         user.UserName = dto.UserName;
                         user.Email = dto.Email;
                         user.PhoneNumber = dto.PhoneNumber;
@@ -129,7 +155,10 @@ namespace Restia.Common.Identity.Services
                         var updateResult = await _userManager.UpdateAsync(user);
 
                         if (!updateResult.Succeeded)
+                        {
+                            await transaction.RollbackAsync();
                             return ServiceResult.FromIdentityResult(updateResult);
+                        }
 
                         if (!string.IsNullOrWhiteSpace(dto.Password))
                         {
@@ -141,18 +170,11 @@ namespace Restia.Common.Identity.Services
                                     user, token, dto.Password);
 
                             if (!passwordResult.Succeeded)
+                            {
+                                await transaction.RollbackAsync();
                                 return ServiceResult.FromIdentityResult(passwordResult);
+                            }
                         }
-
-                        var currentRoles = await _userManager.GetRolesAsync(user);
-
-                        var rolesToRemove = currentRoles
-                            .Except(dto.SelectedRoles, StringComparer.OrdinalIgnoreCase)
-                            .ToArray();
-
-                        var rolesToAdd = dto.SelectedRoles
-                            .Except(currentRoles, StringComparer.OrdinalIgnoreCase)
-                            .ToArray();
 
                         if (rolesToRemove.Length > 0)
                         {
@@ -160,7 +182,10 @@ namespace Restia.Common.Identity.Services
                                 await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
 
                             if (!removeResult.Succeeded)
+                            {
+                                await transaction.RollbackAsync();
                                 return ServiceResult.FromIdentityResult(removeResult);
+                            }
                         }
 
                         if (rolesToAdd.Length > 0)
@@ -169,14 +194,20 @@ namespace Restia.Common.Identity.Services
                                 await _userManager.AddToRolesAsync(user, rolesToAdd);
 
                             if (!addResult.Succeeded)
+                            {
+                                await transaction.RollbackAsync();
                                 return ServiceResult.FromIdentityResult(addResult);
+                            }
                         }
 
                         var stampResult =
                             await _userManager.UpdateSecurityStampAsync(user);
 
                         if (!stampResult.Succeeded)
+                        {
+                            await transaction.RollbackAsync();
                             return ServiceResult.FromIdentityResult(stampResult);
+                        }
 
                         await transaction.CommitAsync();
 
@@ -209,6 +240,9 @@ namespace Restia.Common.Identity.Services
 
                     if (user is null)
                         return ServiceResult.Fail("User_NotFound");
+
+                    if (await _userManager.IsInRoleAsync(user, AppRoles.SuperAdmin.ToString()))
+                        return ServiceResult.Fail("User_CannotDeleteSuperAdmin");
 
                     var permissions = await _uow.UserPermissionRepository.FindAsync(up => up.UserId == id);
                     foreach (var permission in permissions)

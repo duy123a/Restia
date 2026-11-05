@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Restia.Common.Localization.Constants;
 
@@ -8,9 +8,9 @@ namespace Restia.Web.Controllers
     {
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SetLanguage(string culture, string returnUrl)
+        public IActionResult SetLanguage(string? culture, string? returnUrl)
         {
-            var selectedCulture = culture.ToLower().Equals(LocalizationConstants.Vietnamese, StringComparison.OrdinalIgnoreCase)
+            var selectedCulture = string.Equals(culture, LocalizationConstants.Vietnamese, StringComparison.OrdinalIgnoreCase)
                 ? LocalizationConstants.Vietnamese
                 : LocalizationConstants.English;
 
@@ -20,12 +20,12 @@ namespace Restia.Web.Controllers
                 new CookieOptions
                 {
                     Expires = DateTimeOffset.UtcNow.AddYears(1),
-                    Secure = true,
+                    Secure = Request.IsHttps,
                     HttpOnly = true
                 }
             );
 
-            return LocalRedirect(returnUrl ?? "/");
+            return LocalRedirect(string.IsNullOrWhiteSpace(returnUrl) ? "/" : returnUrl);
         }
     }
 }

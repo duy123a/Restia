@@ -1,4 +1,4 @@
-﻿@model IReadOnlyList<Restia.Common.Form.Models.FormItemDto>
+@model IReadOnlyList<Restia.Common.Form.Models.FormItemDto>
 
 @using Restia.Common.Localization.Resources
 @using Microsoft.Extensions.Localization
@@ -36,7 +36,7 @@
         <div class="sidebar-group">
 
             <button type="button"
-                    class="sidebar-section-label px-3 py-2 text-uppercase d-flex align-items-center w-100"
+                    class="sidebar-section-label text-uppercase d-flex align-items-center w-100"
                     data-bs-toggle="collapse"
                     data-bs-target="#@collapseId"
                     aria-expanded="@(hasActiveChild ? "true" : "false")"

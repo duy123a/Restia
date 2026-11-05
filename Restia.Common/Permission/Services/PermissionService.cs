@@ -164,6 +164,7 @@ namespace Restia.Common.Permission.Services
                 if (user == null) return null;
 
                 targetName = user.UserName ?? user.Email ?? string.Empty;
+                isReadOnly = await _userManager.IsInRoleAsync(user, AppRoles.SuperAdmin.ToString());
 
                 var userPermissions = await _uow.UserPermissionRepository
                     .FindAsync(up => up.UserId == targetId);
@@ -203,9 +204,11 @@ namespace Restia.Common.Permission.Services
                     .Select(c => new PermissionMatrixItemDto(
                         c.Code,
                         c.Name,
-                        existingPerms.TryGetValue(c.Code, out var sec)
-                            ? sec
-                            : FormAuthoritySec.None))
+                        isReadOnly
+                            ? FormAuthoritySec.Available
+                            : (existingPerms.TryGetValue(c.Code, out var sec)
+                                ? sec
+                                : FormAuthoritySec.None)))
                     .ToList();
 
                 if (leafChildren.Count > 0)
@@ -217,9 +220,11 @@ namespace Restia.Common.Permission.Services
                     var selfItem = new PermissionMatrixItemDto(
                         root.Code,
                         root.Name,
-                        existingPerms.TryGetValue(root.Code, out var sec)
-                            ? sec
-                            : FormAuthoritySec.None);
+                        isReadOnly
+                            ? FormAuthoritySec.Available
+                            : (existingPerms.TryGetValue(root.Code, out var sec)
+                                ? sec
+                                : FormAuthoritySec.None));
 
                     groups.Add(new PermissionMatrixGroupDto(root.Name, [selfItem]));
                 }
@@ -279,6 +284,12 @@ namespace Restia.Common.Permission.Services
 
                         if (user == null)
                             return ServiceResult.Fail("User_NotFound");
+
+                        if (await _userManager.IsInRoleAsync(user, AppRoles.SuperAdmin.ToString()))
+                        {
+                            return ServiceResult.Fail(
+                                "Role_CannotModifySuperAdminPermissions");
+                        }
                     }
 
                     // Get active leaf forms

@@ -274,7 +274,8 @@ namespace Restia.Common.Migrations
                 name: "IX_Forms_Code",
                 table: "Forms",
                 column: "Code",
-                unique: true);
+                unique: true,
+                filter: "\"IsDeleted\" = false");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Forms_ParentId",
