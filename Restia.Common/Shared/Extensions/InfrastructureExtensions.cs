@@ -11,6 +11,10 @@ using Restia.Common.Identity.Repository;
 using Restia.Common.Identity.Repository.Interfaces;
 using Restia.Common.Identity.Services;
 using Restia.Common.Identity.Services.Interfaces;
+using Restia.Common.Notification.Repository;
+using Restia.Common.Notification.Repository.Interfaces;
+using Restia.Common.Notification.Service;
+using Restia.Common.Notification.Service.Interfaces;
 using Restia.Common.Permission.Repository;
 using Restia.Common.Permission.Repository.Interfaces;
 using Restia.Common.Permission.Services;
@@ -47,12 +51,14 @@ namespace Restia.Common.Shared.Extensions
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IAdminUnitOfWork, AdminUnitOfWork>();
 
             services.AddScoped<IFormService, FormService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IAppNotificationService, AppNotificationService>();
 
             return services;
         }

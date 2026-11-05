@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Localization.Extensions;
+using Restia.Common.Notification.Service;
 using Restia.Common.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get
 builder.Services.AddControllersWithViews(o => o.AddStringTrimModelBinderProvider());
 builder.Services.AddLocalizationModule();
 builder.Services.AddInfrastructureModules(builder.Configuration);
+builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
@@ -53,5 +55,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

@@ -166,9 +166,18 @@
         </div>
     }
 
+    <!-- Configuration Data -->
+    <div id="layout-config" class="d-none"
+         data-is-authenticated="@(User.Identity?.IsAuthenticated.ToString().ToLower())"
+         data-culture="@Thread.CurrentThread.CurrentCulture.Name">
+    </div>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="~/lib/tom-select/dist/js/tom-select.complete.min.js" asp-append-version="true"></script>
+    <script src="~/lib/tom-select/dist/js/tom-select.complete.min.js" defer></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js" defer></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
+    <script src="~/js/utilities.js" asp-append-version="true" defer></script>
+    <script src="~/js/notification.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
