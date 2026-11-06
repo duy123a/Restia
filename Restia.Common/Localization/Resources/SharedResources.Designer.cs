@@ -187,6 +187,42 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is a test notification sent to all administrators..
+        /// </summary>
+        public static string AppNotice_DemoAdminNoticeMessage {
+            get {
+                return ResourceManager.GetString("AppNotice_DemoAdminNoticeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin Demo Notification.
+        /// </summary>
+        public static string AppNotice_DemoAdminNoticeTitle {
+            get {
+                return ResourceManager.GetString("AppNotice_DemoAdminNoticeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a test notification sent from the Home page..
+        /// </summary>
+        public static string AppNotice_DemoNoticeMessage {
+            get {
+                return ResourceManager.GetString("AppNotice_DemoNoticeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demo Notification.
+        /// </summary>
+        public static string AppNotice_DemoNoticeTitle {
+            get {
+                return ResourceManager.GetString("AppNotice_DemoNoticeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Button_Cancel {
@@ -282,6 +318,42 @@ namespace Restia.Common.Localization.Resources {
         public static string Button_Select {
             get {
                 return ResourceManager.GetString("Button_Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Test Notification (All Admins).
+        /// </summary>
+        public static string Button_TestAdminNotification {
+            get {
+                return ResourceManager.GetString("Button_TestAdminNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Test Notification.
+        /// </summary>
+        public static string Button_TestNotification {
+            get {
+                return ResourceManager.GetString("Button_TestNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this item?.
+        /// </summary>
+        public static string Delete_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("Delete_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete confirmation.
+        /// </summary>
+        public static string Delete_ConfirmationTitle {
+            get {
+                return ResourceManager.GetString("Delete_ConfirmationTitle", resourceCulture);
             }
         }
         
@@ -556,6 +628,42 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No notifications.
+        /// </summary>
+        public static string NoNotifications {
+            get {
+                return ResourceManager.GetString("NoNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark all as read.
+        /// </summary>
+        public static string Notification_ReadAll {
+            get {
+                return ResourceManager.GetString("Notification_ReadAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show more →.
+        /// </summary>
+        public static string Notification_ShowMore {
+            get {
+                return ResourceManager.GetString("Notification_ShowMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string Notifications {
+            get {
+                return ResourceManager.GetString("Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items per page.
         /// </summary>
         public static string Pagination_ItemsPerPage {
@@ -682,7 +790,7 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By Role.
+        ///   Looks up a localized string similar to By Group.
         /// </summary>
         public static string Permission_TabRole {
             get {
@@ -799,7 +907,7 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role updated successfully..
+        ///   Looks up a localized string similar to Group updated successfully..
         /// </summary>
         public static string Role_EditSuccess {
             get {
@@ -808,7 +916,7 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role name.
+        ///   Looks up a localized string similar to Group name.
         /// </summary>
         public static string Role_Name {
             get {
@@ -826,7 +934,7 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role not found..
+        ///   Looks up a localized string similar to Group not found..
         /// </summary>
         public static string Role_NotFound {
             get {
@@ -898,7 +1006,7 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit system role.
+        ///   Looks up a localized string similar to Edit system group.
         /// </summary>
         public static string RoleEdit_Subtitle {
             get {
@@ -934,11 +1042,38 @@ namespace Restia.Common.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot assign SuperAdmin group..
+        /// </summary>
+        public static string User_CannotAssignSuperAdminRole {
+            get {
+                return ResourceManager.GetString("User_CannotAssignSuperAdminRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SuperAdmin account cannot be deleted..
+        /// </summary>
+        public static string User_CannotDeleteSuperAdmin {
+            get {
+                return ResourceManager.GetString("User_CannotDeleteSuperAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You cannot delete your own account..
         /// </summary>
         public static string User_CannotDeleteYourself {
             get {
                 return ResourceManager.GetString("User_CannotDeleteYourself", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot remove SuperAdmin group from SuperAdmin account..
+        /// </summary>
+        public static string User_CannotRemoveSuperAdminRole {
+            get {
+                return ResourceManager.GetString("User_CannotRemoveSuperAdminRole", resourceCulture);
             }
         }
         

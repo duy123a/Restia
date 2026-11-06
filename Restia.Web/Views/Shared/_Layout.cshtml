@@ -68,6 +68,34 @@
 
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
+                    <li class="nav-item dropdown me-2" id="notificationDropdown">
+                        <button type="button"
+                                class="icon-btn notification-icon-btn"
+                                id="notificationToggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                data-bs-display="static"
+                                aria-label="@Localizer["Notifications"]">
+                            <i class="bi bi-bell" aria-hidden="true"></i>
+                            <span id="notificationBadge" class="bg-danger d-none notification-badge-custom"></span>
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-end p-0 shadow notification-dropdown-menu notification-dropdown">
+                            <div class="notification-header">
+                                <div class="notification-header-title">@Localizer["Notifications"]</div>
+                                <button type="button" id="notificationReadAllBtn" class="notification-read-all-btn d-none">
+                                    <i class="bi bi-check2-all me-1" aria-hidden="true"></i>@Localizer["Notification_ReadAll"]
+                                </button>
+                            </div>
+                            <div id="notificationList" class="notification-list-container">
+                                <div id="noNotificationLi" class="text-center text-muted small p-3 d-none">@Localizer["NoNotifications"]</div>
+                            </div>
+                            <div id="notificationShowMoreLi" class="d-none notification-footer">
+                                <a id="notificationShowMoreBtn" class="notification-show-more">@Localizer["Notification_ShowMore"]</a>
+                            </div>
+                        </div>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="~/images/default-avatar.svg" alt="Avatar" width="32" height="32" class="rounded-circle avatar-circle">

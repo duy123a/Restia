@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -503,5 +503,35 @@
   </data>
   <data name="User_CannotAssignSuperAdminRole" xml:space="preserve">
     <value>Không thể gán nhóm SuperAdmin.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Thông báo</value>
+  </data>
+  <data name="NoNotifications" xml:space="preserve">
+    <value>Không có thông báo mới</value>
+  </data>
+  <data name="Notification_ShowMore" xml:space="preserve">
+    <value>Xem thêm →</value>
+  </data>
+  <data name="AppNotice_DemoNoticeTitle" xml:space="preserve">
+    <value>Thông báo thử nghiệm</value>
+  </data>
+  <data name="AppNotice_DemoNoticeMessage" xml:space="preserve">
+    <value>Đây là thông báo thử nghiệm được gửi từ Trang chủ.</value>
+  </data>
+  <data name="Button_TestNotification" xml:space="preserve">
+    <value>Gửi thông báo thử nghiệm</value>
+  </data>
+  <data name="Notification_ReadAll" xml:space="preserve">
+    <value>Đánh dấu đã đọc tất cả</value>
+  </data>
+  <data name="AppNotice_DemoAdminNoticeTitle" xml:space="preserve">
+    <value>Thông báo thử nghiệm Admin</value>
+  </data>
+  <data name="AppNotice_DemoAdminNoticeMessage" xml:space="preserve">
+    <value>Đây là thông báo thử nghiệm gửi tới toàn bộ quản trị viên.</value>
+  </data>
+  <data name="Button_TestAdminNotification" xml:space="preserve">
+    <value>Gửi thông báo thử nghiệm (Toàn bộ Admin)</value>
   </data>
 </root>

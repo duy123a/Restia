@@ -203,7 +203,7 @@ namespace Restia.Web.Controllers
         [Authorize(Policy = PermissionConstants.User.Available)]
         public async Task<IActionResult> Delete(string id)
         {
-            var currentUserId = User.GetLoginId();
+            var currentUserId = User.GetUserId();
             var result = await _userService.DeleteAsync(id, currentUserId);
 
             if (result.ErrorCode == "User_NotFound") return NotFound();

@@ -43,6 +43,7 @@ namespace Restia.Common.Shared.Extensions
         public static IServiceCollection AddPersistenceModule(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddHttpClient();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 

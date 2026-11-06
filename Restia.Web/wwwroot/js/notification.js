@@ -1,8 +1,9 @@
-﻿document.addEventListener("noticeReady", function () {
+document.addEventListener("noticeReady", function () {
     const badge = document.getElementById("notificationBadge");
     const list = document.getElementById("notificationList");
     const showMoreBtn = document.getElementById("notificationShowMoreBtn");
     const showMoreLi = document.getElementById("notificationShowMoreLi");
+    const readAllBtn = document.getElementById("notificationReadAllBtn");
     const dropdownToggle = document.getElementById("notificationToggle");
 
     if (!badge || !list || !showMoreBtn || !showMoreLi || !dropdownToggle) return;
@@ -18,8 +19,10 @@
             const count = await res.json();
             if (count > 0) {
                 badge.classList.remove("d-none");
+                readAllBtn?.classList.remove("d-none");
             } else {
                 badge.classList.add("d-none");
+                readAllBtn?.classList.add("d-none");
             }
         } catch (e) {
             console.error("Failed to load unread count:", e);
@@ -175,6 +178,31 @@
 
         list.dataset.clickHandlerAttached = "true";
     }
+
+    // Mark all as read
+    readAllBtn?.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        if (readAllBtn.disabled) return;
+        readAllBtn.disabled = true;
+
+        try {
+            const res = await fetch("/api/notification/mark-all-as-read", { method: "POST" });
+            if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+
+            list.querySelectorAll(".notification-unread").forEach(el => {
+                el.classList.remove("notification-unread");
+                el.classList.add("notification-read");
+                el.querySelector(".unread-dot")?.remove();
+            });
+
+            badge.classList.add("d-none");
+            readAllBtn.classList.add("d-none");
+        } catch (err) {
+            console.error("Failed to mark all as read:", err);
+        } finally {
+            readAllBtn.disabled = false;
+        }
+    });
 
     // SignalR connection
     const connection = new signalR.HubConnectionBuilder()

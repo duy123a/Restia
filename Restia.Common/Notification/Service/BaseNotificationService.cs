@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Restia.Common.Identity.Entities;
@@ -143,13 +143,16 @@ namespace Restia.Common.Notification.Service
         public async Task TriggerApiAsync(Guid notificationId, string endpoint, string baseUrlKey)
         {
             var client = _httpFactory.CreateClient();
-            client.DefaultRequestHeaders.Add("X-Notification-Key", _config["Notification:ApiKey"]);
+            var apiKey = _config["Notification:ApiKey"];
+            if (!string.IsNullOrEmpty(apiKey))
+            {
+                client.DefaultRequestHeaders.Add("X-Notification-Key", apiKey);
+            }
 
-            var payload = new { NotificationId = notificationId };
             try
             {
-                var baseUrl = _config[baseUrlKey];
-                var res = await client.PostAsJsonAsync($"{baseUrl}/api/notification/{endpoint}", payload);
+                var baseUrl = _config[baseUrlKey]?.TrimEnd('/');
+                var res = await client.PostAsJsonAsync($"{baseUrl}/api/notification/{endpoint}", notificationId);
                 if (!res.IsSuccessStatusCode)
                 {
                     _logger.LogWarning("Trigger to {BaseUrlKey} failed: {Status}", baseUrlKey, res.StatusCode);

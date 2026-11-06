@@ -104,7 +104,7 @@ namespace Restia.Common.Permission.Services
             }
 
             var authoritySec = await GetAuthoritySecAsync(
-                user.GetLoginId(),
+                user.GetUserId(),
                 user.GetRoles(),
                 screen);
 

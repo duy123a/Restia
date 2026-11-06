@@ -10,7 +10,7 @@ namespace Restia.Common.Identity.Extensions
             return principal.IsInRole(AppRoles.SuperAdmin.ToString());
         }
 
-        public static string GetLoginId(this ClaimsPrincipal principal)
+        public static string GetUserId(this ClaimsPrincipal principal)
         {
             return principal.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
         }

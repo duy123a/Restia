@@ -1,9 +1,13 @@
-﻿namespace Restia.Common.Notification.Service.Interfaces
+namespace Restia.Common.Notification.Service.Interfaces
 {
     public interface IAppNotificationService : IBaseNotificationService
     {
-        Task SelfTriggerAsync(Guid notificationId);
+        Task TriggerAsync(Guid notificationId);
 
-        Task SelfTriggerAdminAsync(Guid notificationId);
+        Task TriggerAdminAsync(Guid notificationId);
+
+        Task NotifyDemoAsync(string userId);
+
+        Task NotifyAdminDemoAsync();
     }
 }

@@ -352,7 +352,7 @@
     <value>Manage system groups</value>
   </data>
   <data name="Role_Name" xml:space="preserve">
-    <value>Role name</value>
+    <value>Group name</value>
   </data>
   <data name="Role_UserCount" xml:space="preserve">
     <value>Users</value>
@@ -373,13 +373,13 @@
     <value>Edit group</value>
   </data>
   <data name="RoleEdit_Subtitle" xml:space="preserve">
-    <value>Edit system role</value>
+    <value>Edit system group</value>
   </data>
   <data name="Role_CreateSuccess" xml:space="preserve">
     <value>Group created successfully.</value>
   </data>
   <data name="Role_EditSuccess" xml:space="preserve">
-    <value>Role updated successfully.</value>
+    <value>Group updated successfully.</value>
   </data>
   <data name="Role_DeleteSuccess" xml:space="preserve">
     <value>Group deleted successfully.</value>
@@ -397,7 +397,7 @@
     <value>Group name already exists.</value>
   </data>
   <data name="Role_NotFound" xml:space="preserve">
-    <value>Role not found.</value>
+    <value>Group not found.</value>
   </data>
   <data name="Role_CannotRenameSuperAdmin" xml:space="preserve">
     <value>SuperAdmin group cannot be renamed.</value>
@@ -412,7 +412,7 @@
     <value>Assign screen permissions to roles or users</value>
   </data>
   <data name="Permission_TabRole" xml:space="preserve">
-    <value>By Role</value>
+    <value>By Group</value>
   </data>
   <data name="Permission_TabUser" xml:space="preserve">
     <value>By User</value>
@@ -503,5 +503,35 @@
   </data>
   <data name="User_CannotAssignSuperAdminRole" xml:space="preserve">
     <value>Cannot assign SuperAdmin group.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="NoNotifications" xml:space="preserve">
+    <value>No notifications</value>
+  </data>
+  <data name="Notification_ShowMore" xml:space="preserve">
+    <value>Show more →</value>
+  </data>
+  <data name="AppNotice_DemoNoticeTitle" xml:space="preserve">
+    <value>Demo Notification</value>
+  </data>
+  <data name="AppNotice_DemoNoticeMessage" xml:space="preserve">
+    <value>This is a test notification sent from the Home page.</value>
+  </data>
+  <data name="Button_TestNotification" xml:space="preserve">
+    <value>Send Test Notification</value>
+  </data>
+  <data name="Notification_ReadAll" xml:space="preserve">
+    <value>Mark all as read</value>
+  </data>
+  <data name="AppNotice_DemoAdminNoticeTitle" xml:space="preserve">
+    <value>Admin Demo Notification</value>
+  </data>
+  <data name="AppNotice_DemoAdminNoticeMessage" xml:space="preserve">
+    <value>This is a test notification sent to all administrators.</value>
+  </data>
+  <data name="Button_TestAdminNotification" xml:space="preserve">
+    <value>Send Test Notification (All Admins)</value>
   </data>
 </root>

@@ -1,8 +1,55 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["Button_Home"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="page">
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card page-card">
+        <div class="app-card-body text-center py-5">
+            <h1 class="display-5 fw-bold mb-3">Welcome</h1>
+            <p class="text-secondary mb-4">Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <form asp-controller="Home" asp-action="NotifyDemo" method="post" class="d-inline-block js-notify-form">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn app-btn app-btn-primary">
+                        <i class="bi bi-bell me-2" aria-hidden="true"></i>@Localizer["Button_TestNotification"]
+                    </button>
+                </form>
+
+                <form asp-controller="Home" asp-action="NotifyAdminDemo" method="post" class="d-inline-block js-notify-form">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn app-btn app-btn-secondary">
+                        <i class="bi bi-shield-lock me-2" aria-hidden="true"></i>@Localizer["Button_TestAdminNotification"]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.js-notify-form').forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const btn = this.querySelector('button[type="submit"]');
+                if (btn) btn.disabled = true;
+                try {
+                    await fetch(this.action, {
+                        method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        body: new FormData(this)
+                    });
+                } finally {
+                    if (btn) btn.disabled = false;
+                }
+            });
+        });
+    </script>
+}
