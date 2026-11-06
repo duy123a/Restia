@@ -29,5 +29,7 @@ namespace Restia.Common.Identity.Models
         public string? Password { get; set; }
         public IList<string> SelectedRoles { get; set; } = [];
         public IReadOnlyList<RoleOptionDto> AvailableRoles { get; init; } = [];
+        public bool IsLockedOut { get; init; }
+        public DateTimeOffset? LockoutEnd { get; init; }
     }
 }

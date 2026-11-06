@@ -534,4 +534,61 @@
   <data name="Button_TestAdminNotification" xml:space="preserve">
     <value>Gửi thông báo thử nghiệm (Toàn bộ Admin)</value>
   </data>
+  <data name="User_LockDuration1d" xml:space="preserve">
+    <value>1 ngày</value>
+  </data>
+  <data name="Button_UnlockUser" xml:space="preserve">
+    <value>Mở khóa</value>
+  </data>
+  <data name="User_StatusActive" xml:space="preserve">
+    <value>Đang hoạt động</value>
+  </data>
+  <data name="User_LockSuccess" xml:space="preserve">
+    <value>Đã khóa tài khoản thành công.</value>
+  </data>
+  <data name="User_UnlockSuccess" xml:space="preserve">
+    <value>Đã mở khóa tài khoản thành công.</value>
+  </data>
+  <data name="User_LockDuration5m" xml:space="preserve">
+    <value>5 phút</value>
+  </data>
+  <data name="User_LockedPermanent" xml:space="preserve">
+    <value>Khóa vĩnh viễn</value>
+  </data>
+  <data name="User_LockedUntil" xml:space="preserve">
+    <value>Khóa đến {0}</value>
+  </data>
+  <data name="User_LockFailed" xml:space="preserve">
+    <value>Không thể khóa tài khoản.</value>
+  </data>
+  <data name="User_LockDuration15m" xml:space="preserve">
+    <value>15 phút</value>
+  </data>
+  <data name="User_UnlockFailed" xml:space="preserve">
+    <value>Không thể mở khóa tài khoản.</value>
+  </data>
+  <data name="User_LockDurationPermanent" xml:space="preserve">
+    <value>Vĩnh viễn</value>
+  </data>
+  <data name="User_LockoutStatus" xml:space="preserve">
+    <value>Trạng thái khóa tài khoản</value>
+  </data>
+  <data name="User_LockDuration1h" xml:space="preserve">
+    <value>1 giờ</value>
+  </data>
+  <data name="Button_LockUser" xml:space="preserve">
+    <value>Khóa</value>
+  </data>
+  <data name="User_CannotLockSuperAdmin" xml:space="preserve">
+    <value>Không thể khóa tài khoản SuperAdmin.</value>
+  </data>
+  <data name="User_CannotLockYourself" xml:space="preserve">
+    <value>Bạn không thể tự khóa tài khoản của mình.</value>
+  </data>
+  <data name="Login_LockedOutUntil" xml:space="preserve">
+    <value>Tài khoản này đang bị khóa, sẽ mở khóa lúc {0}.</value>
+  </data>
+  <data name="Login_LockedOutPermanent" xml:space="preserve">
+    <value>Tài khoản này đang bị khóa vĩnh viễn. Vui lòng liên hệ quản trị viên.</value>
+  </data>
 </root>

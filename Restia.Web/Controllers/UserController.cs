@@ -144,7 +144,9 @@ namespace Restia.Web.Controllers
                     Id = r.Id,
                     Name = r.Name,
                     IsSelected = selectedSet.Contains(r.Name)
-                }).ToList()
+                }).ToList(),
+                IsLockedOut = dto.IsLockedOut,
+                LockoutEnd = dto.LockoutEnd
             });
         }
 
@@ -163,7 +165,7 @@ namespace Restia.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                model.AvailableRoles = await BuildRoleOptionsAsync(model.SelectedRoles);
+                await PopulateEditMetadataAsync(model);
                 return View(model);
             }
 
@@ -190,12 +192,61 @@ namespace Restia.Web.Controllers
                 foreach (var error in result.Errors)
                     ModelState.AddModelError(string.Empty, error);
 
-                model.AvailableRoles = await BuildRoleOptionsAsync(model.SelectedRoles);
+                await PopulateEditMetadataAsync(model);
                 return View(model);
             }
 
             TempData["Success"] = "User_EditSuccess";
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = PermissionConstants.User.Available)]
+        public async Task<IActionResult> Lock(string userId, int durationMinutes = 5)
+        {
+            var currentUserId = User.GetUserId();
+            if (string.Equals(userId, currentUserId, StringComparison.Ordinal))
+            {
+                TempData["Error"] = "User_CannotLockYourself";
+                return RedirectToAction(nameof(Edit), new { id = userId });
+            }
+
+            var result = await _userService.SetLockoutAsync(userId, durationMinutes);
+
+            if (result.ErrorCode == "User_NotFound") return NotFound();
+
+            if (!result.Succeeded)
+            {
+                TempData["Error"] = !string.IsNullOrEmpty(result.ErrorCode)
+                    ? result.ErrorCode
+                    : "User_LockFailed";
+                return RedirectToAction(nameof(Edit), new { id = userId });
+            }
+
+            TempData["Success"] = "User_LockSuccess";
+            return RedirectToAction(nameof(Edit), new { id = userId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = PermissionConstants.User.Available)]
+        public async Task<IActionResult> Unlock(string userId)
+        {
+            var result = await _userService.SetLockoutAsync(userId, null);
+
+            if (result.ErrorCode == "User_NotFound") return NotFound();
+
+            if (!result.Succeeded)
+            {
+                TempData["Error"] = !string.IsNullOrEmpty(result.ErrorCode)
+                    ? result.ErrorCode
+                    : "User_UnlockFailed";
+                return RedirectToAction(nameof(Edit), new { id = userId });
+            }
+
+            TempData["Success"] = "User_UnlockSuccess";
+            return RedirectToAction(nameof(Edit), new { id = userId });
         }
 
         [HttpPost]
@@ -218,6 +269,20 @@ namespace Restia.Web.Controllers
 
             TempData["Success"] = "User_DeleteSuccess";
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task PopulateEditMetadataAsync(UserFormViewModel model)
+        {
+            model.AvailableRoles = await BuildRoleOptionsAsync(model.SelectedRoles);
+            if (!string.IsNullOrEmpty(model.Id))
+            {
+                var dto = await _userService.GetInfoForUpdateAsync(model.Id);
+                if (dto != null)
+                {
+                    model.IsLockedOut = dto.IsLockedOut;
+                    model.LockoutEnd = dto.LockoutEnd;
+                }
+            }
         }
 
         private async Task<IList<RoleOptionViewModel>> BuildRoleOptionsAsync(IEnumerable<string> selected)

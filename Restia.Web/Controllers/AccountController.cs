@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Restia.Common.Identity.Configurations;
 using Restia.Common.Identity.Entities;
 using Restia.Common.Localization.Resources;
+using Restia.Common.Shared.Helpers;
 using Restia.Web.Models;
 
 namespace Restia.Web.Controllers
@@ -86,7 +87,20 @@ namespace Restia.Web.Controllers
 
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["Login_Failed"]);
+                    var lockoutEnd = await _userManager.GetLockoutEndDateAsync(user);
+                    if (lockoutEnd.HasValue && lockoutEnd.Value >= DateTimeOffset.MaxValue.AddYears(-1))
+                    {
+                        ModelState.AddModelError(string.Empty, _localizer["Login_LockedOutPermanent"]);
+                    }
+                    else if (lockoutEnd.HasValue)
+                    {
+                        var unlockTime = lockoutEnd.Value.ToAppTime().ToString("dd/MM/yyyy HH:mm:ss");
+                        ModelState.AddModelError(string.Empty, _localizer["Login_LockedOutUntil", unlockTime]);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, _localizer["Login_Failed"]);
+                    }
                     return View(model);
                 }
             }

@@ -11,5 +11,6 @@ namespace Restia.Common.Identity.Services.Interfaces
         Task<ServiceResult> CreateAsync(UserCreateDto dto);
         Task<ServiceResult> UpdateAsync(UserUpdateDto dto);
         Task<ServiceResult> DeleteAsync(string id, string currentUserId);
+        Task<ServiceResult> SetLockoutAsync(string userId, int? durationMinutes);
     }
 }

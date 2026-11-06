@@ -534,4 +534,61 @@
   <data name="Button_TestAdminNotification" xml:space="preserve">
     <value>Send Test Notification (All Admins)</value>
   </data>
+  <data name="User_LockDuration1d" xml:space="preserve">
+    <value>1 day</value>
+  </data>
+  <data name="Button_UnlockUser" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="User_StatusActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="User_LockSuccess" xml:space="preserve">
+    <value>User locked successfully.</value>
+  </data>
+  <data name="User_UnlockSuccess" xml:space="preserve">
+    <value>User unlocked successfully.</value>
+  </data>
+  <data name="User_LockDuration5m" xml:space="preserve">
+    <value>5 minutes</value>
+  </data>
+  <data name="User_LockedPermanent" xml:space="preserve">
+    <value>Locked permanently</value>
+  </data>
+  <data name="User_LockedUntil" xml:space="preserve">
+    <value>Locked until {0}</value>
+  </data>
+  <data name="User_LockFailed" xml:space="preserve">
+    <value>Failed to lock user.</value>
+  </data>
+  <data name="User_LockDuration15m" xml:space="preserve">
+    <value>15 minutes</value>
+  </data>
+  <data name="User_UnlockFailed" xml:space="preserve">
+    <value>Failed to unlock user.</value>
+  </data>
+  <data name="User_LockDurationPermanent" xml:space="preserve">
+    <value>Permanent</value>
+  </data>
+  <data name="User_LockoutStatus" xml:space="preserve">
+    <value>Account lockout</value>
+  </data>
+  <data name="User_LockDuration1h" xml:space="preserve">
+    <value>1 hour</value>
+  </data>
+  <data name="Button_LockUser" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="User_CannotLockSuperAdmin" xml:space="preserve">
+    <value>SuperAdmin account cannot be locked.</value>
+  </data>
+  <data name="User_CannotLockYourself" xml:space="preserve">
+    <value>You cannot lock your own account.</value>
+  </data>
+  <data name="Login_LockedOutUntil" xml:space="preserve">
+    <value>This account is locked out and will be unlocked at {0}.</value>
+  </data>
+  <data name="Login_LockedOutPermanent" xml:space="preserve">
+    <value>This account is permanently locked. Please contact the administrator.</value>
+  </data>
 </root>

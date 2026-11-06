@@ -44,5 +44,7 @@ namespace Restia.Web.Models
 
         public IList<string> SelectedRoles { get; set; } = [];
         public IList<RoleOptionViewModel> AvailableRoles { get; set; } = [];
+        public bool IsLockedOut { get; set; }
+        public DateTimeOffset? LockoutEnd { get; set; }
     }
 }

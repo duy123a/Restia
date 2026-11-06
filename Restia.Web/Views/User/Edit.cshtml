@@ -1,10 +1,14 @@
 @model UserFormViewModel
 @using Microsoft.Extensions.Localization
 @using Restia.Common.Localization.Resources
+@using Restia.Common.Shared.Helpers
 @inject IStringLocalizer<SharedResources> Localizer
 
 @{
     ViewData["Title"] = Localizer["UserEdit_Title"];
+    var isPermanentLock = Model.IsLockedOut
+        && Model.LockoutEnd.HasValue
+        && Model.LockoutEnd.Value >= DateTimeOffset.MaxValue.AddYears(-1);
 }
 
 <div class="page">
@@ -71,6 +75,60 @@
                     }
                 </div>
 
+                <hr class="my-4" />
+
+                <h5 class="mb-3"><i class="bi bi-shield-lock me-2"></i>@Localizer["User_LockoutStatus"]</h5>
+                <div class="lockout-box">
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        @if (Model.IsLockedOut && Model.LockoutEnd.HasValue)
+                        {
+                            <span class="badge app-badge-danger">
+                                <i class="bi bi-lock-fill me-1"></i>@Localizer["User_LockedOut"]
+                            </span>
+                            @if (isPermanentLock)
+                            {
+                                <span class="text-secondary small">@Localizer["User_LockedPermanent"]</span>
+                            }
+                            else
+                            {
+                                var localEnd = Model.LockoutEnd.Value.ToAppTime().ToString("dd/MM/yyyy HH:mm:ss");
+                                <span class="text-secondary small"
+                                      id="lockoutTimer"
+                                      data-lockout-end="@Model.LockoutEnd.Value.ToUnixTimeMilliseconds()"
+                                      data-expired-text="@Localizer["User_StatusActive"]">
+                                    @Localizer["User_LockedUntil", localEnd]
+                                    (<strong id="lockoutRemainingText" class="text-danger"></strong>)
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="badge app-badge">
+                                <i class="bi bi-unlock-fill me-1"></i>@Localizer["User_StatusActive"]
+                            </span>
+                        }
+                    </div>
+
+                    <div class="lockout-actions">
+                        <select name="durationMinutes" form="lockUserForm" class="form-select lockout-select" aria-label="@Localizer["User_LockoutStatus"]">
+                            <option value="5">@Localizer["User_LockDuration5m"]</option>
+                            <option value="15">@Localizer["User_LockDuration15m"]</option>
+                            <option value="60">@Localizer["User_LockDuration1h"]</option>
+                            <option value="1440">@Localizer["User_LockDuration1d"]</option>
+                            <option value="-1">@Localizer["User_LockDurationPermanent"]</option>
+                        </select>
+                        <button type="submit" form="lockUserForm" class="btn app-btn app-btn-danger lockout-btn">
+                            <i class="bi bi-lock me-1"></i>@Localizer["Button_LockUser"]
+                        </button>
+                        @if (Model.IsLockedOut)
+                        {
+                            <button type="submit" form="unlockUserForm" class="btn app-btn app-btn-secondary lockout-btn">
+                                <i class="bi bi-unlock me-1"></i>@Localizer["Button_UnlockUser"]
+                            </button>
+                        }
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-end gap-2 mt-4">
                     <a asp-action="Index" class="btn app-btn app-btn-secondary">@Localizer["Button_Cancel"]</a>
                     <button type="submit" class="btn app-btn app-btn-primary">
@@ -78,6 +136,47 @@
                     </button>
                 </div>
             </form>
+
+            <form id="lockUserForm" asp-action="Lock" asp-route-userId="@Model.Id" method="post" class="d-none">
+                @Html.AntiForgeryToken()
+            </form>
+            <form id="unlockUserForm" asp-action="Unlock" asp-route-userId="@Model.Id" method="post" class="d-none">
+                @Html.AntiForgeryToken()
+            </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const timerEl = document.getElementById('lockoutTimer');
+            const remainingEl = document.getElementById('lockoutRemainingText');
+            if (!timerEl || !remainingEl) return;
+
+            const endMs = parseInt(timerEl.dataset.lockoutEnd, 10);
+            if (isNaN(endMs)) return;
+
+            function updateRemaining() {
+                const diffSec = Math.max(0, Math.floor((endMs - Date.now()) / 1000));
+                if (diffSec <= 0) {
+                    window.location.reload();
+                    return;
+                }
+                const d = Math.floor(diffSec / 86400);
+                const h = Math.floor((diffSec % 86400) / 3600);
+                const m = Math.floor((diffSec % 3600) / 60);
+                const s = diffSec % 60;
+                const parts = [];
+                if (d > 0) parts.push(`${d}d`);
+                if (h > 0 || d > 0) parts.push(`${h}h`);
+                if (m > 0 || h > 0 || d > 0) parts.push(`${m}m`);
+                parts.push(`${s}s`);
+                remainingEl.textContent = parts.join(' ');
+            }
+
+            updateRemaining();
+            setInterval(updateRemaining, 1000);
+        })();
+    </script>
+}
