@@ -15,7 +15,7 @@ namespace Restia.Web.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("{tenantId}/api/[controller]")]
     public abstract class BaseNotificationController : ControllerBase
     {
         protected readonly IAppNotificationService _notificationService;

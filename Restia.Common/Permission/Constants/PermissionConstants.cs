@@ -14,6 +14,7 @@ namespace Restia.Common.Permission.Constants
             public const string User = "User";
             public const string Role = "Role";
             public const string Permission = "Permission";
+            public const string Tenant = "Tenant";
         }
 
         public static class User
@@ -38,6 +39,12 @@ namespace Restia.Common.Permission.Constants
             public const string Available = $"{Default}:{nameof(FormAuthoritySec.Available)}";
             public const string ReferablePrintable = $"{Default}:{nameof(FormAuthoritySec.ReferablePrintable)}";
             public const string Unavailable = $"{Default}:{nameof(FormAuthoritySec.Unavailable)}";
+        }
+
+        public static class Tenant
+        {
+            public const string Default = $"{Prefix}:{FormCodes.Tenant}";
+            public const string Available = $"{Default}:{nameof(FormAuthoritySec.Available)}";
         }
 
         public static string ForForm(string formCode) => $"{Prefix}:{formCode}";

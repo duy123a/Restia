@@ -1,13 +1,16 @@
 @using Restia.Common.Localization.Resources;
 @using Microsoft.Extensions.Localization;
 @using Restia.Common.Localization.Constants;
+@using Restia.Common.Tenant.Services.Interfaces;
 @inject IStringLocalizer<SharedResources> Localizer;
+@inject ITenantContext TenantContext;
 
 @{
     var pageTitle = ViewData["Title"] as string;
     var fullTitle = string.IsNullOrWhiteSpace(pageTitle) ? "Restia.Web" : $"{pageTitle} - Restia.Web";
     var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     var currentPath = $"{Context.Request.Path}{Context.Request.QueryString}";
+    var currentTenant = TenantContext.SchemaId;
 }
 
 <!DOCTYPE html>
@@ -42,7 +45,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="langDropdown">
                         <li>
-                            <form asp-controller="Culture" asp-action="SetLanguage" method="post" class="m-0">
+                            <form asp-controller="Culture" asp-action="SetLanguage" asp-route-tenantId="@currentTenant" method="post" class="m-0">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="culture" value="@LocalizationConstants.English" />
                                 <input type="hidden" name="returnUrl" value="@currentPath" />
@@ -53,7 +56,7 @@
                             </form>
                         </li>
                         <li>
-                            <form asp-controller="Culture" asp-action="SetLanguage" method="post" class="m-0">
+                            <form asp-controller="Culture" asp-action="SetLanguage" asp-route-tenantId="@currentTenant" method="post" class="m-0">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="culture" value="@LocalizationConstants.Vietnamese" />
                                 <input type="hidden" name="returnUrl" value="@currentPath" />
@@ -137,7 +140,7 @@
 
     @if (User.Identity?.IsAuthenticated ?? false)
     {
-        <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="d-none">
+        <form asp-controller="Account" asp-action="Logout" asp-route-tenantId="@currentTenant" method="post" id="logoutForm" class="d-none">
             @Html.AntiForgeryToken()
         </form>
 
@@ -191,7 +194,8 @@
     <!-- Configuration Data -->
     <div id="layout-config" class="d-none"
          data-is-authenticated="@(User.Identity?.IsAuthenticated.ToString().ToLower())"
-         data-culture="@Thread.CurrentThread.CurrentCulture.Name">
+         data-culture="@Thread.CurrentThread.CurrentCulture.Name"
+         data-tenant="@currentTenant">
     </div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>

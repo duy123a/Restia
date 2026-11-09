@@ -1,0 +1,131 @@
+@model PaginationViewModel<TenantViewModel>
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@using Restia.Common.Permission.Constants
+@using Restia.Common.Permission.Services.Interfaces
+@using Restia.Common.Tenant.Constants
+@using X.PagedList.Mvc.Core
+@inject IStringLocalizer<SharedResources> Localizer
+@inject IPermissionService PermissionService
+
+@{
+    ViewData["Title"] = Localizer["Tenant_Title"];
+    var canModify = await PermissionService.HasPermissionAsync(User, PermissionConstants.Tenant.Available);
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">@Localizer["Tenant_Title"]</h1>
+            <p class="page-subtitle">@Localizer["Tenant_Subtitle"]</p>
+        </div>
+        @if (canModify)
+        {
+            <a asp-action="Create" class="btn app-btn app-btn-primary">
+                <i class="bi bi-plus-lg me-1"></i>@Localizer["Button_Create"]
+            </a>
+        }
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card page-card">
+        <partial name="_PaginationToolbar" model="new PaginationViewModel<object> {
+            SearchTerm = Model.SearchTerm,
+            OrderBy = Model.OrderBy,
+            PageSize = Model.PageSize,
+            SearchPlaceholderKey = Model.SearchPlaceholderKey
+        }" />
+
+        <div class="table-responsive">
+            <table class="table data-table data-table--tenants mb-0">
+                <thead>
+                    <tr>
+                        <th class="col-tenant-id">@Localizer["Tenant_Id"]</th>
+                        <th class="col-tenant-name">
+                            <a asp-action="Index"
+                               asp-route-searchTerm="@Model.SearchTerm"
+                               asp-route-orderBy="@(Model.OrderBy == AppConstants.NameDesc ? AppConstants.NameAsc : AppConstants.NameDesc)"
+                               asp-route-pageSize="@Model.PageSize"
+                               class="sort-header-link">
+                                <span>@Localizer["Tenant_DisplayName"]</span>
+                                <span class="sort-icons">
+                                    <i class="bi bi-caret-up-fill sort-icon @(Model.OrderBy == AppConstants.NameAsc ? "active" : "")"></i>
+                                    <i class="bi bi-caret-down-fill sort-icon @(Model.OrderBy == AppConstants.NameDesc ? "active" : "")"></i>
+                                </span>
+                            </a>
+                        </th>
+                        <th class="col-tenant-status">@Localizer["Tenant_IsActive"]</th>
+                        <th class="col-tenant-created">@Localizer["Tenant_CreatedAt"]</th>
+                        <th class="col-actions text-end">@Localizer["User_Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Items.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                @Localizer["Tenant_NoRecords"]
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var tenant in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2 user-cell-content">
+                                    <span class="admin-avatar">@(string.IsNullOrWhiteSpace(tenant.Id) ? '?' : tenant.Id[0])</span>
+                                    <div class="user-info-text">
+                                        <div class="fw-semibold user-display-name" title="@tenant.Id">@tenant.Id</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="user-display-name" title="@tenant.DisplayName">@tenant.DisplayName</div>
+                            </td>
+                            <td>
+                                @if (tenant.IsActive)
+                                {
+                                    <span class="badge app-badge">@Localizer["Tenant_StatusActive"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge app-badge-danger">@Localizer["Tenant_StatusInactive"]</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="text-muted small">@(tenant.CreatedAt?.ToLocalTime().ToString("yyyy-MM-dd HH:mm") ?? "-")</span>
+                            </td>
+                            <td class="text-end">
+                                <partial name="_TableActions"
+                                         model="@(new TableActionsViewModel
+                                         {
+                                             CanModify = canModify,
+                                             EditUrl = Url.Action("Edit", new { id = tenant.Id }),
+                                             DeleteAction = "Delete",
+                                             DeleteId = string.Equals(tenant.Id, TenantConstants.DefaultTenantId, StringComparison.OrdinalIgnoreCase) ? null : tenant.Id
+                                         })" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.Items.PageCount > 1)
+        {
+            <div class="data-table-pagination">
+                @Html.PagedListPager(
+                    Model.Items,
+                    page => Url.Action("Index", new { searchTerm = Model.SearchTerm, orderBy = Model.OrderBy, page, pageSize = Model.PageSize })!,
+                    new PagedListRenderOptions
+                    {
+                        LiElementClasses = ["pagination-li-element"],
+                        PageClasses = ["pagination-page"],
+                        UlElementClasses = ["pagination-ul-element", "mb-0"]
+                    })
+            </div>
+        }
+    </div>
+</div>

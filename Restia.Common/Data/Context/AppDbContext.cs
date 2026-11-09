@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Extensions;
 using Restia.Common.Identity.Entities;
@@ -6,6 +6,7 @@ using Restia.Common.Permission.Entities;
 using System.Reflection;
 using FormEntity = Restia.Common.Form.Entities.Form;
 using NotificationEntity = Restia.Common.Notification.Entities.Notification;
+using TenantEntity = Restia.Common.Tenant.Entities.Tenant;
 
 namespace Restia.Common.Data.Context
 {
@@ -15,6 +16,7 @@ namespace Restia.Common.Data.Context
         public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
         public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
         public DbSet<NotificationEntity> Notifications => Set<NotificationEntity>();
+        public DbSet<TenantEntity> Tenants => Set<TenantEntity>();
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -27,7 +29,6 @@ namespace Restia.Common.Data.Context
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             builder.ApplyCommonEntityConventions();
-
         }
     }
 }

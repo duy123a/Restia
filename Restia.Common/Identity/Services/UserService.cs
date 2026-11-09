@@ -6,6 +6,7 @@ using Restia.Common.Identity.Models;
 using Restia.Common.Identity.Services.Interfaces;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
+using Restia.Common.Tenant.Services.Interfaces;
 
 namespace Restia.Common.Identity.Services
 {
@@ -13,13 +14,16 @@ namespace Restia.Common.Identity.Services
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IAdminUnitOfWork _uow;
+        private readonly ITenantContext _tenantContext;
 
         public UserService(
             UserManager<AppUser> userManager,
-            IAdminUnitOfWork uow)
+            IAdminUnitOfWork uow,
+            ITenantContext tenantContext)
         {
             _userManager = userManager;
             _uow = uow;
+            _tenantContext = tenantContext;
         }
 
         public Task<PagedResult<UserGetDto>> GetPagedListAsync(SearchParam? searchParam, int page, int pageSize)
@@ -76,6 +80,7 @@ namespace Restia.Common.Identity.Services
                             Email = dto.Email,
                             PhoneNumber = dto.PhoneNumber,
                             DisplayName = dto.DisplayName,
+                            SchemaId = _tenantContext.SchemaId,
                             EmailConfirmed = true
                         };
 

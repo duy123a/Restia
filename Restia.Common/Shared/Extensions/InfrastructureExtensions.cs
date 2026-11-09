@@ -22,6 +22,10 @@ using Restia.Common.Permission.Services.Interfaces;
 using Restia.Common.Shared.Helpers;
 using Restia.Common.Shared.UnitOfWorks;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
+using Restia.Common.Tenant.Repository;
+using Restia.Common.Tenant.Repository.Interfaces;
+using Restia.Common.Tenant.Services;
+using Restia.Common.Tenant.Services.Interfaces;
 
 namespace Restia.Common.Shared.Extensions
 {
@@ -31,6 +35,7 @@ namespace Restia.Common.Shared.Extensions
         {
             DateTimeOffsetHelper.Initialize(configuration);
 
+            services.AddMemoryCache();
             services.AddPersistenceModule();
             services.AddDataModule(configuration);
             services.AddIdentityModule(configuration);
@@ -47,12 +52,15 @@ namespace Restia.Common.Shared.Extensions
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
+            services.AddScoped<ITenantContext, TenantContext>();
+
             services.AddScoped<IFormRepository, FormRepository>();
             services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<ITenantRepository, TenantRepository>();
             services.AddScoped<IAdminUnitOfWork, AdminUnitOfWork>();
 
             services.AddScoped<IFormService, FormService>();
@@ -60,6 +68,7 @@ namespace Restia.Common.Shared.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IAppNotificationService, AppNotificationService>();
+            services.AddScoped<ITenantService, TenantService>();
 
             return services;
         }
@@ -67,7 +76,6 @@ namespace Restia.Common.Shared.Extensions
         public static IServiceCollection AddHostServices(this IServiceCollection services)
         {
             services.AddHostedService<IdentitySeedWorker>();
-            services.AddHostedService<FormSeedWorker>();
 
             return services;
         }

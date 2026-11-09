@@ -5,17 +5,19 @@ using Restia.Common.Notification.Repository.Interfaces;
 using Restia.Common.Permission.Repository.Interfaces;
 using Restia.Common.Shared.Repository;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
+using Restia.Common.Tenant.Repository.Interfaces;
 
 namespace Restia.Common.Shared.UnitOfWorks
 {
     public class AdminUnitOfWork : BaseUnitOfWork, IAdminUnitOfWork
     {
-        private IFormRepository _formRepository;
-        private IUserPermissionRepository _userPermissionRepository;
-        private IRolePermissionRepository _rolePermissionRepository;
-        private IUserRepository _userRepository;
-        private IRoleRepository _roleRepository;
-        private INotificationRepository _notificationRepository;
+        private readonly IFormRepository _formRepository;
+        private readonly IUserPermissionRepository _userPermissionRepository;
+        private readonly IRolePermissionRepository _rolePermissionRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly INotificationRepository _notificationRepository;
+        private readonly ITenantRepository _tenantRepository;
 
         public AdminUnitOfWork(
             AppDbContext context,
@@ -24,7 +26,8 @@ namespace Restia.Common.Shared.UnitOfWorks
             IRolePermissionRepository rolePermissionRepository,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
-            INotificationRepository notificationRepository) : base(context)
+            INotificationRepository notificationRepository,
+            ITenantRepository tenantRepository) : base(context)
         {
             _formRepository = formRepository;
             _userPermissionRepository = userPermissionRepository;
@@ -32,6 +35,7 @@ namespace Restia.Common.Shared.UnitOfWorks
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _notificationRepository = notificationRepository;
+            _tenantRepository = tenantRepository;
         }
 
         public IFormRepository FormRepository => _formRepository;
@@ -45,5 +49,7 @@ namespace Restia.Common.Shared.UnitOfWorks
         public IRoleRepository RoleRepository => _roleRepository;
 
         public INotificationRepository NotificationRepository => _notificationRepository;
+
+        public ITenantRepository TenantRepository => _tenantRepository;
     }
 }

@@ -1,21 +1,26 @@
 @model IReadOnlyList<Restia.Common.Form.Models.FormItemDto>
 
 @using Restia.Common.Localization.Resources
+@using Restia.Common.Tenant.Services.Interfaces
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<SharedResources> Localizer
+@inject ITenantContext TenantContext
 
 @{
     var currentPath = Context.Request.Path.Value ?? string.Empty;
+    var currentTenant = TenantContext.SchemaId;
+    var homePrefix = $"/{currentTenant}";
+    var isHomeActive = currentPath.Equals(homePrefix, StringComparison.OrdinalIgnoreCase)
+        || currentPath.Equals($"{homePrefix}/", StringComparison.OrdinalIgnoreCase)
+        || currentPath.Equals($"{homePrefix}/Home", StringComparison.OrdinalIgnoreCase)
+        || currentPath.StartsWith($"{homePrefix}/Home/", StringComparison.OrdinalIgnoreCase);
 }
 
-<a class="sidebar-link @(currentPath == "/"
-       || currentPath.Equals("/Home", StringComparison.OrdinalIgnoreCase)
-       || currentPath.StartsWith("/Home/", StringComparison.OrdinalIgnoreCase)
-           ? "active"
-           : "")"
+<a class="sidebar-link @(isHomeActive ? "active" : "")"
    asp-controller="Home"
-   asp-action="Index">
+   asp-action="Index"
+   asp-route-tenantId="@currentTenant">
 
     <i class="bi bi-house-door me-2"></i>
     @Localizer["Button_Home"]

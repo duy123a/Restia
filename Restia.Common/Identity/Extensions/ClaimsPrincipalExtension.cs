@@ -1,4 +1,5 @@
-﻿using Restia.Common.Identity.Enums;
+using Restia.Common.Identity.Constants;
+using Restia.Common.Identity.Enums;
 using System.Security.Claims;
 
 namespace Restia.Common.Identity.Extensions
@@ -13,6 +14,11 @@ namespace Restia.Common.Identity.Extensions
         public static string GetUserId(this ClaimsPrincipal principal)
         {
             return principal.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+        }
+
+        public static string GetSchemaId(this ClaimsPrincipal principal)
+        {
+            return principal.FindFirst(CustomClaimTypes.SchemaId)?.Value ?? string.Empty;
         }
 
         public static List<string> GetRoles(this ClaimsPrincipal principal)

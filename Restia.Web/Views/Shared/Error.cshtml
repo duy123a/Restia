@@ -1,12 +1,19 @@
 @model ErrorViewModel
 @using Restia.Common.Localization.Resources
+@using Restia.Common.Tenant.Services.Interfaces
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<SharedResources> Localizer
+@inject ITenantContext TenantContext
 
 @{
     ViewData["Title"] = !string.IsNullOrEmpty(Model.Title)
         ? Model.Title
         : (Model.StatusCode.HasValue ? $"{Model.StatusCode} - {Localizer["Error_Title"]}" : Localizer["Error_Title"].Value);
+
+    if (!(User.Identity?.IsAuthenticated ?? false))
+    {
+        ViewData["ShowSidebar"] = false;
+    }
 }
 
 <div class="container">
@@ -41,7 +48,7 @@
                             <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
                             @Localizer["Button_GoBack"]
                         </a>
-                        <a asp-controller="Home" asp-action="Index" class="btn app-btn app-btn-primary app-btn-lg">
+                        <a asp-controller="Home" asp-action="Index" asp-route-tenantId="@TenantContext.SchemaId" class="btn app-btn app-btn-primary app-btn-lg">
                             <i class="bi bi-house-door me-2" aria-hidden="true"></i>
                             @Localizer["Button_Home"]
                         </a>

@@ -3,6 +3,7 @@ using Restia.Common.Identity.Repository.Interfaces;
 using Restia.Common.Notification.Repository.Interfaces;
 using Restia.Common.Permission.Repository.Interfaces;
 using Restia.Common.Shared.Repository.Interfaces;
+using Restia.Common.Tenant.Repository.Interfaces;
 
 namespace Restia.Common.Shared.UnitOfWorks.Interfaces
 {
@@ -19,5 +20,7 @@ namespace Restia.Common.Shared.UnitOfWorks.Interfaces
         IRoleRepository RoleRepository { get; }
 
         INotificationRepository NotificationRepository { get; }
+
+        ITenantRepository TenantRepository { get; }
     }
 }

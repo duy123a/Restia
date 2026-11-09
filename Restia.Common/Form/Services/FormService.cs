@@ -2,6 +2,7 @@ using Restia.Common.Form.Models;
 using Restia.Common.Form.Repository.Interfaces;
 using Restia.Common.Form.Services.Interfaces;
 using Restia.Common.Permission.Services.Interfaces;
+using Restia.Common.Tenant.Services.Interfaces;
 using System.Security.Claims;
 using FormEntity = Restia.Common.Form.Entities.Form;
 
@@ -11,13 +12,16 @@ namespace Restia.Common.Form.Services
     {
         private readonly IFormRepository _formRepository;
         private readonly IPermissionService _permissionService;
+        private readonly ITenantContext _tenantContext;
 
         public FormService(
             IFormRepository formRepository,
-            IPermissionService permissionService)
+            IPermissionService permissionService,
+            ITenantContext tenantContext)
         {
             _formRepository = formRepository;
             _permissionService = permissionService;
+            _tenantContext = tenantContext;
         }
 
         public async Task<IReadOnlyList<FormItemDto>> GetSidebarMenuAsync(
@@ -68,7 +72,7 @@ namespace Restia.Common.Form.Services
                 return new FormItemDto
                 {
                     NameKey = form.Name,
-                    Url = form.Url,
+                    Url = FormatTenantUrl(form.Url),
                     Icon = form.Icon,
                     Children = children
                 };
@@ -105,16 +109,21 @@ namespace Restia.Common.Form.Services
             return new FormItemDto
             {
                 NameKey = form.Name,
-                Url = form.Url,
+                Url = FormatTenantUrl(form.Url),
                 Icon = form.Icon
             };
+        }
+
+        private string FormatTenantUrl(string url)
+        {
+            var normalized = url.StartsWith('/') ? url : $"/{url}";
+            return $"/{_tenantContext.SchemaId}{normalized}";
         }
 
         private async Task<bool> CanAccessFormAsync(
             FormEntity form,
             ClaimsPrincipal user)
         {
-            // Adjust policy format to match your conventions.
             var policyName = $"Form:{form.Code}";
 
             return await _permissionService.HasPermissionAsync(

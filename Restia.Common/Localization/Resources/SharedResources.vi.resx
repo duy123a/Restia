@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -587,5 +587,83 @@
   </data>
   <data name="Login_LockedOutPermanent" xml:space="preserve">
     <value>Tài khoản này đang bị khóa vĩnh viễn. Vui lòng liên hệ quản trị viên.</value>
+  </data>
+  <data name="Form_Tenant" xml:space="preserve">
+    <value>Quản lý Schema</value>
+  </data>
+  <data name="Tenant_Title" xml:space="preserve">
+    <value>Quản lý Schema (Tenant)</value>
+  </data>
+  <data name="Tenant_Subtitle" xml:space="preserve">
+    <value>Quản lý các schema PostgreSQL trong hệ thống</value>
+  </data>
+  <data name="Tenant_Id" xml:space="preserve">
+    <value>Mã Schema</value>
+  </data>
+  <data name="Tenant_IdHint" xml:space="preserve">
+    <value>Chỉ gồm chữ thường, chữ số và dấu gạch dưới (2-63 ký tự, bắt đầu bằng chữ cái).</value>
+  </data>
+  <data name="Tenant_DisplayName" xml:space="preserve">
+    <value>Tên hiển thị</value>
+  </data>
+  <data name="Tenant_IsActive" xml:space="preserve">
+    <value>Đang hoạt động</value>
+  </data>
+  <data name="Tenant_StatusActive" xml:space="preserve">
+    <value>Đang hoạt động</value>
+  </data>
+  <data name="Tenant_StatusInactive" xml:space="preserve">
+    <value>Ngừng hoạt động</value>
+  </data>
+  <data name="Tenant_CreatedAt" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="Tenant_SearchPlaceholder" xml:space="preserve">
+    <value>Tìm theo mã schema hoặc tên hiển thị</value>
+  </data>
+  <data name="Tenant_NoRecords" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="TenantCreate_Title" xml:space="preserve">
+    <value>Tạo mới Schema</value>
+  </data>
+  <data name="TenantCreate_Subtitle" xml:space="preserve">
+    <value>Khởi tạo schema PostgreSQL mới và tài khoản SuperAdmin ban đầu</value>
+  </data>
+  <data name="TenantCreate_SuperAdminSection" xml:space="preserve">
+    <value>Tài khoản SuperAdmin khởi tạo</value>
+  </data>
+  <data name="TenantEdit_Title" xml:space="preserve">
+    <value>Chỉnh sửa Schema</value>
+  </data>
+  <data name="TenantEdit_Subtitle" xml:space="preserve">
+    <value>Cập nhật tên hiển thị và trạng thái hoạt động của schema</value>
+  </data>
+  <data name="Tenant_CreateSuccess" xml:space="preserve">
+    <value>Tạo mới schema thành công.</value>
+  </data>
+  <data name="Tenant_EditSuccess" xml:space="preserve">
+    <value>Cập nhật schema thành công.</value>
+  </data>
+  <data name="Tenant_DeleteSuccess" xml:space="preserve">
+    <value>Xóa schema thành công.</value>
+  </data>
+  <data name="Tenant_DeleteFailed" xml:space="preserve">
+    <value>Xóa schema thất bại.</value>
+  </data>
+  <data name="Tenant_InvalidId" xml:space="preserve">
+    <value>Mã schema phải từ 2-63 ký tự, bắt đầu bằng chữ thường và chỉ chứa chữ thường, số hoặc dấu gạch dưới.</value>
+  </data>
+  <data name="Tenant_DuplicateId" xml:space="preserve">
+    <value>Mã schema đã tồn tại hoặc không hợp lệ.</value>
+  </data>
+  <data name="Tenant_NotFound" xml:space="preserve">
+    <value>Không tìm thấy schema.</value>
+  </data>
+  <data name="Tenant_CannotDeletePublic" xml:space="preserve">
+    <value>Không thể xóa schema public mặc định.</value>
+  </data>
+  <data name="Tenant_CannotDeactivatePublic" xml:space="preserve">
+    <value>Không thể ngừng hoạt động schema public mặc định.</value>
   </data>
 </root>

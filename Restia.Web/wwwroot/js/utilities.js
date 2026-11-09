@@ -28,7 +28,8 @@
             }
         }
 
-        const res = await fetch(`/api/notification/translations?culture=${culture}`);
+        const tenant = window.currentTenant || "public";
+        const res = await fetch(`/${tenant}/api/notification/translations?culture=${culture}`);
         if (!res.ok) {
             throw new Error(`Translation API failed: ${res.status}`);
         }
@@ -107,6 +108,9 @@
 
         window.currentCulture =
             configDiv?.dataset.culture || "en";
+
+        window.currentTenant =
+            configDiv?.dataset.tenant || "public";
 
         if (!window.isAuthenticated) {
             return;

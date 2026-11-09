@@ -41,7 +41,9 @@ namespace Restia.Web.Controllers
 
             return View(new LoginViewModel
             {
-                ReturnUrl = returnUrl ?? Url.Content("~/")
+                ReturnUrl = string.IsNullOrWhiteSpace(returnUrl) || returnUrl == "/"
+                    ? Url.Action("Index", "Home")
+                    : returnUrl
             });
         }
 
@@ -49,7 +51,10 @@ namespace Restia.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            model.ReturnUrl ??= Url.Content("~/");
+            if (string.IsNullOrWhiteSpace(model.ReturnUrl) || model.ReturnUrl == "/")
+            {
+                model.ReturnUrl = Url.Action("Index", "Home");
+            }
 
             if (!ModelState.IsValid)
             {

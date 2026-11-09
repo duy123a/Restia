@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +11,9 @@ namespace Restia.Common.Data.Extensions
     {
         public static IServiceCollection AddDataModule(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ISaveChangesInterceptor, SoftDeleteInterceptor>();
-            services.AddScoped<ISaveChangesInterceptor, AuditInterceptor>();
+            services.AddScoped<IInterceptor, TenantConnectionInterceptor>();
+            services.AddScoped<IInterceptor, SoftDeleteInterceptor>();
+            services.AddScoped<IInterceptor, AuditInterceptor>();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -22,7 +23,7 @@ namespace Restia.Common.Data.Extensions
 
             services.AddDbContext<AppDbContext>((sp, options) =>
             {
-                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+                options.AddInterceptors(sp.GetServices<IInterceptor>());
 
                 options.UseNpgsql(connectionString, sql =>
                 {

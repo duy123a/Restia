@@ -12,9 +12,11 @@
         let notificationSkip = 0;
         const notificationTake = 10;
 
+        const apiBase = `/${window.currentTenant || "public"}/api/notification`;
+
         async function loadUnreadCount() {
             try {
-                const res = await fetch("/api/notification/unread-count");
+                const res = await fetch(`${apiBase}/unread-count`);
                 if (!res.ok) return;
 
                 const count = await res.json();
@@ -69,7 +71,7 @@
 
         async function loadNotifications(skip = 0, take = 10, replace = false) {
             try {
-                const res = await fetch(`/api/notification/list?skip=${skip}&take=${take}`);
+                const res = await fetch(`${apiBase}/list?skip=${skip}&take=${take}`);
                 if (!res.ok) return;
 
                 const data = await res.json();
@@ -131,7 +133,7 @@
 
             try {
                 const res = await fetch(
-                    `/api/notification/mark-as-read/${id}`,
+                    `${apiBase}/mark-as-read/${id}`,
                     { method: "POST" }
                 );
 
@@ -178,7 +180,7 @@
             readAllBtn.disabled = true;
 
             try {
-                const res = await fetch("/api/notification/mark-all-as-read", { method: "POST" });
+                const res = await fetch(`${apiBase}/mark-all-as-read`, { method: "POST" });
                 if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
 
                 list.querySelectorAll(".notification-unread").forEach(el => {

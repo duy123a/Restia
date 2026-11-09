@@ -1,0 +1,67 @@
+@model TenantEditViewModel
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@using Restia.Common.Tenant.Constants
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["TenantEdit_Title"];
+    var isPublic = string.Equals(Model.Id, TenantConstants.DefaultTenantId, StringComparison.OrdinalIgnoreCase);
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">@Localizer["TenantEdit_Title"]</h1>
+            <p class="page-subtitle">@Localizer["TenantEdit_Subtitle"]</p>
+        </div>
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card page-card">
+        <div class="app-card-body">
+            <form asp-action="Edit" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger app-alert mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="app-form-label">@Localizer["Tenant_Id"]</label>
+                        <input value="@Model.Id" class="form-control app-form-control" disabled />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DisplayName" class="app-form-label"></label>
+                        <input asp-for="DisplayName" class="form-control app-form-control" autofocus />
+                        <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-12">
+                        @if (isPublic)
+                        {
+                            <input type="hidden" asp-for="IsActive" value="true" />
+                            <label class="check-item d-inline-flex opacity-75">
+                                <input type="checkbox" class="form-check-input" checked disabled />
+                                <span>@Localizer["Tenant_IsActive"]</span>
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="check-item d-inline-flex">
+                                <input asp-for="IsActive" class="form-check-input" />
+                                <span>@Localizer["Tenant_IsActive"]</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-action="Index" class="btn app-btn app-btn-secondary">@Localizer["Button_Cancel"]</a>
+                    <button type="submit" class="btn app-btn app-btn-primary">
+                        <i class="bi bi-check-lg me-1"></i>@Localizer["Button_Save"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Restia.Common.Entities.Interfaces;
+using Restia.Common.Tenant.Constants;
 
 namespace Restia.Common.Identity.Entities
 {
@@ -7,6 +8,7 @@ namespace Restia.Common.Identity.Entities
     {
         public string DisplayName { get; set; } = string.Empty;
         public string ProfileImg { get; set; } = string.Empty;
+        public string SchemaId { get; set; } = TenantConstants.DefaultTenantId;
 
         // Audit
         public DateTimeOffset? CreatedAt { get; set; } = DateTimeOffset.UtcNow;

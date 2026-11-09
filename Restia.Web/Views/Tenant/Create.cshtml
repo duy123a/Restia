@@ -1,0 +1,81 @@
+@model TenantCreateViewModel
+@using Microsoft.Extensions.Localization
+@using Restia.Common.Localization.Resources
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["TenantCreate_Title"];
+}
+
+<div class="page">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">@Localizer["TenantCreate_Title"]</h1>
+            <p class="page-subtitle">@Localizer["TenantCreate_Subtitle"]</p>
+        </div>
+    </div>
+
+    <partial name="_TempDataAlerts" />
+
+    <div class="app-card page-card">
+        <div class="app-card-body">
+            <form asp-action="Create" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger app-alert mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Id" class="app-form-label"></label>
+                        <input asp-for="Id" class="form-control app-form-control" autofocus />
+                        <div class="form-text small text-muted">@Localizer["Tenant_IdHint"]</div>
+                        <span asp-validation-for="Id" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DisplayName" class="app-form-label"></label>
+                        <input asp-for="DisplayName" class="form-control app-form-control" />
+                        <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-12">
+                        <label class="check-item d-inline-flex">
+                            <input asp-for="IsActive" class="form-check-input" />
+                            <span>@Localizer["Tenant_IsActive"]</span>
+                        </label>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <h5 class="mb-3"><i class="bi bi-shield-lock me-2"></i>@Localizer["TenantCreate_SuperAdminSection"]</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="AdminUserName" class="app-form-label"></label>
+                        <input asp-for="AdminUserName" class="form-control app-form-control" />
+                        <span asp-validation-for="AdminUserName" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="AdminEmail" class="app-form-label"></label>
+                        <input asp-for="AdminEmail" class="form-control app-form-control" />
+                        <span asp-validation-for="AdminEmail" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="AdminPassword" class="app-form-label"></label>
+                        <input asp-for="AdminPassword" class="form-control app-form-control" />
+                        <span asp-validation-for="AdminPassword" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ConfirmPassword" class="app-form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control app-form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-action="Index" class="btn app-btn app-btn-secondary">@Localizer["Button_Cancel"]</a>
+                    <button type="submit" class="btn app-btn app-btn-primary">
+                        <i class="bi bi-check-lg me-1"></i>@Localizer["Button_Save"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

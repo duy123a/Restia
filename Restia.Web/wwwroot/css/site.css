@@ -573,6 +573,13 @@ body {
 .data-table--roles .col-role-permissions { width: 20%; }
 .data-table--roles .col-actions { width: 15%; }
 
+/* Tenants table columns */
+.data-table--tenants .col-tenant-id { width: 22%; }
+.data-table--tenants .col-tenant-name { width: 32%; }
+.data-table--tenants .col-tenant-status { width: 14%; }
+.data-table--tenants .col-tenant-created { width: 20%; }
+.data-table--tenants .col-actions { width: 12%; }
+
 .data-table th {
     background: var(--bg-page);
     color: var(--text-secondary);

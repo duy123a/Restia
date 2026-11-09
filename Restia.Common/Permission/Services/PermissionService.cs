@@ -10,6 +10,7 @@ using Restia.Common.Permission.Requirements;
 using Restia.Common.Permission.Services.Interfaces;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
+using Restia.Common.Tenant.Services.Interfaces;
 using System.Security.Claims;
 
 namespace Restia.Common.Permission.Services
@@ -19,15 +20,18 @@ namespace Restia.Common.Permission.Services
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IAdminUnitOfWork _uow;
+        private readonly ITenantContext _tenantContext;
 
         public PermissionService(
             UserManager<AppUser> userManager,
             RoleManager<AppRole> roleManager,
-            IAdminUnitOfWork uow)
+            IAdminUnitOfWork uow,
+            ITenantContext tenantContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _uow = uow;
+            _tenantContext = tenantContext;
         }
 
         public async Task<FormAuthoritySec> GetAuthoritySecAsync(
@@ -78,12 +82,17 @@ namespace Restia.Common.Permission.Services
                 return false;
             }
 
+            var requirement = new PermissionRequirement(policyName);
+
+            if (string.Equals(requirement.Screen, PermissionConstants.FormCodes.Tenant, StringComparison.OrdinalIgnoreCase))
+            {
+                return _tenantContext.IsPublic && user.IsSuperAdmin();
+            }
+
             if (user.IsSuperAdmin())
             {
                 return true;
             }
-
-            var requirement = new PermissionRequirement(policyName);
 
             var authoritySec = await GetAuthoritySecAsync(
                 user.GetUserId(),
@@ -159,7 +168,7 @@ namespace Restia.Common.Permission.Services
             }
 
             var allForms = await _uow.FormRepository
-                .FindAsync(f => f.IsActive);
+                .FindAsync(f => f.IsActive && f.Code != PermissionConstants.FormCodes.Tenant);
 
             var rootForms = allForms
                 .Where(f => f.ParentId == null)
@@ -278,6 +287,7 @@ namespace Restia.Common.Permission.Services
                     var activeLeafForms = await _uow.FormRepository
                         .FindAsync(f =>
                             f.IsActive &&
+                            f.Code != PermissionConstants.FormCodes.Tenant &&
                             f.Url != null &&
                             f.Url != "");
 

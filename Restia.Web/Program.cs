@@ -1,8 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Restia.Common.Data.Context;
+using Restia.Common.Identity.Extensions;
 using Restia.Common.Localization.Extensions;
 using Restia.Common.Notification.Service;
 using Restia.Common.Shared.Extensions;
+using Restia.Common.Tenant.Constants;
+using Restia.Common.Tenant.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
@@ -24,12 +25,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -43,16 +38,32 @@ app.UseHttpsRedirection();
 app.UseRequestLocalization();
 app.UseCors();
 
+app.MapStaticAssets();
+
 app.UseRouting();
 
+app.UseMiddleware<TenantResolutionMiddleware>();
 app.UseAuthentication();
+app.UseMiddleware<TenantIsolationMiddleware>();
 app.UseAuthorization();
 
-app.MapStaticAssets();
+app.MapGet("/", (HttpContext context) =>
+{
+    if (context.User.Identity?.IsAuthenticated == true)
+    {
+        var userSchema = context.User.GetSchemaId();
+        var targetTenant = TenantConstants.IsValidSchemaName(userSchema)
+            ? userSchema.ToLowerInvariant()
+            : TenantConstants.DefaultTenantId;
+        return Results.Redirect($"/{targetTenant}");
+    }
+
+    return Results.Redirect($"/{TenantConstants.DefaultTenantId}/Account/Login");
+});
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{tenantId}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.MapHub<NotificationHub>("/notificationHub");

@@ -5,6 +5,7 @@ using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Enums;
 using Restia.Common.Notification.Service.Interfaces;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
+using Restia.Common.Tenant.Services.Interfaces;
 using System.Net.Http.Json;
 using NotificationEntity = Restia.Common.Notification.Entities.Notification;
 
@@ -17,19 +18,22 @@ namespace Restia.Common.Notification.Service
         protected readonly IConfiguration _config;
         protected readonly ILogger _logger;
         protected readonly UserManager<AppUser> _userManager;
+        protected readonly ITenantContext _tenantContext;
 
         protected BaseNotificationService(
             IAdminUnitOfWork uow,
             IHttpClientFactory httpFactory,
             IConfiguration config,
             ILogger logger,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager,
+            ITenantContext tenantContext)
         {
             _uow = uow;
             _httpFactory = httpFactory;
             _config = config;
             _logger = logger;
             _userManager = userManager;
+            _tenantContext = tenantContext;
         }
 
         public async Task CreateAsync(NotificationEntity notification)
@@ -127,7 +131,8 @@ namespace Restia.Common.Notification.Service
             try
             {
                 var baseUrl = _config[baseUrlKey]?.TrimEnd('/');
-                var res = await client.PostAsJsonAsync($"{baseUrl}/api/notification/{endpoint}", notificationId);
+                var schemaId = _tenantContext.SchemaId;
+                var res = await client.PostAsJsonAsync($"{baseUrl}/{schemaId}/api/notification/{endpoint}", notificationId);
                 if (!res.IsSuccessStatusCode)
                 {
                     _logger.LogWarning("Trigger to {BaseUrlKey} failed: {Status}", baseUrlKey, res.StatusCode);

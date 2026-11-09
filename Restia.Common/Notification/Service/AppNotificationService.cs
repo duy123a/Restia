@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Restia.Common.Identity.Entities;
 using Restia.Common.Notification.Service.Interfaces;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
+using Restia.Common.Tenant.Services.Interfaces;
 using NotificationEntity = Restia.Common.Notification.Entities.Notification;
 
 namespace Restia.Common.Notification.Service
@@ -15,8 +16,9 @@ namespace Restia.Common.Notification.Service
             IHttpClientFactory httpFactory,
             IConfiguration config,
             ILogger<AppNotificationService> logger,
-            UserManager<AppUser> userManager)
-            : base(notificationUnitOfWork, httpFactory, config, logger, userManager)
+            UserManager<AppUser> userManager,
+            ITenantContext tenantContext)
+            : base(notificationUnitOfWork, httpFactory, config, logger, userManager, tenantContext)
         {
         }
 
@@ -46,7 +48,7 @@ namespace Restia.Common.Notification.Service
                     UserId = userId,
                     TitleKey = "AppNotice_DemoNoticeTitle",
                     MessageKey = "AppNotice_DemoNoticeMessage",
-                    Url = _config["AdminSite:BaseUrl"]
+                    Url = $"{_config["AdminSite:BaseUrl"]?.TrimEnd('/')}/{_tenantContext.SchemaId}"
                 };
                 await CreateAsync(notification);
                 await TriggerAsync(notification.Id);
@@ -65,7 +67,7 @@ namespace Restia.Common.Notification.Service
                 {
                     TitleKey = "AppNotice_DemoAdminNoticeTitle",
                     MessageKey = "AppNotice_DemoAdminNoticeMessage",
-                    Url = _config["AdminSite:BaseUrl"]
+                    Url = $"{_config["AdminSite:BaseUrl"]?.TrimEnd('/')}/{_tenantContext.SchemaId}"
                 };
                 var notifId = await CreateAdminAsync(notification);
                 if (notifId.HasValue)

@@ -21,7 +21,8 @@ namespace Restia.Common.Form.Services
             new(FormCodes.Administrator, null, null, "bi-shield-lock", 10),
             new(FormCodes.User, FormCodes.Administrator, "/User", "bi-people", 1),
             new(FormCodes.Role, FormCodes.Administrator, "/Role", "bi-person-badge", 2),
-            new(FormCodes.Permission, FormCodes.Administrator, "/Permission", "bi-shield-check", 3)
+            new(FormCodes.Permission, FormCodes.Administrator, "/Permission", "bi-shield-check", 3),
+            new(FormCodes.Tenant, FormCodes.Administrator, "/Tenant", "bi-building", 4)
         ];
 
         private readonly IServiceProvider _serviceProvider;
@@ -35,7 +36,11 @@ namespace Restia.Common.Form.Services
         {
             using var scope = _serviceProvider.CreateScope();
             var uow = scope.ServiceProvider.GetRequiredService<IAdminUnitOfWork>();
+            await SeedFormsAsync(uow, cancellationToken);
+        }
 
+        public static async Task SeedFormsAsync(IAdminUnitOfWork uow, CancellationToken cancellationToken = default)
+        {
             var existing = (await uow.FormRepository.GetAllAsync(cancellationToken))
                 .ToDictionary(f => f.Code, StringComparer.OrdinalIgnoreCase);
 

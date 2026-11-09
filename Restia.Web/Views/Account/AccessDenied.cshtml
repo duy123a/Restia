@@ -1,6 +1,8 @@
 @using Restia.Common.Localization.Resources;
+@using Restia.Common.Tenant.Services.Interfaces;
 @using Microsoft.Extensions.Localization;
 @inject IStringLocalizer<SharedResources> Localizer;
+@inject ITenantContext TenantContext;
 
 @{
     ViewData["Title"] = Localizer["AccessDenied_Title"];
@@ -37,7 +39,7 @@
                             <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>
                             @Localizer["Button_GoBack"]
                         </a>
-                        <a asp-controller="Home" asp-action="Index" class="btn app-btn app-btn-primary app-btn-lg">
+                        <a asp-controller="Home" asp-action="Index" asp-route-tenantId="@TenantContext.SchemaId" class="btn app-btn app-btn-primary app-btn-lg">
                             <i class="bi bi-house-door me-2" aria-hidden="true"></i>
                             @Localizer["Button_Home"]
                         </a>

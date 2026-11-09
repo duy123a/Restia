@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR;
+using Restia.Common.Identity.Extensions;
+using Restia.Common.Notification.Constants;
 
 namespace Restia.Common.Notification.Service
 {
@@ -9,10 +11,13 @@ namespace Restia.Common.Notification.Service
             var user = Context.User;
             if (user != null)
             {
-                var roles = user.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Role).Select(c => c.Value);
+                var schemaId = user.GetSchemaId();
+                var roles = user.GetRoles();
                 foreach (var role in roles)
                 {
-                    await Groups.AddToGroupAsync(Context.ConnectionId, "Role_" + role);
+                    await Groups.AddToGroupAsync(
+                        Context.ConnectionId,
+                        NotificationConstants.GetTenantRoleGroup(schemaId, role));
                 }
             }
 

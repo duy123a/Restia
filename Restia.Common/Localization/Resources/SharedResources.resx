@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -587,5 +587,83 @@
   </data>
   <data name="Login_LockedOutPermanent" xml:space="preserve">
     <value>This account is permanently locked. Please contact the administrator.</value>
+  </data>
+  <data name="Form_Tenant" xml:space="preserve">
+    <value>Tenant</value>
+  </data>
+  <data name="Tenant_Title" xml:space="preserve">
+    <value>Tenants</value>
+  </data>
+  <data name="Tenant_Subtitle" xml:space="preserve">
+    <value>Manage PostgreSQL tenant schemas</value>
+  </data>
+  <data name="Tenant_Id" xml:space="preserve">
+    <value>Schema ID</value>
+  </data>
+  <data name="Tenant_IdHint" xml:space="preserve">
+    <value>Lowercase letters, digits, and underscores (2-63 characters, must start with a letter).</value>
+  </data>
+  <data name="Tenant_DisplayName" xml:space="preserve">
+    <value>Display name</value>
+  </data>
+  <data name="Tenant_IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Tenant_StatusActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Tenant_StatusInactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Tenant_CreatedAt" xml:space="preserve">
+    <value>Created at</value>
+  </data>
+  <data name="Tenant_SearchPlaceholder" xml:space="preserve">
+    <value>Search by schema ID or display name</value>
+  </data>
+  <data name="Tenant_NoRecords" xml:space="preserve">
+    <value>No records found</value>
+  </data>
+  <data name="TenantCreate_Title" xml:space="preserve">
+    <value>Create tenant</value>
+  </data>
+  <data name="TenantCreate_Subtitle" xml:space="preserve">
+    <value>Create a new PostgreSQL schema and initial SuperAdmin account</value>
+  </data>
+  <data name="TenantCreate_SuperAdminSection" xml:space="preserve">
+    <value>Initial SuperAdmin Account</value>
+  </data>
+  <data name="TenantEdit_Title" xml:space="preserve">
+    <value>Edit tenant</value>
+  </data>
+  <data name="TenantEdit_Subtitle" xml:space="preserve">
+    <value>Update tenant display name and status</value>
+  </data>
+  <data name="Tenant_CreateSuccess" xml:space="preserve">
+    <value>Tenant created successfully.</value>
+  </data>
+  <data name="Tenant_EditSuccess" xml:space="preserve">
+    <value>Tenant updated successfully.</value>
+  </data>
+  <data name="Tenant_DeleteSuccess" xml:space="preserve">
+    <value>Tenant deleted successfully.</value>
+  </data>
+  <data name="Tenant_DeleteFailed" xml:space="preserve">
+    <value>Failed to delete tenant.</value>
+  </data>
+  <data name="Tenant_InvalidId" xml:space="preserve">
+    <value>Schema ID must be 2-63 characters, start with a lowercase letter, and contain only lowercase letters, numbers, or underscores.</value>
+  </data>
+  <data name="Tenant_DuplicateId" xml:space="preserve">
+    <value>Schema ID already exists or is reserved.</value>
+  </data>
+  <data name="Tenant_NotFound" xml:space="preserve">
+    <value>Tenant not found.</value>
+  </data>
+  <data name="Tenant_CannotDeletePublic" xml:space="preserve">
+    <value>Default public schema cannot be deleted.</value>
+  </data>
+  <data name="Tenant_CannotDeactivatePublic" xml:space="preserve">
+    <value>Default public schema cannot be deactivated.</value>
   </data>
 </root>
