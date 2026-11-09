@@ -6,6 +6,7 @@ using Restia.Common.Identity.Extensions;
 using Restia.Common.Permission.Constants;
 using Restia.Common.Permission.Entities;
 using Restia.Common.Permission.Models;
+using Restia.Common.Permission.Requirements;
 using Restia.Common.Permission.Services.Interfaces;
 using Restia.Common.Shared.Models;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
@@ -82,39 +83,20 @@ namespace Restia.Common.Permission.Services
                 return true;
             }
 
-            var parts = policyName.Split(':');
-
-            if (parts.Length < 2 || parts.Length > 3 || parts.Any(string.IsNullOrWhiteSpace))
-            {
-                throw new ArgumentException($"Invalid permission policy: {policyName}", nameof(policyName));
-            }
-
-            var screen = parts[1];
-            FormAuthoritySec? requiredAuthority = null;
-
-            if (parts.Length == 3)
-            {
-                if (!Enum.TryParse<FormAuthoritySec>(parts[2], true, out var authority)
-                    || !Enum.IsDefined(typeof(FormAuthoritySec), authority))
-                {
-                    throw new ArgumentException($"Invalid form authority: {parts[2]}", nameof(policyName));
-                }
-
-                requiredAuthority = authority;
-            }
+            var requirement = new PermissionRequirement(policyName);
 
             var authoritySec = await GetAuthoritySecAsync(
                 user.GetUserId(),
                 user.GetRoles(),
-                screen);
+                requirement.Screen);
 
-            if (requiredAuthority == null)
+            if (requirement.FormAuthoritySec == null)
             {
                 return authoritySec != FormAuthoritySec.None
                     && authoritySec != FormAuthoritySec.Unavailable;
             }
 
-            return authoritySec == requiredAuthority;
+            return authoritySec == requirement.FormAuthoritySec;
         }
 
         public async Task<IReadOnlyList<PermissionTargetOptionDto>> GetTargetOptionsAsync(PermissionTargetType targetType)

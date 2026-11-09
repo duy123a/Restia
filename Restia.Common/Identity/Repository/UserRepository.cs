@@ -23,12 +23,12 @@ namespace Restia.Common.Identity.Repository
 
             if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))
             {
-                var term = searchParam.SearchTerm.Trim();
+                var pattern = $"%{searchParam.SearchTerm}%";
 
                 query = query.Where(u =>
-                    (u.UserName != null && u.UserName.Contains(term)) ||
-                    (u.DisplayName != null && u.DisplayName.Contains(term)) ||
-                    (u.Email != null && u.Email.Contains(term)));
+                    (u.UserName != null && EF.Functions.ILike(u.UserName, pattern)) ||
+                    (u.DisplayName != null && EF.Functions.ILike(u.DisplayName, pattern)) ||
+                    (u.Email != null && EF.Functions.ILike(u.Email, pattern)));
             }
 
             var totalCount = await query.CountAsync();

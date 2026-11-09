@@ -289,7 +289,7 @@ body {
     left: 0;
     top: 0;
     padding-top: calc(var(--navbar-height) + 14px);
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-slow);
     z-index: 1000;
 }
 
@@ -390,12 +390,12 @@ body {
     padding: 4px;
 }
 
-.dropdown-toggle::after {
+.top-navbar .dropdown-toggle::after {
     border-top-color: var(--bg-card) !important;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-slow);
 }
 
-.dropdown-toggle.arrow-up::after {
+.top-navbar .dropdown-toggle.arrow-up::after {
     transform: rotate(180deg);
 }
 
@@ -445,7 +445,7 @@ body {
     #sidebarToggle {
         position: absolute;
         left: var(--sidebar-width);
-        transition: left 0.3s ease;
+        transition: left var(--transition-slow);
         z-index: 1001;
     }
 
@@ -1001,9 +1001,7 @@ body {
     display: inline-flex;
 }
 
-.pagination-page,
-.pagination-li-element > a,
-.pagination-li-element > span {
+.pagination-page {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1020,25 +1018,20 @@ body {
     transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
 }
 
-.pagination-page:hover,
-.pagination-li-element > a:hover {
+.pagination-page:hover {
     background: var(--bg-page);
     border-color: var(--brand-primary);
     color: var(--brand-primary);
 }
 
-.pagination-li-element.active .pagination-page,
-.pagination-li-element.active > span,
-.pagination-li-element.active > a {
+.pagination-li-element.active .pagination-page {
     background: var(--brand-primary);
     border-color: var(--brand-primary);
     color: var(--text-white);
     font-weight: 600;
 }
 
-.pagination-li-element.disabled .pagination-page,
-.pagination-li-element.disabled > span,
-.pagination-li-element.disabled > a {
+.pagination-li-element.disabled .pagination-page {
     color: var(--text-muted);
     pointer-events: none;
     background: var(--bg-page);

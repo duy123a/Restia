@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -52,6 +52,12 @@ namespace Restia.Common.Identity.Services
         private async Task EnsureAdminUserAsync(
             UserManager<AppUser> userManager)
         {
+            if (string.IsNullOrWhiteSpace(_seedOptions.AdminEmail) ||
+                string.IsNullOrWhiteSpace(_seedOptions.AdminPassword))
+            {
+                return;
+            }
+
             var admin = await userManager.FindByEmailAsync(_seedOptions.AdminEmail);
             if (admin != null)
             {
@@ -61,9 +67,7 @@ namespace Restia.Common.Identity.Services
             admin = new AppUser
             {
                 Email = _seedOptions.AdminEmail,
-                UserName = _seedOptions.AdminEmail?
-                    .Split('@')[0]
-                    ?? string.Empty,
+                UserName = _seedOptions.AdminEmail.Split('@')[0],
                 EmailConfirmed = true,
                 DisplayName = AppRoles.SuperAdmin.ToString()
             };

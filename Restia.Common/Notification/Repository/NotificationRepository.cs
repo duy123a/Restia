@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restia.Common.Data.Context;
 using Restia.Common.Notification.Repository.Interfaces;
 using Restia.Common.Shared.Repository;
@@ -38,9 +38,16 @@ namespace Restia.Common.Notification.Repository
 
         public async Task<int> MarkAllAsReadAsync(string userId)
         {
-            return await Context.Notifications
+            var unreadNotifications = await Context.Notifications
                 .Where(n => n.UserId == userId && !n.IsRead)
-                .ExecuteUpdateAsync(s => s.SetProperty(n => n.IsRead, true));
+                .ToListAsync();
+
+            foreach (var notification in unreadNotifications)
+            {
+                notification.IsRead = true;
+            }
+
+            return unreadNotifications.Count;
         }
     }
 }

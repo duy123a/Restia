@@ -67,12 +67,11 @@ namespace Restia.Web.Controllers
 
                 if (!string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    var term = searchTerm.Trim();
                     allLeafItems = allLeafItems.Where(i =>
-                        i.FormCode.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                        i.FormNameKey.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                        _localizer[i.FormNameKey].Value.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                        _localizer[i.ParentFormNameKey].Value.Contains(term, StringComparison.OrdinalIgnoreCase)
+                        i.FormCode.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        i.FormNameKey.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        _localizer[i.FormNameKey].Value.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        _localizer[i.ParentFormNameKey].Value.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
                     ).ToList();
                 }
 

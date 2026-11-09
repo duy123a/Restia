@@ -48,10 +48,5 @@ namespace Restia.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }

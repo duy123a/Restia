@@ -1,17 +1,9 @@
-﻿using NotificationEntity = Restia.Common.Notification.Entities.Notification;
+using NotificationEntity = Restia.Common.Notification.Entities.Notification;
 
 namespace Restia.Common.Notification.Service.Interfaces
 {
     public interface IBaseNotificationService
     {
-        Task CreateAsync(
-            string userId,
-            string titleKey,
-            string messageKey,
-            List<string>? titleParams = null,
-            List<string>? messageParams = null,
-            string? url = null);
-
         Task CreateAsync(NotificationEntity notification);
 
         Task<List<NotificationEntity>> GetAsync(string userId, int skip, int take);

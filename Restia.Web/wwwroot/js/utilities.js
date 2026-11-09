@@ -1,104 +1,123 @@
-﻿// Sidebar and top nav bar
-const sidebar = document.getElementById('sidebar');
-const sidebarToggle = document.getElementById('sidebarToggle');
-const sidebarClose = document.getElementById('sidebarClose');
-const sidebarOverlay = document.getElementById('sidebarOverlay');
-const topNavbar = document.querySelector('.top-navbar');
+(() => {
+    const TRANSLATIONS_REFRESH_COOLDOWN = 60 * 1000;
+    let translationsRefreshPromise = null;
+    let lastTranslationsRefresh = 0;
 
-function closeSidebar() {
-    if (sidebar) {
-        sidebar.classList.remove('show');
-    }
-}
+    async function loadTranslations(forceRefresh = false) {
+        const configDiv = document.getElementById("layout-config");
+        const culture = configDiv?.dataset.culture || "en";
 
-if (sidebarToggle) {
-    sidebarToggle.addEventListener('click', function () {
-        if (sidebar) {
-            if (window.innerWidth >= 992) {
-                sidebar.classList.toggle('collapsed');
-                if (topNavbar) {
-                    topNavbar.classList.toggle('sidebar-collapsed');
+        const cacheKey = `translations_${culture}`;
+        const cacheTTL = 60 * 60 * 1000; // 1 hour (ms)
+
+        if (forceRefresh) {
+            localStorage.removeItem(cacheKey);
+        } else {
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) {
+                try {
+                    const parsed = JSON.parse(cached);
+                    if (parsed && typeof parsed === "object" && Date.now() < parsed.expiry) {
+                        window.translations = parsed.data;
+                        return;
+                    }
+                } catch {
+                    // Corrupted cache entry
                 }
-            } else {
-                sidebar.classList.toggle('show');
+                localStorage.removeItem(cacheKey);
             }
         }
-    });
-}
 
-if (sidebarClose) {
-    sidebarClose.addEventListener('click', closeSidebar);
-}
-
-if (sidebarOverlay) {
-    sidebarOverlay.addEventListener('click', closeSidebar);
-}
-
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        closeSidebar();
-    }
-});
-
-// User dropdown button
-
-const userDropdown = document.getElementById('userDropdown');
-if (userDropdown) {
-    userDropdown.addEventListener('show.bs.dropdown', function () {
-        this.classList.add('arrow-up');
-    });
-    userDropdown.addEventListener('hidden.bs.dropdown', function () {
-        this.classList.remove('arrow-up');
-    });
-}
-
-// Logout modal
-
-const logoutOpenBtn = document.getElementById('logoutOpenBtn');
-const logoutConfirmBtn = document.getElementById('logoutConfirmBtn');
-const logoutForm = document.getElementById('logoutForm');
-const logoutConfirmModalEl = document.getElementById('logoutConfirmModal');
-
-if (logoutOpenBtn && logoutConfirmModalEl && window.bootstrap?.Modal) {
-    const logoutModal = window.bootstrap.Modal.getOrCreateInstance(logoutConfirmModalEl);
-    logoutOpenBtn.addEventListener('click', () => logoutModal.show());
-}
-
-if (logoutConfirmBtn && logoutForm) {
-    logoutConfirmBtn.addEventListener('click', () => logoutForm.submit());
-}
-
-// Bulk column selector for permission matrix
-document.addEventListener('click', function (e) {
-    const btn = e.target.closest('[data-select-column]');
-    if (!btn) return;
-    const col = btn.getAttribute('data-select-column');
-    if (!col) return;
-    const radios = document.querySelectorAll(`input[type="radio"][data-column="${col}"]:not(:disabled)`);
-    radios.forEach(r => { r.checked = true; });
-});
-
-// Table delete confirmation modal
-const deleteConfirmModalEl = document.getElementById('deleteConfirmModal');
-const deleteConfirmBtn = document.getElementById('deleteConfirmBtn');
-let pendingDeleteForm = null;
-
-document.addEventListener('click', function (e) {
-    const trigger = e.target.closest('.table-delete-trigger');
-    if (!trigger) return;
-    const form = trigger.closest('form');
-    if (!form) return;
-
-    if (deleteConfirmModalEl && window.bootstrap?.Modal) {
-        pendingDeleteForm = form;
-        window.bootstrap.Modal.getOrCreateInstance(deleteConfirmModalEl).show();
-    }
-});
-
-if (deleteConfirmBtn) {
-    deleteConfirmBtn.addEventListener('click', function () {
-        if (pendingDeleteForm) {
-            pendingDeleteForm.submit();
+        const res = await fetch(`/api/notification/translations?culture=${culture}`);
+        if (!res.ok) {
+            throw new Error(`Translation API failed: ${res.status}`);
         }
+
+        const data = await res.json();
+        window.translations = data.translations;
+
+        localStorage.setItem(cacheKey, JSON.stringify({
+            data: data.translations,
+            expiry: Date.now() + cacheTTL
+        }));
+    }
+
+    function scheduleTranslationsRefresh() {
+        const now = Date.now();
+
+        if (translationsRefreshPromise) {
+            return translationsRefreshPromise;
+        }
+
+        if (now - lastTranslationsRefresh < TRANSLATIONS_REFRESH_COOLDOWN) {
+            return Promise.resolve();
+        }
+
+        lastTranslationsRefresh = now;
+
+        translationsRefreshPromise = loadTranslations(true)
+            .then(() => {
+                document.dispatchEvent(new Event("translationsRefreshed"));
+            })
+            .catch(error => {
+                console.error("Failed to refresh translations:", error);
+            })
+            .finally(() => {
+                translationsRefreshPromise = null;
+            });
+
+        return translationsRefreshPromise;
+    }
+
+    window.t = function (key, paramsJson) {
+        if (!window.translations) return key;
+        const raw = window.translations[key];
+        if (raw === undefined) {
+            scheduleTranslationsRefresh();
+            return key;
+        }
+        let template = raw;
+
+        if (paramsJson) {
+            try {
+                const params = JSON.parse(paramsJson);
+                if (Array.isArray(params)) {
+                    params.forEach((p, i) => {
+                        let value = p;
+                        if (typeof value === "string" && value.startsWith("@@") && value.endsWith("@@")) {
+                            const innerKey = value.slice(2, -2).trim();
+                            value = window.translations[innerKey] || value;
+                        }
+                        template = template.replaceAll(`{${i}}`, () => String(value ?? ""));
+                    });
+                }
+            } catch {
+                // Ignore invalid params JSON
+            }
+        }
+
+        return template;
+    };
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const configDiv = document.getElementById("layout-config");
+
+        window.isAuthenticated =
+            configDiv?.dataset.isAuthenticated === "true";
+
+        window.currentCulture =
+            configDiv?.dataset.culture || "en";
+
+        if (!window.isAuthenticated) {
+            return;
+        }
+
+        try {
+            await loadTranslations();
+        } catch (e) {
+            console.error("Failed to load translations:", e);
+        }
+
+        document.dispatchEvent(new Event("noticeReady"));
     });
-}
+})();

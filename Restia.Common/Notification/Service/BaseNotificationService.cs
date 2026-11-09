@@ -6,7 +6,6 @@ using Restia.Common.Identity.Enums;
 using Restia.Common.Notification.Service.Interfaces;
 using Restia.Common.Shared.UnitOfWorks.Interfaces;
 using System.Net.Http.Json;
-using System.Text.Json;
 using NotificationEntity = Restia.Common.Notification.Entities.Notification;
 
 namespace Restia.Common.Notification.Service
@@ -31,30 +30,6 @@ namespace Restia.Common.Notification.Service
             _config = config;
             _logger = logger;
             _userManager = userManager;
-        }
-
-        public async Task CreateAsync(
-            string userId,
-            string titleKey,
-            string messageKey,
-            List<string>? titleParams = null,
-            List<string>? messageParams = null,
-            string? url = null)
-        {
-            var notification = new NotificationEntity
-            {
-                UserId = userId,
-                TitleKey = titleKey,
-                TitleParams = titleParams != null ? JsonSerializer.Serialize(titleParams) : null,
-                MessageKey = messageKey,
-                MessageParams = messageParams != null ? JsonSerializer.Serialize(messageParams) : null,
-                Url = url,
-                IsRead = false,
-                CreatedAt = DateTimeOffset.UtcNow
-            };
-
-            await _uow.NotificationRepository.AddAsync(notification);
-            await _uow.SaveChangesAsync();
         }
 
         public async Task CreateAsync(NotificationEntity notification)

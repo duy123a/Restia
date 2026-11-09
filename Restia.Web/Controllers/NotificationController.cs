@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Localization;
-using Restia.Common.Identity.Entities;
 using Restia.Common.Localization.Resources;
 using Restia.Common.Notification.Constants;
 using Restia.Common.Notification.Service;
@@ -15,10 +13,9 @@ namespace Restia.Web.Controllers
     {
         public NotificationController(
             IAppNotificationService notificationService,
-            UserManager<AppUser> userManager,
             IStringLocalizer<SharedResources> localizer,
             IHubContext<NotificationHub> hubContext,
-            IConfiguration config) : base(notificationService, userManager, localizer, hubContext, config)
+            IConfiguration config) : base(notificationService, localizer, hubContext, config)
         {
         }
 

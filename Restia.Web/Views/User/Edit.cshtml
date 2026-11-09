@@ -92,10 +92,10 @@
                             else
                             {
                                 var localEnd = Model.LockoutEnd.Value.ToAppTime().ToString("dd/MM/yyyy HH:mm:ss");
+                                var remainingSec = (int)Math.Max(0, Math.Ceiling((Model.LockoutEnd.Value - DateTimeOffset.UtcNow).TotalSeconds));
                                 <span class="text-secondary small"
                                       id="lockoutTimer"
-                                      data-lockout-end="@Model.LockoutEnd.Value.ToUnixTimeMilliseconds()"
-                                      data-expired-text="@Localizer["User_StatusActive"]">
+                                      data-remaining-seconds="@remainingSec">
                                     @Localizer["User_LockedUntil", localEnd]
                                     (<strong id="lockoutRemainingText" class="text-danger"></strong>)
                                 </span>
@@ -154,12 +154,18 @@
             const remainingEl = document.getElementById('lockoutRemainingText');
             if (!timerEl || !remainingEl) return;
 
-            const endMs = parseInt(timerEl.dataset.lockoutEnd, 10);
-            if (isNaN(endMs)) return;
+            const initialSeconds = parseInt(timerEl.dataset.remainingSeconds, 10);
+            if (isNaN(initialSeconds) || initialSeconds <= 0) return;
+
+            const targetTime = Date.now() + initialSeconds * 1000;
+            let intervalId = null;
 
             function updateRemaining() {
-                const diffSec = Math.max(0, Math.floor((endMs - Date.now()) / 1000));
+                const diffSec = Math.max(0, Math.ceil((targetTime - Date.now()) / 1000));
                 if (diffSec <= 0) {
+                    if (intervalId !== null) {
+                        clearInterval(intervalId);
+                    }
                     window.location.reload();
                     return;
                 }
@@ -176,7 +182,7 @@
             }
 
             updateRemaining();
-            setInterval(updateRemaining, 1000);
+            intervalId = setInterval(updateRemaining, 1000);
         })();
     </script>
 }

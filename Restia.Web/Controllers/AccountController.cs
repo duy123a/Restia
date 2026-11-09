@@ -39,15 +39,17 @@ namespace Restia.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewData["ReturnUrl"] = returnUrl ?? Url.Content("~/");
-            return View(new LoginViewModel());
+            return View(new LoginViewModel
+            {
+                ReturnUrl = returnUrl ?? Url.Content("~/")
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            ViewData["ReturnUrl"] = returnUrl ?? Url.Content("~/");
+            model.ReturnUrl ??= Url.Content("~/");
 
             if (!ModelState.IsValid)
             {
@@ -62,7 +64,7 @@ namespace Restia.Web.Controllers
                     : DateTimeOffset.UtcNow.AddSeconds(_cookieSettings.DefaultExpireSeconds)
             };
 
-            var loginInfo = model.LoginInfo?.Trim() ?? string.Empty;
+            var loginInfo = model.LoginInfo ?? string.Empty;
             var user = await _userManager.FindByEmailAsync(loginInfo)
                 ?? await _userManager.FindByNameAsync(loginInfo);
 
@@ -77,9 +79,9 @@ namespace Restia.Web.Controllers
                 {
                     await _signInManager.SignInAsync(user, authProperties);
 
-                    if (Url.IsLocalUrl(returnUrl))
+                    if (Url.IsLocalUrl(model.ReturnUrl))
                     {
-                        return Redirect(returnUrl);
+                        return Redirect(model.ReturnUrl);
                     }
 
                     return RedirectToAction("Index", "Home");

@@ -70,7 +70,7 @@
                 {
                     <li class="nav-item dropdown me-2" id="notificationDropdown">
                         <button type="button"
-                                class="icon-btn notification-icon-btn"
+                                class="notification-icon-btn"
                                 id="notificationToggle"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
@@ -80,7 +80,7 @@
                             <span id="notificationBadge" class="bg-danger d-none notification-badge-custom"></span>
                         </button>
 
-                        <div class="dropdown-menu dropdown-menu-end p-0 shadow notification-dropdown-menu notification-dropdown">
+                        <div class="dropdown-menu dropdown-menu-end p-0 shadow notification-dropdown-menu">
                             <div class="notification-header">
                                 <div class="notification-header-title">@Localizer["Notifications"]</div>
                                 <button type="button" id="notificationReadAllBtn" class="notification-read-all-btn d-none">
@@ -196,10 +196,13 @@
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="~/lib/tom-select/dist/js/tom-select.complete.min.js" defer></script>
-    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js" defer></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
-    <script src="~/js/utilities.js" asp-append-version="true" defer></script>
-    <script src="~/js/notification.js" asp-append-version="true" defer></script>
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js" defer></script>
+        <script src="~/js/utilities.js" asp-append-version="true" defer></script>
+        <script src="~/js/notification.js" asp-append-version="true" defer></script>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

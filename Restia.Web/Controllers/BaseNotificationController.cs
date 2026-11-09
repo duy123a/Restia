@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Localization;
-using Restia.Common.Identity.Entities;
 using Restia.Common.Identity.Extensions;
 using Restia.Common.Localization.Constants;
 using Restia.Common.Localization.Resources;
 using Restia.Common.Notification.Constants;
 using Restia.Common.Notification.Service;
 using Restia.Common.Notification.Service.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Restia.Web.Controllers
 {
@@ -19,20 +19,17 @@ namespace Restia.Web.Controllers
     public abstract class BaseNotificationController : ControllerBase
     {
         protected readonly IAppNotificationService _notificationService;
-        protected readonly UserManager<AppUser> _userManager;
         protected readonly IStringLocalizer<SharedResources> _localizer;
         protected readonly IHubContext<NotificationHub> _hubContext;
         protected readonly IConfiguration _config;
 
         protected BaseNotificationController(
             IAppNotificationService notificationService,
-            UserManager<AppUser> userManager,
             IStringLocalizer<SharedResources> localizer,
             IHubContext<NotificationHub> hubContext,
             IConfiguration config)
         {
             _notificationService = notificationService;
-            _userManager = userManager;
             _localizer = localizer;
             _hubContext = hubContext;
             _config = config;
@@ -91,7 +88,16 @@ namespace Restia.Web.Controllers
         {
             var header = req.Headers["X-Notification-Key"].FirstOrDefault();
             var expectedKey = _config["Notification:ApiKey"];
-            return !string.IsNullOrEmpty(expectedKey) && header == expectedKey;
+
+            if (string.IsNullOrEmpty(header) || string.IsNullOrEmpty(expectedKey))
+            {
+                return false;
+            }
+
+            // Protect timing attack
+            return CryptographicOperations.FixedTimeEquals(
+                Encoding.UTF8.GetBytes(header),
+                Encoding.UTF8.GetBytes(expectedKey));
         }
 
         [HttpPost("trigger")]

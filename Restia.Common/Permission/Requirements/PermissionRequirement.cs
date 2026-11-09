@@ -18,6 +18,13 @@ namespace Restia.Common.Permission.Requirements
             PolicyName = policyName;
             var parts = policyName.Split(SEPARATOR);
 
+            if (parts.Length < 2 || parts.Length > 3 || parts.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException(
+                    $"Invalid permission policy: {policyName}",
+                    nameof(policyName));
+            }
+
             Module = parts[0];
             Screen = parts[1];
 
@@ -27,7 +34,7 @@ namespace Restia.Common.Permission.Requirements
                 FormAuthoritySec = null;
             }
             else if (Enum.TryParse<FormAuthoritySec>(
-                 parts[2], out var authority)
+                 parts[2], ignoreCase: true, out var authority)
              && Enum.IsDefined(typeof(FormAuthoritySec), authority))
             {
                 FormAuthoritySec = authority;

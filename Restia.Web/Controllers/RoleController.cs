@@ -82,7 +82,7 @@ namespace Restia.Web.Controllers
 
             var result = await _roleService.CreateAsync(new RoleCreateDto
             {
-                Name = model.Name.Trim()
+                Name = model.Name
             });
 
             if (!result.Succeeded)
@@ -138,7 +138,7 @@ namespace Restia.Web.Controllers
             var result = await _roleService.UpdateAsync(new RoleUpdateDto
             {
                 Id = model.Id,
-                Name = model.Name.Trim()
+                Name = model.Name
             });
 
             if (result.ErrorCode == "Role_NotFound")

@@ -34,10 +34,10 @@ namespace Restia.Common.Identity.Repository
 
             if (!string.IsNullOrWhiteSpace(searchParam?.SearchTerm))
             {
-                var term = searchParam.SearchTerm.Trim();
+                var pattern = $"%{searchParam.SearchTerm}%";
 
                 query = query.Where(r =>
-                    r.Name != null && r.Name.Contains(term));
+                    r.Name != null && EF.Functions.ILike(r.Name, pattern));
             }
 
             var totalCount = await query.CountAsync();
