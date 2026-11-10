@@ -112,6 +112,9 @@
         window.currentTenant =
             configDiv?.dataset.tenant || "public";
 
+        window.appTimeZone =
+            configDiv?.dataset.timezone || "Asia/Ho_Chi_Minh";
+
         if (!window.isAuthenticated) {
             return;
         }

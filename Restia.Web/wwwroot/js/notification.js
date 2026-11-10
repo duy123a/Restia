@@ -35,7 +35,7 @@
         function createNotificationElement(n) {
             const a = document.createElement("a");
             const readClass = n.isRead ? "notification-read" : "notification-unread";
-            const created = n.createdAt ? new Date(n.createdAt).toLocaleString(window.currentCulture) : "";
+            const created = n.createdAt ? new Date(n.createdAt).toLocaleString(window.currentCulture, { timeZone: window.appTimeZone }) : "";
 
             a.href = n.url || "#";
             a.className = `dropdown-item text-wrap notification-item position-relative ${readClass}`;

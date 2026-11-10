@@ -1,6 +1,7 @@
 @using Restia.Common.Localization.Resources;
 @using Microsoft.Extensions.Localization;
 @using Restia.Common.Localization.Constants;
+@using Restia.Common.Shared.Helpers;
 @using Restia.Common.Tenant.Services.Interfaces;
 @inject IStringLocalizer<SharedResources> Localizer;
 @inject ITenantContext TenantContext;
@@ -195,7 +196,8 @@
     <div id="layout-config" class="d-none"
          data-is-authenticated="@(User.Identity?.IsAuthenticated.ToString().ToLower())"
          data-culture="@Thread.CurrentThread.CurrentCulture.Name"
-         data-tenant="@currentTenant">
+         data-tenant="@currentTenant"
+         data-timezone="@DateTimeOffsetHelper.AppTimeZone.Id">
     </div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>

@@ -1,11 +1,18 @@
 using Restia.Common.Identity.Extensions;
 using Restia.Common.Localization.Extensions;
+using Restia.Common.Logging.Service;
 using Restia.Common.Notification.Service;
 using Restia.Common.Shared.Extensions;
 using Restia.Common.Tenant.Constants;
 using Restia.Common.Tenant.Middlewares;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+SeriLogProvider.Initialize(builder.Environment, new LogEventEnricher(builder.Configuration));
+builder.Host.UseSerilog();
+Log.Logger.Information("Lucia application will now start.");
+
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 
 // Add services to the container.
