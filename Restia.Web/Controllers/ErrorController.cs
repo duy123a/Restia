@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Restia.Common.Localization.Resources;
@@ -9,10 +10,12 @@ namespace Restia.Web.Controllers
     public class ErrorController : Controller
     {
         private readonly IStringLocalizer<SharedResources> _localizer;
+        private readonly ILogger<ErrorController> _logger;
 
-        public ErrorController(IStringLocalizer<SharedResources> localizer)
+        public ErrorController(IStringLocalizer<SharedResources> localizer, ILogger<ErrorController> logger)
         {
             _localizer = localizer;
+            _logger = logger;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -21,6 +24,12 @@ namespace Restia.Web.Controllers
         {
             var requestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             var code = statusCode ?? (HttpContext.Response.StatusCode >= 400 ? HttpContext.Response.StatusCode : null);
+
+            var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            if (exceptionFeature?.Error is { } ex)
+            {
+                _logger.LogError(ex, "Unhandled exception at {Path}: {ExceptionMessage}", exceptionFeature.Path, ex.Message);
+            }
 
             var (title, message) = code switch
             {
